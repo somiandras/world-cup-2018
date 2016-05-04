@@ -16,6 +16,6 @@
 
 	angular.module('myBets', []);
 
-	angular.module('user', []);
+	angular.module('user', ['firebase']);
 
 })();

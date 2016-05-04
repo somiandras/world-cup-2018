@@ -2,12 +2,11 @@
 
 	'use strict';
 
-	angular.module('user')
-		.controller('ProfileController', ProfileController);
+	angular.module('user').controller('ProfileController', ProfileController);
 
-	ProfileController.$inject = [];
+	ProfileController.$inject = ['userService'];
 
-	function ProfileController () {
+	function ProfileController (userService) {
 
 		//...
 	}

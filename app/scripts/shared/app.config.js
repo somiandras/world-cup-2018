@@ -2,14 +2,14 @@
 
 	'use strict';
 
-	angular.module('appCore')
-	.config(uiRouter);
+	// ROUTING
 
-	uiRouter.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
+	angular.module('appCore').config(uiRouter);
+
+	uiRouter.$inject = ['$stateProvider', '$urlRouterProvider'];
 	
 	function uiRouter($stateProvider, $urlRouterProvider) {
 
-		
 		$urlRouterProvider.otherwise('/dashboard');
 
 		$stateProvider
@@ -41,23 +41,8 @@
 			templateUrl: 'views/bets.html',
 			controller: 'BetsController',
 			controllerAs: 'bets',
-		})
-		.state('app.profile', {
-			url: '/profile',
-			templateUrl: 'views/profile.html',
-			controller: 'ProfileController',
-			controllerAs: 'profile',
-		})
-		.state('login', {
-			url: '/login',
-			views: {
-				content: {
-					templateUrl: 'views/login.html',
-					controller: 'LoginController',
-					controllerAs: 'login'
-				}
-			}
 		});
+
 	}
 
 })();

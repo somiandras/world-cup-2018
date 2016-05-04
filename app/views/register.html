@@ -1,0 +1,77 @@
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
+			<form name="regForm" class="form user-form" ng-submit="register.registerUser(form.email, form.password)" novalidate autocomplete="false">
+				<h4>Regisztráció</h4>
+
+				<!-- Email -->
+				
+				 <div class="form-group" ng-class="{ 'has-error': regForm.email.$touched && regForm.email.$invalid, 'has-success': regForm.email.$touched && regForm.email.$valid }">
+				    <div class="input-group">
+				    	<div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
+				    	<input 
+				    		required 
+				    		type="text" 
+				    		class="form-control" 
+				    		id="emailInput" 
+				    		name="email" 
+				    		ng-model="form.email" 
+				    		placeholder="Email" 
+				    		ng-pattern="/^[a-z]+\.[a-z]+$/" 
+				    		ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 300, 'blur': 0 } }">
+				    	<div class="input-group-addon">@kbcsecurities.hu</div>
+				    </div>
+				    <div ng-messages="regForm.email.$error" ng-if="regForm.email.$touched">
+				    	<p class="help-block" ng-message="required">Kelleni fog az emailcímed</p>
+				    	<p class="help-block" ng-message="pattern">A @ előtti részt írd be az emailcímedből</p>
+				    </div>
+				</div>
+
+				<!-- Password -->
+
+				<div class="form-group" ng-class="{'has-success': regForm.password.$dirty && regForm.password.$touched}">
+				    <div class="input-group">
+				    	<div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+						<input 
+							required 
+							type="password" 
+							class="form-control" 
+							id="passwordInput" 
+							name="password" 
+							ng-model="form.password" 
+							placeholder="Jelszó">
+				    </div>
+				</div>
+
+				<!-- Password check -->
+
+				<div class="form-group" ng-class="{'has-error': form.password !== form.passwordCheck && regForm.passwordCheck.$touched, 'has-success': form.password == form.passwordCheck && regForm.passwordCheck.$dirty}">
+				    <div class="input-group">
+				    	<div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+						<input 
+							required 
+							type="password" 
+							class="form-control" 
+							id="passwordInput" 
+							name="passwordCheck" 
+							ng-model="form.passwordCheck" 
+							placeholder="Jelszó megerősítése">
+				    </div>
+					<div class="help-block" ng-show="form.password !== form.passwordCheck && regForm.passwordCheck.$touched">Nem egyezik a két jelszó</div>
+				</div>
+
+				<!-- Submit button -->
+
+				<div class="form-group">
+				    <button type="submit" class="btn btn-info btn-block" ng-disabled="regForm.$invalid || form.password !== form.passwordCheck">Regisztrálok</button>
+					<hr>
+				  	<div class="col-xs-12">
+				  		<p class="text-center">Már regisztráltál?
+				  		<a ui-sref="login">Itt tudsz bejelentkezni.</a></p>
+				  	</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
