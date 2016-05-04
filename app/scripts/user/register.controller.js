@@ -18,7 +18,7 @@
 			};
 
 			userService.register(credentials);
-		}
+		};
 
 	}
 

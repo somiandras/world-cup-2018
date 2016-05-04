@@ -16,9 +16,14 @@
 
 		auth.$onAuth((newData) => {
 
-			console.log(newData);
+			if (newData) {
 
-			$state.go('app.dashboard');
+				$state.go('app.dashboard');
+
+			} else {
+
+				$state.go('login');
+			}
 		
 		});
 

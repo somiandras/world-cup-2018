@@ -37,9 +37,9 @@
 
 	// ROUTING
 
-	userRouting.$inject = ['$stateProvider', '$urlRouterProvider'];
+	userRouting.$inject = ['$stateProvider'];
 
-	function userRouting ($stateProvider, $urlRouterProvider) {
+	function userRouting ($stateProvider) {
 
 		$stateProvider
 		.state('app.profile', {

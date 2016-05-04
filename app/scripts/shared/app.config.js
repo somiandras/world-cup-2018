@@ -4,7 +4,10 @@
 
 	// ROUTING
 
-	angular.module('appCore').config(uiRouter);
+	angular
+	.module('appCore')
+	.config(uiRouter)
+	.run(noAuth);
 
 	uiRouter.$inject = ['$stateProvider', '$urlRouterProvider'];
 	
@@ -27,7 +30,10 @@
 				}
 			},
 			resolve: {
-				//...
+				user: ($firebaseAuthService) => {
+
+					return $firebaseAuthService.$requireAuth();
+				}
 			}
 		})
 		.state('app.dashboard', {
@@ -43,6 +49,20 @@
 			controllerAs: 'bets',
 		});
 
+	}
+
+
+	noAuth.$inject = ['$rootScope', '$state'];
+
+	function noAuth ($rootScope, $state) {
+
+		$rootScope.$on("$stateChangeError", function (event, toState, toParams, fromState, fromParams, error) {
+
+		 	if (error === "AUTH_REQUIRED") {
+
+				$state.go("login");
+		  	}
+		});
 	}
 
 })();
