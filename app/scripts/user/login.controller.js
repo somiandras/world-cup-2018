@@ -7,12 +7,14 @@
 		.controller('LoginController', LoginController);
 
 
-	LoginController.$inject = [];
+	LoginController.$inject = ['userService'];
 
 
-	function LoginController () {
+	function LoginController (userService) {
 
-		//...
+		var vm = this;
+
+		vm.user = userService;
 	}
 
 })();
