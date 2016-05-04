@@ -18,4 +18,6 @@
 
 	angular.module('user', ['firebase']);
 
+	angular.module('admin', []);
+
 })();

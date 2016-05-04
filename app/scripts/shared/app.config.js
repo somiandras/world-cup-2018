@@ -55,6 +55,12 @@
 			templateUrl: 'views/bets.html',
 			controller: 'BetsController',
 			controllerAs: 'bets',
+		})
+		.state('app.admin', {
+			url: '/admin',
+			templateUrl: 'views/admin.html',
+			controller: 'AdminController',
+			controllerAs: 'admin',
 		});
 
 	}

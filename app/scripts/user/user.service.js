@@ -13,26 +13,12 @@
 
 		const auth = $firebaseAuthService;
 
-		let user;
-
 		auth.$onAuth((newData) => {
 
 			if (newData) {
 
-				let users = $firebaseObject($firebaseRef.users);
-
-				users.$loaded()
-				.then(() => {
-
-					user = users[newData.uid];
-					$state.go('app.dashboard');
-				})
-				.catch((error) => {
-
-					console.error(error);
-				});
-
-
+				$state.go('app.dashboard');
+				
 			} else {
 
 				$state.go('login');
