@@ -13,19 +13,48 @@
 
 		const auth = $firebaseAuthService;
 
+		let user;
 
 		auth.$onAuth((newData) => {
 
 			if (newData) {
 
-				$state.go('app.dashboard');
+				let users = $firebaseObject($firebaseRef.users);
+
+				users.$loaded()
+				.then(() => {
+
+					user = users[newData.uid];
+					$state.go('app.dashboard');
+				})
+				.catch((error) => {
+
+					console.error(error);
+				});
+
 
 			} else {
 
 				$state.go('login');
-			}
-		
+			}		
 		});
+
+
+		function getUser (uid) {
+
+			let user;
+			let users = $firebaseObject($firebaseRef.users);
+			
+			return users.$loaded()
+			.then((ref) => {
+				
+				return ref[uid];
+			})
+			.catch((error) => {
+
+				console.error(error);
+			});
+		}
 
 
 		function login (credentials) {
@@ -48,7 +77,11 @@
 
 			let users = $firebaseObject($firebaseRef.users);
 
-			auth.$createUser(credentials)
+			users.$loaded()
+			.then(() => {
+
+				return auth.$createUser(credentials);
+			})
 			.then((data) => {
 
 				let date = new Date();
@@ -75,7 +108,8 @@
 		return {
 			login: login,
 			logout: logout,
-			register: register
+			register: register,
+			getUser: getUser
 		};
 	}
 

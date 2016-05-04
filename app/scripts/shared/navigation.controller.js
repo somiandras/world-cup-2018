@@ -5,13 +5,13 @@
 	angular.module('appCore')
 		.controller('NavigationController', NavigationController);
 
-	NavigationController.$inject = ['userService'];
+	NavigationController.$inject = ['userService', 'user'];
 
-	function NavigationController (userService) {
+	function NavigationController (userService, user) {
 
 		var vm = this;
-
-		vm.user = userService;
+		vm.userService = userService;
+		vm.user = user;
 	}
 
 })();

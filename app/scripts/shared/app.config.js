@@ -30,9 +30,17 @@
 				}
 			},
 			resolve: {
-				user: ($firebaseAuthService) => {
+				user: ($firebaseAuthService, userService) => {
 
-					return $firebaseAuthService.$requireAuth();
+					return $firebaseAuthService.$requireAuth()
+					.then((data) => {
+
+						return userService.getUser(data.uid);
+					})
+					.catch((error) => {
+
+						console.error(error);
+					});
 				}
 			}
 		})
