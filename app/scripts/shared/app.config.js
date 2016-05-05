@@ -2,12 +2,30 @@
 
 	'use strict';
 
-	// ROUTING
-
 	angular
 	.module('appCore')
+	.constant('FB_URL', 'https://kbceuro2016.firebaseio.com/')
 	.config(appRouting)
+	.config(firebase)
 	.run(noAuth);
+
+
+	// FIREBASE
+
+	firebase.$inject = ['$firebaseRefProvider', 'FB_URL'];
+
+	function firebase ($firebaseRefProvider, FB_URL) {
+
+		$firebaseRefProvider.registerUrl({
+			default: FB_URL,
+			users: FB_URL + 'users',
+			tournament: FB_URL + 'tournament',
+			teams: FB_URL + 'tournament/teams',
+			matches: FB_URL + 'tournament/matches'
+		});
+	}
+
+	// ROUTING
 
 	appRouting.$inject = ['$stateProvider', '$urlRouterProvider'];
 	

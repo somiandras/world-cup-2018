@@ -2,40 +2,8 @@
 
 	'use strict';
 
-	// CONSTANTS
-
 	angular.module('user')
-	.constant('FB_URL', 'https://kbceuro2016.firebaseio.com/')
-	.constant('DEPARTMENTS', [
-		'Brókerek és Sec Services',
-		'Elemzők és Marketing',
-		'Mid-Office és Back-Office',
-		'IT',
-		'Könyvelés, Jog és Compliance',
-		'Corporate Finance',
-		'Office Management',
-		'Market és Op Risk',
-		'Nem tudom eldönteni...',
-		]);
-
-
-	// CONFIG
-	
-	angular.module('user')
-	.config(firebase)
 	.config(userRouting);
-
-	// FIREBASE
-
-	firebase.$inject = ['$firebaseRefProvider', 'FB_URL'];
-
-	function firebase ($firebaseRefProvider, FB_URL) {
-
-		$firebaseRefProvider.registerUrl({
-			default: FB_URL,
-			users: FB_URL + 'users'
-		});
-	}
 
 	// ROUTING
 

@@ -12,11 +12,11 @@
 	 */
 	angular.module('euro2016App', ['appCore', 'myBets', 'user', 'admin']);
 
-	angular.module('appCore',['ngMessages','ngResource','ngSanitize', 'ui.router']);  
+	angular.module('appCore',['ngMessages','ngResource','ngSanitize', 'ui.router', 'firebase']);  
 
 	angular.module('myBets', []);
 
-	angular.module('user', ['firebase']);
+	angular.module('user', []);
 
 	angular.module('admin', []);
 
