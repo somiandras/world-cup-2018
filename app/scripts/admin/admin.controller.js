@@ -4,11 +4,14 @@
 
 	angular.module('admin').controller('AdminController', AdminController);
 
-	AdminController.$inject = [];
+	AdminController.$inject = ['$state'];
 
-	function AdminController () {
+	function AdminController ($state) {
 
-		//...
+		let vm = this;
+
+		vm.state = $state;
+
 	}
 
 })();

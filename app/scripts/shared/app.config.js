@@ -6,12 +6,12 @@
 
 	angular
 	.module('appCore')
-	.config(uiRouter)
+	.config(appRouting)
 	.run(noAuth);
 
-	uiRouter.$inject = ['$stateProvider', '$urlRouterProvider'];
+	appRouting.$inject = ['$stateProvider', '$urlRouterProvider'];
 	
-	function uiRouter($stateProvider, $urlRouterProvider) {
+	function appRouting($stateProvider, $urlRouterProvider) {
 
 		$urlRouterProvider.otherwise('/dashboard');
 
@@ -55,14 +55,7 @@
 			templateUrl: 'views/bets.html',
 			controller: 'BetsController',
 			controllerAs: 'bets',
-		})
-		.state('app.admin', {
-			url: '/admin',
-			templateUrl: 'views/admin.html',
-			controller: 'AdminController',
-			controllerAs: 'admin',
 		});
-
 	}
 
 

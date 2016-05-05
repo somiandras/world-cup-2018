@@ -19,11 +19,13 @@
 		]);
 
 
-	// FIREBASE
+	// CONFIG
 	
 	angular.module('user')
 	.config(firebase)
 	.config(userRouting);
+
+	// FIREBASE
 
 	firebase.$inject = ['$firebaseRefProvider', 'FB_URL'];
 
