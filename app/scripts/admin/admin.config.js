@@ -9,9 +9,9 @@
 
 	// ROUTING
 	
-	adminRouting.$inject = ['$stateProvider', '$urlRouterProvider'];
+	adminRouting.$inject = ['$stateProvider'];
 
-	function adminRouting ($stateProvider, $urlRouterProvider) {
+	function adminRouting ($stateProvider) {
 
 		$stateProvider
 		.state('app.admin', {

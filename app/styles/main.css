@@ -1,5 +1,23 @@
 /* OWN STYLES */
 
+.inner-content {
+
+  margin-top: 30px;
+}
+
+
+.list-group-item > .list-edit-controls {
+  display: none;
+}
+
+
+.list-group-item:hover > .list-edit-controls {
+  display: inline;
+}
+
+
+
+
 /* Login & Register */
 
 .user-form {
