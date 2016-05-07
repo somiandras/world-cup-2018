@@ -5,7 +5,7 @@
 		</div>
 		<div class="col-xs-12" ng-show="matches.uploadForm">
 			<h4>Meccsek feltöltése</h4>
-			<form name="matchesForm" ng-submit = "matches.upload(matches.form.list)">
+			<form name="matchesForm" ng-submit = "matches.upload(matches.form.list, matches.form.replace); matches.reset(matchesForm)">
 				<div class="form-group">
 					<label>Meccslista</label>
 					<textarea 
@@ -19,6 +19,12 @@
 						ng-model="matches.form.list"></textarea>
 				</div>
 				<p class="help-block" ng-show="matchesForm.matchlist.$touched && matchesForm.matchlist.$invalid">Másold be a meccsadatokat!</p>
+				<div class="checkbox" ng-class="{'has-warning': matches.form.replace}">
+					<label>
+						<input type="checkbox" ng-model="matches.form.replace">A feltöltött meccsek cserélése</input>
+					</label>
+					<p class="help-block" ng-show="matches.form.replace"><strong>Figyelj oda,</strong> ezzel törölni fogod az összes feltöltött meccset, eredményt és az eddig leadott tippek sem lesznek érvényesek!</p>
+				</div>
 				<button class="btn btn-primary" type="submit" ng-disabled="matchesForm.$invalid">Feltöltés</button>
 				<button class="btn btn-default" type="reset" ng-click="matches.uploadForm=false; matches.reset(matchesForm)">Mégse</button>
 			</form>

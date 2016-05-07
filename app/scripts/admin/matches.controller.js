@@ -22,9 +22,9 @@
 		}
 
 
-		vm.upload = function (matches) {
+		vm.upload = function (matches, replace) {
 
-			tour.uploadMatches(matches)
+			tour.uploadMatches(matches, replace)
 			.then((matches) => {
 				console.log(matches);
 				if (matches) {

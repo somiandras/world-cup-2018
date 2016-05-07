@@ -47,7 +47,7 @@
 		// --> check team names --> compose match object --> add to match list
 		
 
-		function uploadMatches (string) {
+		function uploadMatches (string, replace) {
 
 			let matchlist = decomposeMatches(string);
 			let newList;
@@ -71,11 +71,13 @@
 			return data.matches.$loaded()
 			.then((matches) => {
 
-				matches.forEach((match) => {
+				if (replace) {
 
-					matches.$remove(match);
-				});
+					matches.forEach((match) => {
 
+						matches.$remove(match);
+					});
+				}
 
 				newList.forEach((newMatch) => {
 
@@ -102,11 +104,11 @@
 
 			} else if (!find.home) {
 
-				throw new Error (match.home + ' nevű csapat (hazai) nincs a listában');
+				throw new Error (match.home + ' nevű csapat nincs a listában');
 			
 			} else {
 
-				throw new Error (match.away + ' nevű csapat (vendég) nincs a listában');
+				throw new Error (match.away + ' nevű csapat nincs a listában');
 			}
 		}
 
