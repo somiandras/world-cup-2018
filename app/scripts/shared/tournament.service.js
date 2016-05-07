@@ -90,8 +90,10 @@
 
 		function checkTeamNames (match) {
 
-			let findHome = lookUpTeamName(match.home);
-			let findAway = lookUpTeamName(match.away);
+			let findHome = lookUpTeamName(match.home.trim());
+			let findAway = lookUpTeamName(match.away.trim());
+
+			console.log(findHome, findAway);
 
 			if (findHome && findAway) {
 
@@ -100,11 +102,11 @@
 
 			} else if (!find.home) {
 
-				throw new Error (match.home + ' nevű csapat nincs a listában');
+				throw new Error (match.home + ' nevű csapat (hazai) nincs a listában');
 			
 			} else {
 
-				throw new Error (match.away + ' nevű csapat nincs a listában');
+				throw new Error (match.away + ' nevű csapat (vendég) nincs a listában');
 			}
 		}
 
@@ -146,10 +148,6 @@
 
 				if (existingTeam.shortName === name || existingTeam.longName === name) {
 
-					console.log(name);
-					console.log(existingTeam.shortName);
-					console.log(existingTeam.longName);
-
 					return true;
 
 				} else {
@@ -159,107 +157,6 @@
 			})
 		}
 
-
-
-
-		function __uploadMatches (matchString) {
-
-			return data.matches.$loaded()
-			.then((matches) => {
-
-				let matchList;
-
-				try {
-
-					matchList = parseMatchData(matchString);
-
-				} catch (error) {
-
-					toastr.error(error.message);
-				}
-				
-				if (matchList) {
-
-					//Clear the previous matchlist
-					matches.forEach ((element) => {
-
-						matches.$remove(element);
-					})
-					
-					//Add new matchlist
-					matchList.forEach((matchElement) => {
-
-						matches.$add(matchElement);
-					})
-				}
-
-				return matches;
-			})
-		}
-
-
-		function parseMatchData (matchString) {
-
-			let matches = matchString.split('\n');
-
-			matches.forEach((element, index, array) => {
-
-				let matchData = element.split(',');
-				let matchObj = {};
-
-				if (matchData.length == 4) {
-
-					MATCH_FIELDS.forEach((field, idx) => {
-
-						if (field == 'home' || field == 'away') {
-
-							lookupTeam(matchData[idx])
-							.then((team) => {
-
-								if (team) {
-
-									matchObj[field] = team;
-
-								} else {
-
-									throw new Error (matchData[idx] + ' nevű csapat nincs a listában');
-								}
-							})
-
-						} else {
-
-							matchObj[field] = matchData[idx];
-						}
-						
-					})
-
-					array[index] = matchObj;
-
-				} else {
-
-					throw new Error('Nem stimmel az oszlopok száma')
-				}
-
-			})
-
-			return matches;
-		}
-
-
-		function lookupTeam (name) {
-
-			return data.teams.$loaded()
-			.then((teams) => {
-
-				let teamFound = teams.find((existingTeam) => {
-
-					return existingTeam.shortName === name || existingTeam.longName === name;
-				})
-
-				return teamFound;
-
-			})
-		}
 
 
 		return {
