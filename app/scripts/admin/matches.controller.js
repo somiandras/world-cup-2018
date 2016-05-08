@@ -22,14 +22,15 @@
 		}
 
 
-		vm.upload = function (matches, replace) {
+		vm.upload = function (matches, replace, form) {
 
 			tour.uploadMatches(matches, replace)
 			.then((matches) => {
-				console.log(matches);
+
 				if (matches) {
 					toastr.success('Meccsek feltöltve');
 					vm.uploadForm = false;
+					vm.reset(form);
 				}
 			})
 			.catch((error) => {

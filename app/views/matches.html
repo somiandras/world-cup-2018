@@ -1,11 +1,8 @@
 <div class="container">
 	<div class="row">
-		<div class="col-xs-12" ng-hide="matches.uploadForm">
-			<a href ng-click="matches.uploadForm = true" ><span class="glyphicon glyphicon-plus"></span> Meccsek feltöltése</a>
-		</div>
 		<div class="col-xs-12" ng-show="matches.uploadForm">
 			<h4>Meccsek feltöltése</h4>
-			<form name="matchesForm" ng-submit = "matches.upload(matches.form.list, matches.form.replace); matches.reset(matchesForm)">
+			<form name="matchesForm" ng-submit = "matches.upload(matches.form.list, matches.form.replace, matchesForm)">
 				<div class="form-group">
 					<label>Meccslista</label>
 					<textarea 
@@ -44,6 +41,9 @@
 					<td class="text-center">{{match.result.home}} : {{match.result.away}}</td>
 				</tr>
 			</table>
+		</div>
+		<div class="col-xs-12" ng-hide="matches.uploadForm">
+			<a href ng-click="matches.uploadForm = true" ><span class="glyphicon glyphicon-plus"></span> Meccsek feltöltése</a>
 		</div>
 	</div>
 </div>

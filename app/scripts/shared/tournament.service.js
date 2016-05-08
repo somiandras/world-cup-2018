@@ -16,6 +16,7 @@
 		const MATCH_FIELDS = ['group', 'datetime', 'home', 'away'];
 
 
+
 		function addTeam (newTeam) {
 
 			return data.teams.$loaded()
@@ -41,10 +42,6 @@
 				return teams.$remove(team);
 			})
 		}
-
-
-		// receive string --> decompose string to matches --> decompose matches to data
-		// --> check team names --> compose match object --> add to match list
 		
 
 		function uploadMatches (string, replace) {
@@ -58,7 +55,9 @@
 
 					match = decomposeMatchData(match);
 					match = createMatchObject(match);
+					match.datetime = parseDate(match.datetime);
 					checkTeamNames(match);
+					
 					return match;
 				});
 			
@@ -90,12 +89,27 @@
 		}
 
 
+		function parseDate (string) {
+
+			console.log(string);
+
+			let date = new Date (string);
+
+			console.log(date);
+
+			if (date == 'Invalid Date') {
+
+				throw new Error ('Nem jó a dátumformátum')
+			}
+
+			return date;
+		}
+
+
 		function checkTeamNames (match) {
 
 			let findHome = lookUpTeamName(match.home.trim());
 			let findAway = lookUpTeamName(match.away.trim());
-
-			console.log(findHome, findAway);
 
 			if (findHome && findAway) {
 
