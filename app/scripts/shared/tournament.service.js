@@ -57,7 +57,7 @@
 					match = createMatchObject(match);
 					match.datetime = parseDate(match.datetime);
 					checkTeamNames(match);
-					
+
 					return match;
 				});
 			
@@ -91,18 +91,14 @@
 
 		function parseDate (string) {
 
-			console.log(string);
-
 			let date = new Date (string);
-
-			console.log(date);
 
 			if (date == 'Invalid Date') {
 
 				throw new Error ('Nem jó a dátumformátum')
 			}
 
-			return date;
+			return date.getTime();
 		}
 
 

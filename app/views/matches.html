@@ -20,23 +20,34 @@
 					<label>
 						<input type="checkbox" ng-model="matches.form.replace">A feltöltött meccsek cserélése</input>
 					</label>
-					<p class="help-block" ng-show="matches.form.replace"><strong>Figyelj oda,</strong> ezzel törölni fogod az összes feltöltött meccset, eredményt és az eddig leadott tippek sem lesznek érvényesek!</p>
+					<p class="help-block" ng-show="matches.form.replace"><strong>Figyelj oda,</strong> ezzel felül fogod írni az összes korábban feltöltött meccset, eredményt és az eddig leadott tippek sem lesznek érvényesek!</p>
 				</div>
 				<button class="btn btn-primary" type="submit" ng-disabled="matchesForm.$invalid">Feltöltés</button>
 				<button class="btn btn-default" type="reset" ng-click="matches.uploadForm=false; matches.reset(matchesForm)">Mégse</button>
 			</form>
 		</div>
 		<div class="col-xs-12" ng-hide="matches.uploadForm">
+			<form>
+				<div class="form-group">
+					<label for="filter">Szűrés</label>
+					<input type="text" class="form-control" name="filter" ng-model = "matches.table.filter" placeholder="Írd be a csapat hosszú vagy rövid nevét"></div>
+			</form>
 			<table class="table table-striped">
 				<thead>
-					<th>Csoport</th>
-					<th class="text-center">Időpont</th>
+					<th ng-click="matches.table.sortColumn = 'group'; matches.table.reverse = !matches.table.reverse">
+						<span class="glyphicon glyphicon-triangle-bottom" ng-show="matches.table.sortColumn == 'group' && matches.table.reverse"></span>
+						<span class="glyphicon glyphicon-triangle-top" ng-show="matches.table.sortColumn == 'group' && !matches.table.reverse"></span>
+						Csoport</th>
+					<th class="text-center" ng-click="matches.table.sortColumn = 'datetime'; matches.table.reverse = !matches.table.reverse">
+						<span class="glyphicon glyphicon-triangle-bottom" ng-show="matches.table.sortColumn == 'datetime' && matches.table.reverse"></span>
+						<span class="glyphicon glyphicon-triangle-top" ng-show="matches.table.sortColumn == 'datetime' && !matches.table.reverse"></span>
+						Időpont</th>
 					<th class="text-center">Csapatok</th>
 					<th class="text-center">Eredmény</th>
 				</thead>
-				<tr ng-repeat="match in matches.data.matches">
+				<tr ng-repeat="match in matches.data.matches | orderBy: matches.table.sortColumn : matches.table.reverse | filter: matches.table.filter">
 					<td>{{match.group}}</td>
-					<td class="text-center">{{match.datetime}}</td>
+					<td class="text-center">{{match.datetime | date : 'MM.dd. H:mm'}}</td>
 					<td class="text-center">{{match.home.longName}} - {{match.away.longName}}</td>
 					<td class="text-center">{{match.result.home}} : {{match.result.away}}</td>
 				</tr>

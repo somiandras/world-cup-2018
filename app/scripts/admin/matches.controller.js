@@ -12,6 +12,10 @@
 		let tour = tournamentService;
 		vm.uploadForm = false;
 		vm.data = tour.data;
+		vm.table = {};
+		vm.table.sortColumn = 'datetime';
+		vm.table.reverse = false;
+
 
 		vm.reset = function (form) {
 
