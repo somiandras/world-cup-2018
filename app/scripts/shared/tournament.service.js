@@ -170,12 +170,57 @@
 		}
 
 
+		function updateResult (match, result) {
+
+			let regexp = new RegExp('^[0-9].*[0-9]$');
+			
+			match.result = {};
+
+			if (result) {
+
+				result = result.trim();
+			}
+
+			if (regexp.test(result)) {
+
+				result = result.split("");
+				match.result.home = result[0];
+				match.result.away = result[result.length-1];
+
+				return saveMatch(match);
+
+			} else if (result) {
+
+				let error = new Error('Az eredmény első és utolsó karaktere szám kell legyen');
+
+				return $q.reject(error);
+
+			} else {
+
+				return saveMatch(match);
+			}
+		}
+
+
+		function saveMatch (match) {
+
+			return data.matches.$loaded()
+			.then((matches) => {
+
+				let index = matches.$indexFor(match.$id);
+
+				return matches.$save(index);
+			})
+
+		}
 
 		return {
 			data: data,
 			addTeam: addTeam,
 			removeTeam: removeTeam,
-			uploadMatches: uploadMatches
+			uploadMatches: uploadMatches,
+			saveMatch: saveMatch,
+			updateResult: updateResult
 		};
 	}
 

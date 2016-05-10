@@ -32,24 +32,45 @@
 					<label for="filter">Szűrés</label>
 					<input type="text" class="form-control" name="filter" ng-model = "matches.table.filter" placeholder="Írd be a csapat hosszú vagy rövid nevét"></div>
 			</form>
-			<table class="table table-striped">
+			<table class="table table-hover">
 				<thead>
-					<th ng-click="matches.table.sortColumn = 'group'; matches.table.reverse = !matches.table.reverse">
+					<th class="text-center col-xs-2" ng-click="matches.table.sortColumn = 'group'; matches.table.reverse = !matches.table.reverse">
 						<span class="glyphicon glyphicon-triangle-bottom" ng-show="matches.table.sortColumn == 'group' && matches.table.reverse"></span>
 						<span class="glyphicon glyphicon-triangle-top" ng-show="matches.table.sortColumn == 'group' && !matches.table.reverse"></span>
 						Csoport</th>
-					<th class="text-center" ng-click="matches.table.sortColumn = 'datetime'; matches.table.reverse = !matches.table.reverse">
+					<th class="text-center col-xs-3" ng-click="matches.table.sortColumn = 'datetime'; matches.table.reverse = !matches.table.reverse">
 						<span class="glyphicon glyphicon-triangle-bottom" ng-show="matches.table.sortColumn == 'datetime' && matches.table.reverse"></span>
 						<span class="glyphicon glyphicon-triangle-top" ng-show="matches.table.sortColumn == 'datetime' && !matches.table.reverse"></span>
 						Időpont</th>
-					<th class="text-center">Csapatok</th>
-					<th class="text-center">Eredmény</th>
+					<th class="text-center col-xs-3">Csapatok</th>
+					<th class="text-center col-xs3">Eredmény</th>
 				</thead>
-				<tr ng-repeat="match in matches.data.matches | orderBy: matches.table.sortColumn : matches.table.reverse | filter: matches.table.filter">
+				<tr class="text-center" ng-repeat="match in matches.data.matches | orderBy: matches.table.sortColumn : matches.table.reverse | filter: matches.table.filter">
 					<td>{{match.group}}</td>
 					<td class="text-center">{{match.datetime | date : 'MM.dd. H:mm'}}</td>
 					<td class="text-center">{{match.home.longName}} - {{match.away.longName}}</td>
-					<td class="text-center">{{match.result.home}} : {{match.result.away}}</td>
+					<td class="text-center">
+						<div ng-hide="matches.table.editResult == match.$id" ng-click="matches.table.editResult = match.$id">
+							<span ng-show="match.result.home">{{match.result.home}} : {{match.result.away}}</span>
+							<span class="glyphicon glyphicon-pencil"></span>
+						</div>
+						<form 
+							ng-if="matches.table.editResult == match.$id" 
+							name="resultForm" 
+							class="form-inline" 
+							ng-submit="matches.updateResult(match, matches.table.result[match.$id])">
+							<div class="form-group">
+								<input 
+									autofocus 
+									focus = "matches.table.editResult === match.$id"
+									size="3"
+									type="text" 
+									class="form-control"
+									ng-model="matches.table.result[match.$id]">
+								<a href ng-click="matches.table.editResult = false">Mégse</a>
+							</div>
+						</form>
+					</td>
 				</tr>
 			</table>
 		</div>
