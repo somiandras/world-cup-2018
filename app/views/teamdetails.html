@@ -1,0 +1,9 @@
+<div class="container">
+	<div class="row">
+		<div class="col-xs-6">
+			<a ui-sref="app.admin.teamList">Vissza</a>
+			<h4>{{team.current.longName}} <small>({{team.current.shortName}})</small></h4> 
+			<p ng-repeat="player in team.current.players">{{player}}</p>
+		</div>
+	</div>
+</div>

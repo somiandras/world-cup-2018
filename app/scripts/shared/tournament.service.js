@@ -214,9 +214,24 @@
 
 		}
 
+		function getTeam (shortName) {
+
+			return data.teams.$loaded()
+			.then((teams) => {
+
+				let found = teams.find((team) => {
+
+					return team.shortName == shortName;
+				})
+
+				return found;
+			})
+		}
+
 		return {
 			data: data,
 			addTeam: addTeam,
+			getTeam: getTeam,
 			removeTeam: removeTeam,
 			uploadMatches: uploadMatches,
 			saveMatch: saveMatch,

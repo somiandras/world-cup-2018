@@ -1,22 +1,31 @@
 <div class="container">
 	<div class="row">
+
+		<!-- TEAM LIST -->
+
 		<div class="col-xs-6" ng-hide="teams.addTeamForm || teams.teamHighlight">
 			<ul class="list-group">
 				<li class="list-group-item" ng-repeat = "team in teams.data.teams">
 				{{team.longName}} ({{team.shortName}})
 				<span class="list-edit-controls pull-right text-danger">
 
-					<a href ng-click="teams.showTeam(team)" title="Játékosok"><span class="glyphicon glyphicon-user"></span></a>&nbsp
+					<a href ui-sref="app.admin.teamDetails({team: team.shortName})" title="Játékosok"><span class="glyphicon glyphicon-user"></span></a>&nbsp
 					<a href ng-click="teams.removeTeam(team)" title="Törlés"><span class="glyphicon glyphicon-remove"></span></a>
 
 				</span>
 				</li>
 			</ul>
 		</div>
+
+		<!-- Empty state -->
 		<div class="col-xs-12">
 			<p ng-hide="teams.data.teams[0] || teams.addTeamForm">Nincs még csapat a listában.</p>
 			<a href ng-click="teams.addTeamForm = !teams.addTeamForm" ng-hide="teams.addTeamForm || teams.teamHighlight"><span class="glyphicon glyphicon-plus"></span> Csapat hozzáadása</a>
 		</div>
+
+
+		<!-- ADD TEAM FORM -->
+
 		<div class="col-xs-12" ng-show="teams.addTeamForm">
 			<form name="teamForm">
 				<h4>Csapat hozzáadása</h4>
@@ -82,11 +91,6 @@
 				<button class="btn btn-primary"  ng-click="teams.addTeam(teams.form); teams.reset(teamForm)" ng-disabled="teamForm.$invalid">Hozzáadás</button>
 				<button class="btn btn-default" ng-click="teams.addTeamForm = !teams.addTeamForm; teams.reset(teamForm)">Mégse</button>
 			</form>
-		</div>
-		<div class="col-xs-12" ng-show="teams.teamHighlight">
-			<a href ng-click="teams.teamHighlight = false">Vissza</a>
-			<h4>{{teams.teamHighlight.longName}} <small>({{teams.teamHighlight.shortName}})</small></h4> 
-			<p ng-repeat="player in teams.teamHighlight.players">{{player}}</p>
 		</div>
 	</div>
 </div>

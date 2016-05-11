@@ -19,12 +19,30 @@
 			templateUrl: 'views/admin.html',
 			controller: 'AdminController',
 			controllerAs: 'admin',
+			resolve: {
+				admin: (user) => {
+
+					// Return promise that resolves if user.admin === true
+				}
+			}
 		})
-		.state('app.admin.teams', {
+		.state('app.admin.teamList', {
 			url: '/teams',
 			templateUrl: 'views/teams.html',
 			controller: 'TeamsController',
 			controllerAs: 'teams'
+		})
+		.state('app.admin.teamDetails', {
+			url: '/teams/:team',
+			templateUrl: 'views/teamdetails.html',
+			controller: 'TeamDetailsController',
+			controllerAs: 'team',
+			resolve: {
+				team: (tournamentService, $stateParams) => {
+
+					return tournamentService.getTeam($stateParams.team);
+				},
+			}
 		})
 		.state('app.admin.matches', {
 			url: '/matches',
@@ -36,7 +54,13 @@
 			url: '/participants',
 			templateUrl: 'views/participants.html',
 			controller: 'ParticipantsController',
-			controllerAs: 'participants'
+			controllerAs: 'participants',
+			resolve: {
+				userList: (userService) => {
+					
+					return userService.gerUserList();
+				}
+			}
 		});
 	}
 
