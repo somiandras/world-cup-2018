@@ -30,7 +30,7 @@
 				let index = data.teams.$indexFor(id);
 
 				return data.teams[index];
-			})
+			});
 		}
 
 
@@ -40,7 +40,7 @@
 			.then((teams) => {
 
 				return teams.$remove(team);
-			})
+			});
 		}
 		
 
@@ -93,9 +93,9 @@
 
 			let date = new Date (string);
 
-			if (date == 'Invalid Date') {
+			if (date === 'Invalid Date') {
 
-				throw new Error ('Nem jó a dátumformátum')
+				throw new Error ('Nem jó a dátumformátum');
 			}
 
 			return date.getTime();
@@ -126,7 +126,7 @@
 
 			let matchObj = {};
 
-			if (matchArray.length == MATCH_FIELDS.length) {
+			if (matchArray.length === MATCH_FIELDS.length) {
 
 				matchArray.forEach((currentData, index) => {
 
@@ -134,13 +134,13 @@
 
 					matchObj[currentField] = currentData;
 
-				})
+				});
 
 				return matchObj;
 					
 			} else {
 
-				throw new Error ('Nem megfelelő az oszlopok száma')
+				throw new Error ('Nem megfelelő az oszlopok száma');
 			}
 		}
 
@@ -166,7 +166,7 @@
 
 					return false;
 				}
-			})
+			});
 		}
 
 
@@ -210,7 +210,7 @@
 				let index = matches.$indexFor(match.$id);
 
 				return matches.$save(index);
-			})
+			});
 
 		}
 

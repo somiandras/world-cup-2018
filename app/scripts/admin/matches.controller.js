@@ -24,7 +24,7 @@
 
 			form.$setPristine();
 			form.$setUntouched();
-		}
+		};
 
 
 		vm.upload = function (matches, replace, form) {
@@ -42,12 +42,12 @@
 
 				toastr.error(error.message);
 			})
-		}
+		};
 
 		vm.updateResult = function (match, result) {
 
 			tour.updateResult(match, result)			
-			.then((resp) => {
+			.then(() => {
 
 				if (result) {
 
@@ -65,7 +65,7 @@
 
 				toastr.error(error.message);
 			});
-		}
+		};
 	}
 
 })();

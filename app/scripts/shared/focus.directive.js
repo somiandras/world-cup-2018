@@ -4,20 +4,20 @@
 
 	angular
 		.module('appCore')
-		.directive('focus', focus)
+		.directive('ebFocus', ebFocus);
 
-	focus.$inject = ['$timeout']
+	ebFocus.$inject = ['$timeout'];
 
-	function focus ($timeout) {
+	function ebFocus ($timeout) {
 
 		return {
 			restrict: 'A',
 			link: link
-		}
+		};
 
 		function link (scope, element, attr) {
 
-			scope.$watch(attr.focus, (value) => {
+			scope.$watch(attr.ebFocus, (value) => {
 
 				if (value) {
 
@@ -28,13 +28,13 @@
 						element[0].selectionStart = 0;
 						element[0].selectionEnd = element[0].value.length;
 
-					}, 0)
+					}, 0);
 
 				} else {
 
 					element[0].blur();
 				}
-			})
+			});
 		}
 	}
 

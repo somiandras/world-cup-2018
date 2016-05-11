@@ -33,7 +33,7 @@
 
 				toastr.error(error.message);
 			});
-		}
+		};
 
 
 		vm.removeTeam = function (team) {
@@ -47,13 +47,13 @@
 
 				toastr.error(error.message);
 			});
-		}
+		};
 
 
 		vm.showTeam = function (team) {
 
 			vm.teamHighlight = team;
-		}
+		};
 
 
 		vm.reset = function (form) {
@@ -63,7 +63,7 @@
 			form.$setPristine();
 			form.$setUntouched();
 
-		}
+		};
 	}
 
 })();
