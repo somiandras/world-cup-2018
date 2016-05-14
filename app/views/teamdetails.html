@@ -1,6 +1,6 @@
 <div class="container">
 	<div class="row">
-		<div class="col-xs-6" style="overflow: auto">
+		<div class="col-xs-12 col-sm-6" style="overflow: auto">
 			<a ui-sref="app.admin.teamList">Vissza</a>
 			<h4>{{team.current.longName}} <small>({{team.current.shortName}})</small></h4> 
 			<p class="player" ng-repeat="player in team.current.players track by $index">{{player}} <a href ng-click="team.removePlayer(team.current, $index)"><span class="glyphicon glyphicon-remove"></span></a></p>
@@ -8,7 +8,7 @@
 
 		<!-- ADD TEAM FORM -->
 
-		<div class="col-xs-6">
+		<div class="col-xs-12 col-sm-6">
 			<form name="playerForm">
 				<h4>Játékosok hozzáadása</h4>
 				<div class="form-group">

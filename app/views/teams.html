@@ -5,11 +5,12 @@
 
 		<div class="col-xs-6" ng-hide="teams.addTeamForm">
 			<ul class="list-group">
-				<li class="list-group-item" ng-repeat = "team in teams.data.teams">
+				<li class="list-group-item" ng-repeat = "team in teams.data.teams | orderBy: 'shortName'">
+				<span class="flag-icon" ng-class="{'flag-icon-{{team.ISO}}': true}"></span>
 				{{team.longName}} ({{team.shortName}})
 				<span class="list-edit-controls pull-right text-danger">
 
-					<a href ui-sref="app.admin.teamDetails({team: team.shortName})" title="Játékosok"><span class="glyphicon glyphicon-user"></span>&nbspJátékosok szerkesztése</a>&nbsp
+					<a href ui-sref="app.admin.teamDetails({team: team.shortName})" title="Játékosok"><span class="glyphicon glyphicon-user"></span>&nbspJátékosok</a>
 				</span>
 				</li>
 			</ul>
