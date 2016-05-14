@@ -3,94 +3,16 @@
 
 		<!-- TEAM LIST -->
 
-		<div class="col-xs-6" ng-hide="teams.addTeamForm || teams.teamHighlight">
+		<div class="col-xs-6" ng-hide="teams.addTeamForm">
 			<ul class="list-group">
 				<li class="list-group-item" ng-repeat = "team in teams.data.teams">
 				{{team.longName}} ({{team.shortName}})
 				<span class="list-edit-controls pull-right text-danger">
 
-					<a href ui-sref="app.admin.teamDetails({team: team.shortName})" title="Játékosok"><span class="glyphicon glyphicon-user"></span></a>&nbsp
-					<a href ng-click="teams.removeTeam(team)" title="Törlés"><span class="glyphicon glyphicon-remove"></span></a>
-
+					<a href ui-sref="app.admin.teamDetails({team: team.shortName})" title="Játékosok"><span class="glyphicon glyphicon-user"></span>&nbspJátékosok szerkesztése</a>&nbsp
 				</span>
 				</li>
 			</ul>
-		</div>
-
-		<!-- Empty state -->
-		<div class="col-xs-12">
-			<p ng-hide="teams.data.teams[0] || teams.addTeamForm">Nincs még csapat a listában.</p>
-			<a href ng-click="teams.addTeamForm = !teams.addTeamForm" ng-hide="teams.addTeamForm || teams.teamHighlight"><span class="glyphicon glyphicon-plus"></span> Csapat hozzáadása</a>
-		</div>
-
-
-		<!-- ADD TEAM FORM -->
-
-		<div class="col-xs-12" ng-show="teams.addTeamForm">
-			<form name="teamForm">
-				<h4>Csapat hozzáadása</h4>
-				<div class="form-group" ng-class="{'has-error': teamForm.shortName.$invalid && teamForm.shortName.$touched}">
-
-				<!-- Short name -->
-					<label>Csapat jele:</label>
-					<input 
-						required
-						duplicate
-						maxlength = "3"
-						minlength= "3" 
-						name="shortName" 
-						class="form-control" 
-						type="text" 
-						ng-model="teams.form.shortName" 
-						pattern="[A-Z]{3}" 
-						placeholder="A csapat hárombetűs rövidítése" 
-						ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 300, 'blur': 0 } }">
-
-					<div 
-						ng-messages="teamForm.shortName.$error" 
-						ng-show="teamForm.shortName.$touched && teamForm.shortName.$invalid">
-
-						<p class="help-block" ng-message="pattern">3 nagybetűnek kell lennie, pl. GER, FRA, ITA</p>
-						<p class="help-block" ng-message="required">Kötelező kitölteni</p>
-						<p class="help-block" ng-message="duplicate">Ilyen csapat már szerepel</p>
-					</div>
-				</div>
-
-				<!-- Long name -->
-				<div class="form-group" ng-class="{'has-error': teamForm.longName.$invalid && teamForm.longName.$touched}">
-					<label>Csapat teljes neve:</label>
-					<input 
-						required
-						duplicate
-						name="longName" 
-						class="form-control" 
-						type="text" 
-						ng-model="teams.form.longName" 
-						placeholder="A csapat teljes neve" 
-						ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 300, 'blur': 0 } }">
-
-					<div ng-messages="teamForm.longName.$error" ng-show="teamForm.longName.$touched && teamForm.longName.$invalid">
-						<p class="help-block" ng-message="required">Kötelező kitölteni</p>
-						<p class="help-block" ng-message="duplicate">Ilyen csapat már szerepel</p>
-					</div>
-				</div>
-
-				<!-- Players -->
-				<div class="form-group">
-					<label>Játékosok</label>
-					<textarea 
-						class="form-control" 
-						id="" 
-						cols="30" 
-						rows="10" 
-						ng-model="teams.form.players"
-						placeholder="Ide jöhet a játékosok listája"></textarea>
-					<div class="help-block">Vesszővel elválasztva a játékosok nevei.</div>
-				</div>
-
-				<button class="btn btn-primary"  ng-click="teams.addTeam(teams.form); teams.reset(teamForm)" ng-disabled="teamForm.$invalid">Hozzáadás</button>
-				<button class="btn btn-default" ng-click="teams.addTeamForm = !teams.addTeamForm; teams.reset(teamForm)">Mégse</button>
-			</form>
 		</div>
 	</div>
 </div>

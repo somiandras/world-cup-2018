@@ -6,13 +6,13 @@
 }
 
 
-.list-group-item > .list-edit-controls {
+.list-group-item > .list-edit-controls, .player .glyphicon-remove {
   display: none;
+
 }
 
-
-.list-group-item:hover > .list-edit-controls {
-  display: inline;
+.list-group-item:hover > .list-edit-controls, .player:hover .glyphicon-remove {
+  display: inline-block;
 }
 
 

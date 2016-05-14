@@ -34,6 +34,20 @@
 		}
 
 
+		function saveTeam (team) {
+
+			return data.teams.$loaded()
+			.then((teams) => {
+
+				let index = teams.$indexFor(team.$id);
+
+				teams[index] = team;
+
+				return teams.$save(index);
+			})
+		}
+
+
 		function removeTeam (team) {
 
 			return data.teams.$loaded()
@@ -151,7 +165,7 @@
 
 		function decomposeMatchData (string) {
 
-			return string.split(',');
+			return string.split(';');
 		}
 
 		function lookUpTeamName (name) {
@@ -232,6 +246,7 @@
 			data: data,
 			addTeam: addTeam,
 			getTeam: getTeam,
+			saveTeam: saveTeam,
 			removeTeam: removeTeam,
 			uploadMatches: uploadMatches,
 			saveMatch: saveMatch,

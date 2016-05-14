@@ -1,9 +1,9 @@
 <div class="container">
 	<ul class="nav nav-pills">
-	  <li role="presentation" ng-class="{'active': admin.state.current.name == 'app.admin.teamList' || admin.state.current.name == 'app.admin.teamDetails'  }">
-	  	<a ui-sref="app.admin.teamList">Csapatok</a></li>
 	  <li role="presentation" ng-class="{'active': admin.state.current.name == 'app.admin.matches'}">
 	  	<a ui-sref="app.admin.matches">Meccsek</a></li>
+	  <li role="presentation" ng-class="{'active': admin.state.current.name == 'app.admin.teamList' || admin.state.current.name == 'app.admin.teamDetails'  }">
+	  	<a ui-sref="app.admin.teamList">Csapatok</a></li>
 	  <li role="presentation" ng-class="{'active': admin.state.current.name == 'app.admin.participants'}">
 	  	<a ui-sref="app.admin.participants">Résztvevők</a></li>
 	</ul>
