@@ -58,7 +58,7 @@
 		}
 		
 
-		function uploadMatches (string, replace) {
+		function uploadMatches (string) {
 
 			let matchlist = decomposeMatches(string);
 			let newList;
@@ -84,13 +84,6 @@
 			return data.matches.$loaded()
 			.then((matches) => {
 
-				if (replace) {
-
-					matches.forEach((match) => {
-
-						matches.$remove(match);
-					});
-				}
 
 				newList.forEach((newMatch) => {
 

@@ -27,9 +27,9 @@
 		};
 
 
-		vm.upload = function (matches, replace, form) {
+		vm.upload = function (matches, form) {
 
-			tour.uploadMatches(matches, replace)
+			tour.uploadMatches(matches)
 			.then((matches) => {
 
 				if (matches) {
