@@ -13,7 +13,6 @@
 		vm.userService = userService;
 		vm.user = user;
 
-		console.log(typeof user.admin);
 	}
 
 })();

@@ -1,3 +1,7 @@
 <div class="container">
-	Résztvevők
+	<div ng-repeat="user in participants.players">
+		{{user.email}}&nbsp 
+		<a href ng-click="participants.makeUserAdmin(user)" ng-hide="user.admin">Adminná teszem</a>
+		<small ng-show="user.admin">(Admin)</small>
+	</div>
 </div>

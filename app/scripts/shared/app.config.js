@@ -54,10 +54,6 @@
 					.then((data) => {
 
 						return userService.getUser(data.uid);
-					})
-					.catch((error) => {
-
-						console.error(error);
 					});
 				}
 			}
@@ -86,6 +82,10 @@
 		 	if (error === "AUTH_REQUIRED") {
 
 				$state.go("login");
+				
+		  	} else {
+
+		  		toastr.error(error);
 		  	}
 		});
 	}

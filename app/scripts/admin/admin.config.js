@@ -20,9 +20,16 @@
 			controller: 'AdminController',
 			controllerAs: 'admin',
 			resolve: {
-				admin: (user) => {
+				admin: ($q, user) => {
 
-					// Return promise that resolves if user.admin === true
+					if (user.admin) {
+
+						return $q.resolve(true);
+
+					} else {
+
+						return $q.reject('Nincs admin jogod!');
+					}
 				}
 			}
 		})
@@ -57,8 +64,8 @@
 			controllerAs: 'participants',
 			resolve: {
 				userList: (userService) => {
-					
-					return userService.gerUserList();
+
+					return userService.getUserList();
 				}
 			}
 		});

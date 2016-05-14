@@ -42,6 +42,13 @@
 			});
 		}
 
+		function getUserList () {
+
+			let users = $firebaseArray($firebaseRef.users);
+
+			return users.$loaded();
+		}
+
 
 		function login (credentials) {
 
@@ -91,11 +98,26 @@
 		}
 
 
+		function saveUser (user) {
+
+			let users = $firebaseObject($firebaseRef.users);
+
+			return users.$loaded()
+			.then((userRef) => {
+
+				userRef[user.$id] = user;
+
+				return users.$save();
+			})
+		}
+
 		return {
 			login: login,
 			logout: logout,
 			register: register,
-			getUser: getUser
+			getUser: getUser,
+			saveUser: saveUser,
+			getUserList: getUserList
 		};
 	}
 
