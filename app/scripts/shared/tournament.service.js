@@ -12,6 +12,7 @@
 
 		data.teams = $firebaseArray($firebaseRef.teams);
 		data.matches = $firebaseArray($firebaseRef.matches);
+		data.players = $firebaseArray($firebaseRef.players);
 
 		const MATCH_FIELDS = ['group', 'datetime', 'home', 'away'];
 
@@ -31,6 +32,38 @@
 
 				return data.teams[index];
 			});
+		}
+
+		function addPlayers (newPlayers, team) {
+
+			return data.players.$loaded()
+			.then((players) => {
+
+				let promises = [];
+
+				newPlayers.forEach((newPlayer) => {
+					
+					if (newPlayer.length) {
+
+						let playerToAdd = {};
+						playerToAdd.name = newPlayer;
+						playerToAdd.team = team.shortName;
+
+						promises.push(players.$add(playerToAdd));
+					}
+				})
+
+				return $q.all(promises);
+			})
+		}
+
+		function removePlayer (playerToRemove) {
+
+			return data.players.$loaded()
+			.then((players) => {
+
+				return players.$remove(playerToRemove);
+			})
 		}
 
 
@@ -238,6 +271,8 @@
 		return {
 			data: data,
 			addTeam: addTeam,
+			addPlayers: addPlayers,
+			removePlayer: removePlayer,
 			getTeam: getTeam,
 			saveTeam: saveTeam,
 			removeTeam: removeTeam,

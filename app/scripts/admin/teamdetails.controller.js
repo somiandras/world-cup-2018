@@ -14,22 +14,18 @@
 
 		vm.current = team;
 
-		vm.addPlayersForm = false;
-
+		vm.data = tour.data;
 
 
 		vm.addPlayers = function (team, players) {
 
 			let playerArray = players.trim().split(',')
 
-			team.players = team.players || [];
-
-			team.players = team.players.concat(playerArray);
-
-			tour.saveTeam(team)
+			tour.addPlayers(playerArray, team)
 			.then((resp) => {
 
-				toastr.success('Játékosok hozzáadva');
+				toastr.success(team.longName + ': ' + resp.length + ' játékos hozzáadva');
+
 			})
 			.catch((error) => {
 
@@ -38,16 +34,13 @@
 		}
 
 
-		vm.removePlayer = function (team, playerIndex) {
+		vm.removePlayer = function (player) {
 
-			team.players = team.players || [];
-
-			let deletedPlayer = team.players.splice(playerIndex, 1);
-
-			tour.saveTeam(team)
+			tour.removePlayer(player)
 			.then((resp) => {
 
-				toastr.success(deletedPlayer[0] + ' törölve');
+				toastr.success(player.name + ' eltávolítva');
+
 			})
 			.catch((error) => {
 

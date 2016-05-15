@@ -4,7 +4,7 @@
 			<a ui-sref="app.admin.teamList">Vissza</a>
 			<h4><span class="flag-icon" ng-class="{'flag-icon-{{team.current.ISO}}': true}"></span>
 			{{team.current.longName}} <small>({{team.current.shortName}})</small></h4> 
-			<p class="player" ng-repeat="player in team.current.players track by $index">{{player}} <a href ng-click="team.removePlayer(team.current, $index)"><span class="glyphicon glyphicon-remove"></span></a></p>
+			<p class="player" ng-repeat="player in team.data.players track by $index">{{player.name}} <a href ng-click="team.removePlayer(player)"><span class="glyphicon glyphicon-remove"></span></a></p>
 		</div>
 
 		<!-- ADD TEAM FORM -->

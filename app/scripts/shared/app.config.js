@@ -21,7 +21,8 @@
 			users: FB_URL + 'users',
 			tournament: FB_URL + 'tournament',
 			teams: FB_URL + 'tournament/teams',
-			matches: FB_URL + 'tournament/matches'
+			matches: FB_URL + 'tournament/matches',
+			players: FB_URL + 'tournament/players'
 		});
 	}
 
