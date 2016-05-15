@@ -8,7 +8,7 @@
 				</div>
 				<div class="form-group col-xs-6">
 					<label>Gólkirály</label>
-					<input type="text" class="form-control" uib-typeahead="player as players.player for team.players in bets.tour.data.teams | filter: {longName: $viewValue}" ng-model="bets.form.topScorer">
+					<input type="text" class="form-control" uib-typeahead="player as player.name for player in bets.tour.data.players | filter: {name: $viewValue}" ng-model="bets.form.topScorer">
 				</div>
 			</form>
 		</div>
