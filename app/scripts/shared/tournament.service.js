@@ -17,6 +17,21 @@
 		const MATCH_FIELDS = ['group', 'datetime', 'home', 'away'];
 
 
+		return {
+			data: data,
+			addTeam: addTeam,
+			getTeam: getTeam,
+			saveTeam: saveTeam,
+			removeTeam: removeTeam,
+			addPlayers: addPlayers,
+			removePlayer: removePlayer,
+			uploadMatches: uploadMatches,
+			saveMatch: saveMatch,
+			updateResult: updateResult
+		};
+
+		// TEAM METHODS
+
 
 		function addTeam (newTeam) {
 
@@ -34,35 +49,18 @@
 			});
 		}
 
-		function addPlayers (newPlayers, team) {
 
-			return data.players.$loaded()
-			.then((players) => {
+		function getTeam (shortName) {
 
-				let promises = [];
+			return data.teams.$loaded()
+			.then((teams) => {
 
-				newPlayers.forEach((newPlayer) => {
-					
-					if (newPlayer.length) {
+				let found = teams.find((team) => {
 
-						let playerToAdd = {};
-						playerToAdd.name = newPlayer;
-						playerToAdd.team = team.shortName;
-
-						promises.push(players.$add(playerToAdd));
-					}
+					return team.shortName == shortName;
 				})
 
-				return $q.all(promises);
-			})
-		}
-
-		function removePlayer (playerToRemove) {
-
-			return data.players.$loaded()
-			.then((players) => {
-
-				return players.$remove(playerToRemove);
+				return found;
 			})
 		}
 
@@ -89,7 +87,47 @@
 				return teams.$remove(team);
 			});
 		}
+
+
+		// PLAYER METHODS
 		
+
+		function addPlayers (newPlayers, team) {
+
+			return data.players.$loaded()
+			.then((players) => {
+
+				let promises = [];
+
+				newPlayers.forEach((newPlayer) => {
+					
+					if (newPlayer.length) {
+
+						let playerToAdd = {};
+						playerToAdd.name = newPlayer;
+						playerToAdd.team = team.shortName;
+
+						promises.push(players.$add(playerToAdd));
+					}
+				})
+
+				return $q.all(promises);
+			})
+		}
+
+
+		function removePlayer (playerToRemove) {
+
+			return data.players.$loaded()
+			.then((players) => {
+
+				return players.$remove(playerToRemove);
+			})
+		}
+
+
+		// MATCH METHODS
+
 
 		function uploadMatches (string) {
 
@@ -127,6 +165,55 @@
 				return matches;
 			});
 		}
+
+
+		function saveMatch (match) {
+
+			return data.matches.$loaded()
+			.then((matches) => {
+
+				let index = matches.$indexFor(match.$id);
+
+				return matches.$save(index);
+			});
+
+		}
+
+
+		function updateResult (match, result) {
+
+			let regexp = new RegExp('^[0-9].*[0-9]$');
+			
+			match.result = {};
+
+			if (result) {
+
+				result = result.trim();
+			}
+
+			if (regexp.test(result)) {
+
+				result = result.split("");
+				match.result.home = result[0];
+				match.result.away = result[result.length-1];
+
+				return saveMatch(match);
+
+			} else if (result) {
+
+				let error = new Error('Az eredmény első és utolsó karaktere szám kell legyen');
+
+				return $q.reject(error);
+
+			} else {
+
+				return saveMatch(match);
+			}
+		}
+
+
+		// HELPER FUNCTIONS
+
 
 
 		function parseDate (string) {
@@ -208,78 +295,6 @@
 				}
 			});
 		}
-
-
-		function updateResult (match, result) {
-
-			let regexp = new RegExp('^[0-9].*[0-9]$');
-			
-			match.result = {};
-
-			if (result) {
-
-				result = result.trim();
-			}
-
-			if (regexp.test(result)) {
-
-				result = result.split("");
-				match.result.home = result[0];
-				match.result.away = result[result.length-1];
-
-				return saveMatch(match);
-
-			} else if (result) {
-
-				let error = new Error('Az eredmény első és utolsó karaktere szám kell legyen');
-
-				return $q.reject(error);
-
-			} else {
-
-				return saveMatch(match);
-			}
-		}
-
-
-		function saveMatch (match) {
-
-			return data.matches.$loaded()
-			.then((matches) => {
-
-				let index = matches.$indexFor(match.$id);
-
-				return matches.$save(index);
-			});
-
-		}
-
-		function getTeam (shortName) {
-
-			return data.teams.$loaded()
-			.then((teams) => {
-
-				let found = teams.find((team) => {
-
-					return team.shortName == shortName;
-				})
-
-				return found;
-			})
-		}
-
-		return {
-			data: data,
-			addTeam: addTeam,
-			addPlayers: addPlayers,
-			removePlayer: removePlayer,
-			getTeam: getTeam,
-			saveTeam: saveTeam,
-			removeTeam: removeTeam,
-			uploadMatches: uploadMatches,
-			saveMatch: saveMatch,
-			updateResult: updateResult
-		};
 	}
-
+	
 })();
