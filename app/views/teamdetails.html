@@ -1,8 +1,9 @@
 <div class="container">
 	<div class="row">
-		<div class="col-xs-12 col-sm-6" style="overflow: auto">
+		<div class="col-xs-12 col-sm-6" style="overflow: scroll, white-space: nowrap">
 			<a ui-sref="app.admin.teamList">Vissza</a>
-			<h4>{{team.current.longName}} <small>({{team.current.shortName}})</small></h4> 
+			<h4><span class="flag-icon" ng-class="{'flag-icon-{{team.current.ISO}}': true}"></span>
+			{{team.current.longName}} <small>({{team.current.shortName}})</small></h4> 
 			<p class="player" ng-repeat="player in team.current.players track by $index">{{player}} <a href ng-click="team.removePlayer(team.current, $index)"><span class="glyphicon glyphicon-remove"></span></a></p>
 		</div>
 

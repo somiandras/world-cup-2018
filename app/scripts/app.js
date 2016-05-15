@@ -14,7 +14,7 @@
 
 	angular.module('appCore',['ngMessages','ngResource','ngSanitize', 'ui.router', 'firebase']);  
 
-	angular.module('myBets', []);
+	angular.module('myBets', ['ui.bootstrap']);
 
 	angular.module('user', []);
 
