@@ -16,9 +16,9 @@
       <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
         <ul class="nav navbar-nav">
-          <li><a ui-sref="app.dashboard">Főoldal</a></li>
-          <li><a ui-sref="app.myBets">Tippjeim</a></li>
-          <li ng-show="navigation.user.admin"><a ui-sref="app.admin.matches">Admin</a></li>
+          <li ng-class="{'active': navigation.state.is('app.dashboard')}""><a ui-sref="app.dashboard">Főoldal</a></li>
+          <li ng-class="{'active': navigation.state.is('app.myBets')}""><a ui-sref="app.myBets">Tippjeim</a></li>
+          <li ng-show="navigation.user.admin" ng-class="{'active': navigation.state.includes('app.admin')}""><a ui-sref="app.admin.matches">Admin</a></li>
         </ul>
 
         <div class="navbar-right">
@@ -34,7 +34,6 @@
             <button class="btn btn-primary" ng-click="navigation.userService.logout()">Kijelentkezés</button>            
           </form>
         </div>
-
       </div>
     </div>
   </div>
