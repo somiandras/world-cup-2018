@@ -42,6 +42,7 @@
 			});
 		}
 
+
 		function getUserList () {
 
 			let users = $firebaseArray($firebaseRef.users);
@@ -55,7 +56,7 @@
 			auth.$authWithPassword(credentials)
 			.catch((error) => {
 
-				console.error(error);
+				toastr.error(error);
 			});
 		}
 
@@ -82,7 +83,8 @@
 				users[data.uid] = {
 					email: credentials.email,
 					createdAt: date.getTime(),
-					admin: false
+					admin: false,
+					uid: data.uid,
 				};
 
 				return users.$save();
@@ -110,6 +112,7 @@
 				return users.$save();
 			})
 		}
+
 
 		return {
 			login: login,
