@@ -215,7 +215,6 @@
 		// HELPER FUNCTIONS
 
 
-
 		function parseDate (string) {
 
 			let date = new Date (string);
@@ -296,5 +295,5 @@
 			});
 		}
 	}
-	
+
 })();

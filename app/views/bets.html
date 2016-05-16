@@ -1,16 +1,52 @@
 <div class="container">
+
+	<!-- Winner form -->
+	<div class="jumbotron">
+		<div class="row">
+			<div class="col-xs-12">
+				<form class="" name="winnerForm">
+					<div class="form-group col-xs-12">
+						<h1>Győztes és gólkirály</h1>
+					</div>
+					<div class="form-group col-xs-12 col-sm-6">
+						<input 
+							type="text" 
+							class="form-control input-lg" 
+							uib-typeahead="team as team.longName for team in bets.tour.data.teams | filter: {longName: $viewValue}" 
+							ng-model="bets.form.winner"
+							placeholder="Győztes">
+					</div>
+					<div class="form-group col-xs-12 col-sm-6">
+						<input 
+							type="text" 
+							class="form-control input-lg" 
+							uib-typeahead="player as player.name for player in bets.tour.data.players | filter: {name: $viewValue}" 
+							ng-model="bets.form.topScorer"
+							placeholder="Gólkirály">
+					</div>
+					<div class="form-group col-xs-12 col-sm-12">
+						<p class="help-block">Ezeket a tippeket az első meccs kezdetéig adhatod le, illetve addig módosíthatod.</p>
+					</div>
+					<div class="form-group col-xs-12 col-sm-12">
+						<span class="pull-right">
+							<button type="reset" class="btn btn-lg btn-default">Mégse</button>
+							<button type="submit" class="btn btn-lg btn-primary">Mentés</button>
+						</span>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
 	<div class="row">
 		<div class="col-xs-12">
-			<form name="winnerForm">
-				<div class="form-group col-xs-6">
-					<label>Végső győztes</label>
-					<input type="text" class="form-control" uib-typeahead="team as team.longName for team in bets.tour.data.teams | filter: {longName: $viewValue}" ng-model="bets.form.winner">
-				</div>
-				<div class="form-group col-xs-6">
-					<label>Gólkirály</label>
-					<input type="text" class="form-control" uib-typeahead="player as player.name for player in bets.tour.data.players | filter: {name: $viewValue}" ng-model="bets.form.topScorer">
-				</div>
-			</form>
+			<h1>Csoportmeccsek</h1>
+			<h4><small>Ezeket a tippeket a meccs kezdéséig módosíthatod</small></h4>
+		</div>
+		<div class="col-xs-12">
+			<h5>Dátum, idő</h5>
+			<h2>Hazai csapat - Vendég csapat</h2>
+			<hr>
 		</div>
 	</div>
 </div>
