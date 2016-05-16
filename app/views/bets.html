@@ -1,10 +1,11 @@
 <div class="container">
 
 	<!-- Winner form -->
+
 	<div class="jumbotron">
 		<div class="row">
 			<div class="col-xs-12">
-				<form class="" name="winnerForm">
+				<form class="" name="topForm" ng-submit="bets.addWinner(bets.winnerForm)">
 					<div class="form-group col-xs-12">
 						<h1>Győztes és gólkirály</h1>
 					</div>
@@ -13,7 +14,7 @@
 							type="text" 
 							class="form-control input-lg" 
 							uib-typeahead="team as team.longName for team in bets.data.teams | filter: {longName: $viewValue}" 
-							ng-model="bets.form.winner"
+							ng-model="bets.winnerForm.winner"
 							placeholder="Győztes">
 					</div>
 					<div class="form-group col-xs-12 col-sm-6">
@@ -21,11 +22,11 @@
 							type="text" 
 							class="form-control input-lg" 
 							uib-typeahead="player as player.name for player in bets.data.players | filter: {name: $viewValue}" 
-							ng-model="bets.form.topScorer"
+							ng-model="bets.winnerForm.topScorer"
 							placeholder="Gólkirály">
 					</div>
 					<div class="form-group col-xs-12 col-sm-12">
-						<p class="help-block">Ezeket a tippeket az első meccs kezdetéig adhatod le, illetve addig módosíthatod.</p>
+						<p class="help-block">Nem kötelező megadnod most mindkettőt. Ezeket a tippeket az első meccs kezdetéig módosíthatod.</p>
 					</div>
 					<div class="form-group col-xs-12 col-sm-12">
 						<span class="pull-right">
@@ -37,6 +38,23 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Winner bet -->
+	
+	<div class="row">
+		<div class="col-xs-12 well">
+			<strong>Favoritjaim:</strong>
+			<span>
+				<span class="flag-icon" ng-class="{'flag-icon-hu': true}"></span> <strong>Magyarország</strong> lesz az Európa-bajnok, és
+			</span>
+			<span>
+				<span class="flag-icon" ng-class="{'flag-icon-hu': true}"></span> <strong>Böde Dániel</strong> lesz a gólkirály.
+			</span>
+			<a href class="pull-right">Módosítom</a>
+		</div>
+	</div>
+
+	<!-- Match bets -->
 
 	<div class="row">
 		<div class="col-xs-12">
@@ -50,6 +68,7 @@
 				<span class="flag-icon" ng-class="{'flag-icon-{{match.away.ISO}}': true}"></span>
 				<span class="pull-right">0-0</span>
 			</h2>
+			<h3>Eredmény: 2-1 <span class="pull-right">0 pont</span></h3>
 		</div>
 	</div>
 </div>
