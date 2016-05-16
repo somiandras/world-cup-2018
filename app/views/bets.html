@@ -12,7 +12,7 @@
 						<input 
 							type="text" 
 							class="form-control input-lg" 
-							uib-typeahead="team as team.longName for team in bets.tour.data.teams | filter: {longName: $viewValue}" 
+							uib-typeahead="team as team.longName for team in bets.data.teams | filter: {longName: $viewValue}" 
 							ng-model="bets.form.winner"
 							placeholder="Győztes">
 					</div>
@@ -20,7 +20,7 @@
 						<input 
 							type="text" 
 							class="form-control input-lg" 
-							uib-typeahead="player as player.name for player in bets.tour.data.players | filter: {name: $viewValue}" 
+							uib-typeahead="player as player.name for player in bets.data.players | filter: {name: $viewValue}" 
 							ng-model="bets.form.topScorer"
 							placeholder="Gólkirály">
 					</div>
@@ -41,12 +41,15 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<h1>Csoportmeccsek</h1>
-			<h4><small>Ezeket a tippeket a meccs kezdéséig módosíthatod</small></h4>
+			<h4><small>Ezeket a tippeket a meccs kezdéséig még módosíthatod</small></h4>
 		</div>
-		<div class="col-xs-12">
-			<h5>Dátum, idő</h5>
-			<h2>Hazai csapat - Vendég csapat</h2>
-			<hr>
+		<div class="col-xs-12 match-block" ng-repeat="match in bets.data.matches | orderBy: 'datetime'">
+			<h5>{{match.datetime | date: 'MM.dd. H:mm'}}</h5>
+			<h2>
+				<span class="flag-icon" ng-class="{'flag-icon-{{match.home.ISO}}': true}"></span>&nbsp{{match.home.longName}} - {{match.away.longName}}
+				<span class="flag-icon" ng-class="{'flag-icon-{{match.away.ISO}}': true}"></span>
+				<span class="pull-right">0-0</span>
+			</h2>
 		</div>
 	</div>
 </div>

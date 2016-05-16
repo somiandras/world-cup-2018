@@ -10,8 +10,11 @@
 	function BetsController (tournamentService) {
 
 		let vm = this;
-		vm.tour = tournamentService;
-	
+		let tour = tournamentService;
+		
+		vm.now = new Date();
+		vm.data = tour.data;
+
 				
 	}
 	

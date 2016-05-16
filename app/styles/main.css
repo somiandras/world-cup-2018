@@ -24,6 +24,17 @@ tr:hover .glyphicon-pencil {
   display: inline;
 }
 
+.flag-icon {
+  border: 1px solid #eee;
+}
+
+.match-block {
+
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+}
+
 
 /* Login & Register */
 
