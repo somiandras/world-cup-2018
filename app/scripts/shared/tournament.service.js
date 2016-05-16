@@ -104,7 +104,7 @@
 					if (newPlayer.length) {
 
 						let playerToAdd = {};
-						playerToAdd.name = newPlayer;
+						playerToAdd.name = newPlayer.trim();
 						playerToAdd.team = team.$id;
 
 						promises.push(players.$add(playerToAdd));

@@ -107,7 +107,7 @@
 			return users.$loaded()
 			.then((userRef) => {
 
-				userRef[user.$id] = user;
+				userRef[user.uid] = user;
 
 				return users.$save();
 			})

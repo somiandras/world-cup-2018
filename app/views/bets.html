@@ -2,36 +2,52 @@
 
 	<!-- Winner form -->
 
-	<div class="jumbotron">
+	<div class="jumbotron" ng-show = "bets.showTopForm">
 		<div class="row">
 			<div class="col-xs-12">
-				<form class="" name="topForm" ng-submit="bets.addWinner(bets.winnerForm)">
+				<form class="" name="topForm" ng-submit="bets.addWinnerAndScorer(bets.topForm)" autocomplete="off">
 					<div class="form-group col-xs-12">
 						<h1>Győztes és gólkirály</h1>
 					</div>
-					<div class="form-group col-xs-12 col-sm-6">
-						<input 
+					<div class="form-group col-xs-12 col-sm-6" ng-class="{'has-error': topForm.winner.$invalid && topForm.winner.$touched}">
+						<input
+							required
+							name="winner"
+							list-to-validate = "teams" 
 							type="text" 
 							class="form-control input-lg" 
 							uib-typeahead="team as team.longName for team in bets.data.teams | filter: {longName: $viewValue}" 
-							ng-model="bets.winnerForm.winner"
-							placeholder="Győztes">
+							ng-model="bets.topForm.winner"
+							placeholder="Győztes"
+							ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 300, 'blur': 0 } }">
+						<div ng-messages = "topForm.winner.$error" ng-if="topForm.winner.$touched">
+							<p class="help-block" ng-message="required">Ne felejtsd el megadni a győztest</p>
+							<p class="help-block" ng-message="listToValidate">Nincs ilyen csapat az adatbázisban</p>
+						</div>
 					</div>
-					<div class="form-group col-xs-12 col-sm-6">
+					<div class="form-group col-xs-12 col-sm-6" ng-class="{'has-error': topForm.scorer.$invalid && topForm.scorer.$touched}">
 						<input 
+							required
+							name="scorer"
+							list-to-validate = "players"
 							type="text" 
 							class="form-control input-lg" 
 							uib-typeahead="player as player.name for player in bets.data.players | filter: {name: $viewValue}" 
-							ng-model="bets.winnerForm.topScorer"
-							placeholder="Gólkirály">
+							ng-model="bets.topForm.topScorer"
+							placeholder="Gólkirály"
+							ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 300, 'blur': 0 } }">
+						<div ng-messages = "topForm.scorer.$error" ng-if="topForm.scorer.$touched">
+							<p class="help-block" ng-message="required">Ne felejtsd el megadni a gólkirályt</p>
+							<p class="help-block" ng-message="listToValidate">Nincs ilyen játékos az adatbázisban</p>
+						</div>
 					</div>
 					<div class="form-group col-xs-12 col-sm-12">
-						<p class="help-block">Nem kötelező megadnod most mindkettőt. Ezeket a tippeket az első meccs kezdetéig módosíthatod.</p>
+						<p class="help-block">Ezeket a tippeket az első meccs kezdetéig még akármikor módosíthatod.</p>
 					</div>
 					<div class="form-group col-xs-12 col-sm-12">
 						<span class="pull-right">
-							<button type="reset" class="btn btn-lg btn-default">Mégse</button>
-							<button type="submit" class="btn btn-lg btn-primary">Mentés</button>
+							<button type="reset" class="btn btn-lg btn-default" ng-click = "bets.showTopForm = false">Mégse</button>
+							<button type="submit" class="btn btn-lg btn-primary" ng-disabled="topForm.$invalid">Mentés</button>
 						</span>
 					</div>
 				</form>
@@ -41,16 +57,16 @@
 
 	<!-- Winner bet -->
 	
-	<div class="row">
+	<div class="row" ng-hide="bets.showTopForm">
 		<div class="col-xs-12 well">
-			<strong>Favoritjaim:</strong>
+			<strong>Favoritok:</strong>
 			<span>
 				<span class="flag-icon" ng-class="{'flag-icon-hu': true}"></span> <strong>Magyarország</strong> lesz az Európa-bajnok, és
 			</span>
 			<span>
 				<span class="flag-icon" ng-class="{'flag-icon-hu': true}"></span> <strong>Böde Dániel</strong> lesz a gólkirály.
 			</span>
-			<a href class="pull-right">Módosítom</a>
+			<a href class="pull-right" ng-click="bets.showTopForm = true">Módosítom</a>
 		</div>
 	</div>
 
@@ -58,17 +74,17 @@
 
 	<div class="row">
 		<div class="col-xs-12">
-			<h1>Csoportmeccsek</h1>
+			<h1>Meccsek</h1>
 			<h4><small>Ezeket a tippeket a meccs kezdéséig még módosíthatod</small></h4>
 		</div>
 		<div class="col-xs-12 match-block" ng-repeat="match in bets.data.matches | orderBy: 'datetime'">
 			<h5>{{match.datetime | date: 'MM.dd. H:mm'}}</h5>
-			<h2>
+			<h3>
 				<span class="flag-icon" ng-class="{'flag-icon-{{match.home.ISO}}': true}"></span>&nbsp{{match.home.longName}} - {{match.away.longName}}
 				<span class="flag-icon" ng-class="{'flag-icon-{{match.away.ISO}}': true}"></span>
 				<span class="pull-right">0-0</span>
-			</h2>
-			<h3>Eredmény: 2-1 <span class="pull-right">0 pont</span></h3>
+			</h3>
+			<h4>Eredmény: 2-1 <span class="pull-right">0 pont</span></h4>
 		</div>
 	</div>
 </div>
