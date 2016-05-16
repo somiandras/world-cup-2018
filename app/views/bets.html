@@ -57,14 +57,14 @@
 
 	<!-- Winner bet -->
 	
-	<div class="row" ng-hide="bets.showTopForm">
+	<div class="row" ng-if="!bets.showTopForm">
 		<div class="col-xs-12 well">
-			<strong>Favoritok:</strong>
+			<strong>Favoritok:</strong> 
 			<span>
-				<span class="flag-icon" ng-class="{'flag-icon-hu': true}"></span> <strong>Magyarország</strong> lesz az Európa-bajnok, és
+				<span class="flag-icon" ng-class="{'flag-icon-{{bets.user.bets.winner.ISO}}': true}"></span> <strong>{{bets.user.bets.winner.longName}}</strong> lesz az Európa-bajnok, és
 			</span>
 			<span>
-				<span class="flag-icon" ng-class="{'flag-icon-hu': true}"></span> <strong>Böde Dániel</strong> lesz a gólkirály.
+				<span class="flag-icon" ng-class="{'flag-icon-hu': true}"></span> <strong>{{bets.user.bets.topScorer.name}}</strong> a gólkirály.
 			</span>
 			<a href class="pull-right" ng-click="bets.showTopForm = true">Módosítom</a>
 		</div>

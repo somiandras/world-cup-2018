@@ -17,13 +17,13 @@
 		vm.user = user;
 
 
-		if (user.bets.winner && user.bets.topScorer) {
+		if (!user.bets || !user.bets.winner || !user.bets.topScorer) {
 
-			vm.showTopForm = false;
+			vm.showTopForm = true;
 		
 		} else {
 
-			vm.showTopForm = true;
+			vm.showTopForm = false;
 		}
 
 
@@ -33,7 +33,7 @@
 			betService.saveWinner(data, user)
 			.then((resp) => {
 
-				toastr.success('Elmentettük a tippedet');
+				toastr.success('Elmentettük a favoritjaidat');
 				vm.showTopForm = false;
 
 			})
