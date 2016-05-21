@@ -27,7 +27,6 @@
 		}
 
 
-
 		vm.addWinnerAndScorer = function (data) {
 
 			betService.saveWinner(data, user)
@@ -41,6 +40,12 @@
 
 				toastr.error(error);
 			})
+		}
+
+		vm.loadBets = function () {
+
+			vm.topForm.winner = user.bets.winner;
+			vm.topForm.topScorer = user.bets.topScorer;
 		}
 	}
 	

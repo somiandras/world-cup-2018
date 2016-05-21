@@ -67,7 +67,7 @@
 			<span ng-show="bets.user.bets.topScorer">
 				<span class="flag-icon" ng-class="{'flag-icon-hu': true}"></span> <strong>{{bets.user.bets.topScorer.name}}</strong> a gólkirály.
 			</span>
-			<a ng-show="bets.user.bets.winner || bets.user.bets.topScorer" href class="pull-right" ng-click="bets.showTopForm = true">Módosítom</a>
+			<a ng-show="bets.user.bets.winner || bets.user.bets.topScorer" href class="pull-right" ng-click="bets.showTopForm = true; bets.loadBets()">Módosítom</a>
 		</div>
 
 		<!-- Empty state -->
