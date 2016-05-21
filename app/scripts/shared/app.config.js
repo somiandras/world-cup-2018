@@ -7,7 +7,7 @@
 	.constant('FB_URL', 'https://kbceuro2016.firebaseio.com/')
 	.config(appRouting)
 	.config(firebase)
-	.run(noAuth);
+	.run(stateWatchers);
 
 
 	// FIREBASE
@@ -56,10 +56,6 @@
 
 						return userService.getUser(data.uid);
 					})
-					.catch((error) => {
-
-						console.error(error);
-					});
 				}
 			}
 		})
@@ -78,9 +74,9 @@
 	}
 
 
-	noAuth.$inject = ['$rootScope', '$state'];
+	stateWatchers.$inject = ['$rootScope', '$state'];
 
-	function noAuth ($rootScope, $state) {
+	function stateWatchers ($rootScope, $state) {
 
 		$rootScope.$on("$stateChangeError", function (event, toState, toParams, fromState, fromParams, error) {
 
