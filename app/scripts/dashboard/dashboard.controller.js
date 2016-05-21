@@ -2,8 +2,7 @@
 
 	'use strict';
 
-	angular.module('appCore')
-		.controller('DashboardController', DashboardController);
+	angular.module('appCore').controller('DashboardController', DashboardController);
 
 	DashboardController.$inject = [];
 

@@ -3,8 +3,8 @@
 	'use strict';
 
 	angular
-		.module('user')
-		.controller('LoginController', LoginController);
+	.module('user')
+	.controller('LoginController', LoginController);
 
 
 	LoginController.$inject = ['userService'];

@@ -69,29 +69,32 @@
 
 		function register (credentials) {
 
-			let users = $firebaseObject($firebaseRef.users);
+			let users, uid;
 
-			users.$loaded()
+			auth.$createUser(credentials)
+			.then((data) => {
+
+				uid = data.uid;
+
+				return auth.$authWithPassword(credentials);
+			})
 			.then(() => {
 
-				return auth.$createUser(credentials);
+				users = $firebaseObject($firebaseRef.users);
+				return users.$loaded();
 			})
-			.then((data) => {
+			.then((users) => {
 
 				let date = new Date();
 
-				users[data.uid] = {
+				users[uid] = {
 					email: credentials.email,
 					createdAt: date.getTime(),
 					admin: false,
-					uid: data.uid,
+					uid: uid,
 				};
 
 				return users.$save();
-			})
-			.then(() => {
-
-				login(credentials);
 			})
 			.catch((error) => {
 
