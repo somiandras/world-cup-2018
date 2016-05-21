@@ -42,8 +42,10 @@
 			})
 		}
 
+
 		vm.loadBets = function () {
 
+			vm.topForm = {};
 			vm.topForm.winner = user.bets.winner;
 			vm.topForm.topScorer = user.bets.topScorer;
 		}
