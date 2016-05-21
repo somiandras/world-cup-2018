@@ -38,7 +38,7 @@
 			})
 			.catch((error) => {
 
-				toastr.error(error);
+				toastr.error(error.message);
 			})
 		}
 
@@ -48,6 +48,41 @@
 			vm.topForm = {};
 			vm.topForm.winner = user.bets.winner;
 			vm.topForm.topScorer = user.bets.topScorer;
+		}
+
+
+		vm.updateBet = function (bet, matchId) {
+
+			betService.saveMatchBet(bet, matchId, user)
+			.then((resp) => {
+
+				vm.inputs[matchId] = false;
+				vm.matchBet = undefined;
+			})
+			.catch((error) => {
+
+				toastr.error(error.message);
+				vm.inputs[matchId] = false;
+				vm.matchBet = undefined;
+			})
+		}
+
+
+		vm.submitBetOnEnter = function (event, bet, matchId) {
+
+			if (event.keyCode === 13) {
+
+				vm.updateBet(bet, matchId);
+			}
+		}
+
+
+		vm.loadMatchBet = function (bet) {
+
+			if (bet) {
+
+				vm.matchBet = bet.home + " - " + bet.away;
+			}
 		}
 	}
 	

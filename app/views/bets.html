@@ -71,6 +71,7 @@
 		</div>
 
 		<!-- Empty state -->
+
 		<div class="alert alert-danger" ng-hide="bets.user.bets.winner || bets.user.bets.topScorer">
 			<span>
 				Még nem tippeltél a győztesre és a gólkirályra! 
@@ -83,15 +84,34 @@
 
 	<div class="row">
 		<div class="col-xs-12">
-			<h1>Meccsek</h1>
-			<h4><small>Ezeket a tippeket a meccs kezdéséig még módosíthatod</small></h4>
+			<h3>Meccsek<br>	
+			<small>A tippedet még megváltoztathatod, legkésőbb a meccs kezdete előtt 5 perccel. Kattints a tippre a módosításhoz!</small></h3>
 		</div>
 		<div class="col-xs-12 match-block" ng-repeat="match in bets.data.matches | orderBy: 'datetime'">
 			<h5>{{match.datetime | date: 'MM.dd. H:mm'}}</h5>
 			<h3>
 				<span class="flag-icon" ng-class="{'flag-icon-{{match.home.ISO}}': true}"></span>&nbsp{{match.home.longName}} - {{match.away.longName}}
 				<span class="flag-icon" ng-class="{'flag-icon-{{match.away.ISO}}': true}"></span>
-				<span class="pull-right">0-0</span>
+				<span class="pull-right">
+					<a href ng-click="bets.inputs[match.$id] = true; bets.loadMatchBet(bets.user.bets.matches[match.$id])" ng-hide="bets.inputs[match.$id]">
+						<span ng-show="bets.user.bets.matches[match.$id]">
+							{{bets.user.bets.matches[match.$id].home}} - 
+							{{bets.user.bets.matches[match.$id].away}}
+						</span>
+						<span ng-hide="bets.user.bets.matches[match.$id]">Tippelek</span>
+					</a>
+					<input
+						ng-if="bets.inputs[match.$id]"  
+						name="matchBet"
+						size="3"
+						class="form-control input-lg"
+						type="text" 
+						eb-focus="bets.inputs[match.$id]"
+						ng-model="bets.matchBet"
+						ng-blur="bets.updateBet(bets.matchBet, match.$id)"
+						placeholder="X-Y"
+						ng-keypress="bets.submitBetOnEnter($event, bets.matchBet, match.$id)">
+				</span>
 			</h3>
 			<h4>Eredmény: 2-1 <span class="pull-right">0 pont</span></h4>
 		</div>
