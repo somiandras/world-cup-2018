@@ -55,6 +55,10 @@
 					.then((data) => {
 
 						return userService.getUser(data.uid);
+					})
+					.catch((error) => {
+
+						console.error(error);
 					});
 				}
 			}

@@ -12,6 +12,7 @@
 	function userService ($firebaseObject, $firebaseArray, $firebaseAuthService, $firebaseRef, $state) {
 
 		const auth = $firebaseAuthService;
+		let users;
 
 		auth.$onAuth((newData) => {
 
@@ -20,6 +21,11 @@
 				$state.go('app.dashboard');
 				
 			} else {
+				
+				if (users) {
+
+					users.$destroy();
+				} 
 
 				$state.go('login');
 			}		
@@ -29,12 +35,13 @@
 		function getUser (uid) {
 
 			let user;
-			let users = $firebaseObject($firebaseRef.users);
-			
+
+			users = $firebaseArray($firebaseRef.users);
+
 			return users.$loaded()
 			.then((ref) => {
 				
-				return ref[uid];
+				return ref.$getRecord(uid);
 			})
 			.catch((error) => {
 
@@ -44,8 +51,6 @@
 
 
 		function getUserList () {
-
-			let users = $firebaseArray($firebaseRef.users);
 
 			return users.$loaded();
 		}
@@ -69,32 +74,39 @@
 
 		function register (credentials) {
 
-			let users, uid;
+			let newUid;
 
 			auth.$createUser(credentials)
 			.then((data) => {
 
-				uid = data.uid;
+				newUid = data.uid;
 
 				return auth.$authWithPassword(credentials);
 			})
-			.then(() => {
+			.then((user) => {
 
-				users = $firebaseObject($firebaseRef.users);
-				return users.$loaded();
+				let userObject = $firebaseObject($firebaseRef.users)
+
+				return userObject.$loaded();
 			})
-			.then((users) => {
+			.then((userObj) => {
 
 				let date = new Date();
 
-				users[uid] = {
+				let newUser = {
 					email: credentials.email,
 					createdAt: date.getTime(),
 					admin: false,
-					uid: uid,
-				};
+					uid: newUid,
+				}
 
-				return users.$save();
+				userObj[newUid] = newUser;
+
+				return userObj.$save()
+				.then((ref) => {
+
+					return userObj.$destroy();
+				})
 			})
 			.catch((error) => {
 
@@ -105,15 +117,7 @@
 
 		function saveUser (user) {
 
-			let users = $firebaseObject($firebaseRef.users);
-
-			return users.$loaded()
-			.then((userRef) => {
-
-				userRef[user.uid] = user;
-
-				return users.$save();
-			})
+			return users.$save(user);
 		}
 
 
