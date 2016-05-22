@@ -4,9 +4,9 @@
 
 	angular.module('myBets').factory('betService', betService);
 
-	betService.$inject = ['$q', 'userService'];
+	betService.$inject = ['$q', 'userService', 'tournamentService'];
 
-	function betService ($q, userService) {
+	function betService ($q, userService, tournamentService) {
 
 		return {
 			saveWinner: saveWinner,
@@ -26,25 +26,38 @@
 
 		function saveMatchBet (bet, matchID, user) {
 
-			user.bets = user.bets || {};
-			user.bets.matches = user.bets.matches || {};
+			return tournamentService.getMatch(matchID)
+			.then((match) => {
 
-			if (bet) {
+				let now = new Date().getTime();
+				let matchTime = match.datetime;
 
-				try {
+				if (now > matchTime) {
 
-					bet = parseBet(bet);
-				
-				} catch (error) {
-
-					return $q.reject(error);
-
+					return $q.reject('Már nem lehet tippet leadni erre a meccsre');
 				}
 
-				user.bets.matches[matchID] = bet;
-			}
+				user.bets = user.bets || {};
+				user.bets.matches = user.bets.matches || {};
 
-			return userService.saveUser(user);
+
+				if (bet) {
+
+					try {
+
+						bet = parseBet(bet);
+					
+					} catch (error) {
+
+						return $q.reject(error);
+
+					}
+
+					user.bets.matches[matchID] = bet;
+				}
+
+				return userService.saveUser(user);
+			});
 		}
 
 

@@ -24,6 +24,7 @@
 			addPlayers: addPlayers,
 			removePlayer: removePlayer,
 			uploadMatches: uploadMatches,
+			getMatch: getMatch,
 			saveMatch: saveMatch,
 			updateResult: updateResult
 		};
@@ -162,6 +163,16 @@
 
 				return matches;
 			});
+		}
+		
+
+		function getMatch (matchId) {
+
+			return data.matches.$loaded()
+			.then((matches) => {
+
+				return matches.$getRecord(matchId);
+			})
 		}
 
 
