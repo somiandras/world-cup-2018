@@ -107,33 +107,31 @@
 				</h3>
 			</div>
 			<div class="col-xs-12 col-md-2 text-center">
-				<span>
-					<h3>
-						<a href ng-click="bets.inputs[match.$id] = true; bets.loadMatchBet(bets.user.bets.matches[match.$id], match.$id)" ng-hide="bets.inputs[match.$id] || bets.now > match.datetime - bets.timeLimit">
-							<span ng-show="bets.user.bets.matches[match.$id]">
-								{{bets.user.bets.matches[match.$id].home}} - 
-								{{bets.user.bets.matches[match.$id].away}}
-							</span>
-						</a>
-						<span ng-show="bets.now > match.datetime - bets.timeLimit">
-							<span ng-show="bets.user.bets.matches[match.$id]">
-								{{bets.user.bets.matches[match.$id].home}} - 
-								{{bets.user.bets.matches[match.$id].away}}
-							</span>
+				<h3 ng-hide = "bets.now > match.datetime - bets.timeLimit">
+					<a href ng-click="bets.inputs[match.$id] = true; bets.loadMatchBet(bets.user.bets.matches[match.$id], match.$id)" ng-hide="bets.inputs[match.$id]">
+						<span ng-show="bets.user.bets.matches[match.$id]">
+							{{bets.user.bets.matches[match.$id].home}} - 
+							{{bets.user.bets.matches[match.$id].away}}
 						</span>
-						<input
-							ng-if="bets.inputs[match.$id] || !bets.user.bets.matches[match.$id]"  
-							name="matchBet"
-							size="3"
-							class="form-control bet-input"
-							type="text" 
-							eb-focus="bets.inputs[match.$id]"
-							ng-model="bets.matchBet[match.$id]"
-							ng-blur="bets.updateBet(bets.matchBet[match.$id], match.$id)"
-							placeholder=" - "
-							ng-keypress="bets.submitBetOnEnter($event, bets.matchBet[match.$id], match.$id)">
-					
+					</a>
+					<input
+						ng-if="bets.inputs[match.$id] || !bets.user.bets.matches[match.$id]"  
+						name="matchBet"
+						size="3"
+						class="form-control bet-input"
+						type="text" 
+						eb-focus="bets.inputs[match.$id]"
+						ng-model="bets.matchBet[match.$id]"
+						ng-blur="bets.updateBet(bets.matchBet[match.$id], match.$id)"
+						placeholder=" - "
+						ng-keypress="bets.submitBetOnEnter($event, bets.matchBet[match.$id], match.$id)">
+				</h3>
+				<span ng-show="bets.now > match.datetime - bets.timeLimit">
+					<h3 ng-show="bets.user.bets.matches[match.$id]">
+						{{bets.user.bets.matches[match.$id].home}} - 
+						{{bets.user.bets.matches[match.$id].away}}
 					</h3>
+					<h3 ng-hide="bets.user.bets.matches[match.$id]"><small>Nem tippeltél</small></h3>
 				</span>
 			</div>
 			<div class="col-xs-12 col-md-6"  ng-show="match.result">

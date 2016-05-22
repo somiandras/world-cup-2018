@@ -34,7 +34,9 @@
 
 				if (now > matchTime) {
 
-					return $q.reject('Már nem lehet tippet leadni erre a meccsre');
+					let error = new Error('Már nem lehet tippet leadni erre a meccsre');
+					
+					return $q.reject(error);
 				}
 
 				user.bets = user.bets || {};
