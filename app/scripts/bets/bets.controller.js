@@ -58,7 +58,11 @@
 			betService.saveMatchBet(bet, matchId, user)
 			.then((resp) => {
 
-				toastr.success("Elmentettük a tippedet")
+				if (bet) {
+
+					toastr.success("Elmentettük a tippedet")
+				}
+				
 				vm.inputs[matchId] = false;
 				vm.matchBet[matchId] = undefined;
 			})
