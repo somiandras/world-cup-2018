@@ -90,14 +90,10 @@
 		<div class="col-xs-12 match-block" ng-repeat="match in bets.data.matches | orderBy: 'datetime'">
 			<div class="col-sm-10">
 				<h4>
-					{{match.datetime | date: 'MM.dd. H:mm'}}
-				</h4>
-			</div>
-			<div class="col-sm-2 text-center">
-				<h4>
 					<span class="label label-info" ng-show="bets.now < match.datetime - bets.timeLimit && !match.result"><span class="glyphicon glyphicon-pencil"></span> Nyitott</span>
 					<span class="label label-default" ng-show="bets.now > match.datetime - bets.timeLimit && !match.result"><span class="glyphicon glyphicon-ban-circle"></span> Lezárt</span>
 					<span class="label label-primary" ng-show="match.result"><span class="glyphicon glyphicon-ok"></span> Eredmény</span>
+					<small ng-show="bets.now < match.datetime - bets.timeLimit && !match.result"> {{match.datetime | date: 'MM.dd., H:mm'}}</small>
 				</h4>
 			</div>
 			<div class="col-xs-12 col-sm-10">
@@ -126,20 +122,28 @@
 						placeholder="Ide írd a tipped"
 						ng-keypress="bets.submitBetOnEnter($event, bets.matchBet[match.$id], match.$id)">
 				</h3>
-				<span ng-show="bets.now > match.datetime - bets.timeLimit || match.result">
-					<h3 ng-show="bets.user.bets.matches[match.$id]">
+				<h3 ng-show="bets.now > match.datetime - bets.timeLimit && !match.result">
+					<span ng-show="bets.user.bets.matches[match.$id]">
 						{{bets.user.bets.matches[match.$id].home}} - 
-						{{bets.user.bets.matches[match.$id].away}}
-					</h3>
-					<h3 ng-hide="bets.user.bets.matches[match.$id]"><small>Nem tippeltél</small></h3>
-				</span>
+						{{bets.user.bets.matches[match.$id].away}})
+					</span>
+					<small ng-hide="bets.user.bets.matches[match.$id]">Nem tippeltél</small>
+				</h3>
+				<h3>
+					<span class="label label-success" ng-show="bets.user.bets.matches[match.$id].points"><span class="glyphicon glyphicon-ok"></span> {{bets.user.bets.matches[match.$id].points}} pont</span>
+					<span class="label label-default" ng-hide="bets.user.bets.matches[match.$id].points || !match.result"><span class="glyphicon glyphicon-remove"></span> 0 pont</span>
+				</h3>
 			</div>
-			<div class="col-xs-12 col-sm-10"  ng-show="match.result">
-				<h4>Végeredmény: {{match.result.home}} - {{match.result.away}}</h4>
-			</div>
-			<div class="col-xs-12 col-sm-2 text-center">
-				<h4 ng-show="bets.user.bets.matches[match.$id].points">{{bets.user.bets.matches[match.$id].points}} pont <span class="glyphicon glyphicon-ok-sign text-success"></span> </h4>
-				<h4 ng-hide="bets.user.bets.matches[match.$id].points || !match.result">0 pont <span class="glyphicon glyphicon-remove-sign text-danger"></span></h4>
+			<div class="col-xs-12" >
+				<h5 ng-show="match.result" class="help-block">
+					{{match.result.home}} - {{match.result.away}} 
+					<span ng-show="bets.user.bets.matches[match.$id]">
+						(Tipped: 
+						{{bets.user.bets.matches[match.$id].home}} - 
+						{{bets.user.bets.matches[match.$id].away}})
+					</span>
+					<span ng-hide="bets.user.bets.matches[match.$id]">(Nem tippeltél)</span>
+				</h5>
 			</div>
 		</div>
 	</div>
