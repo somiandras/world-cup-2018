@@ -5,17 +5,19 @@
 	angular.module('myBets')
 		.controller('BetsController', BetsController);
 
-	BetsController.$inject = ['tournamentService', 'user', 'betService'];
+	BetsController.$inject = ['tournamentService', 'user', 'betService', 'APP_CONFIG'];
 
-	function BetsController (tournamentService, user, betService) {
+	function BetsController (tournamentService, user, betService, APP_CONFIG) {
 
 		let vm = this;
 		let tour = tournamentService;
 
-		vm.now = new Date();
+		vm.inputs = {};
+		vm.matchBet = {};
+		vm.now = new Date().getTime();
 		vm.data = tour.data;
 		vm.user = user;
-
+		vm.timeLimit = APP_CONFIG.timeLimit;
 
 		if (!user.bets || !user.bets.winner || !user.bets.topScorer) {
 
@@ -57,13 +59,13 @@
 			.then((resp) => {
 
 				vm.inputs[matchId] = false;
-				vm.matchBet = undefined;
+				vm.matchBet[matchId] = undefined;
 			})
 			.catch((error) => {
 
 				toastr.error(error.message);
 				vm.inputs[matchId] = false;
-				vm.matchBet = undefined;
+				vm.matchBet[matchId] = undefined;
 			})
 		}
 
@@ -77,11 +79,11 @@
 		}
 
 
-		vm.loadMatchBet = function (bet) {
+		vm.loadMatchBet = function (bet, matchId) {
 
 			if (bet) {
 
-				vm.matchBet = bet.home + " - " + bet.away;
+				vm.matchBet[matchId] = bet.home + " - " + bet.away;
 			}
 		}
 	}
