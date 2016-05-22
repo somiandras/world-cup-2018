@@ -4,17 +4,15 @@
 
 	angular.module('appCore').factory('tournamentService', tournamentService);
 
-	tournamentService.$inject = ['$firebaseArray', '$firebaseRef', '$q'];
+	tournamentService.$inject = ['$firebaseArray', '$firebaseRef', '$q', 'APP_CONFIG'];
 
-	function tournamentService ($firebaseArray, $firebaseRef, $q) {
+	function tournamentService ($firebaseArray, $firebaseRef, $q, APP_CONFIG) {
 
 		let data = {};
 
 		data.teams = $firebaseArray($firebaseRef.teams);
 		data.matches = $firebaseArray($firebaseRef.matches);
 		data.players = $firebaseArray($firebaseRef.players);
-
-		const MATCH_FIELDS = ['group', 'datetime', 'home', 'away'];
 
 
 		return {
@@ -252,11 +250,11 @@
 
 			let matchObj = {};
 
-			if (matchArray.length === MATCH_FIELDS.length) {
+			if (matchArray.length === APP_CONFIG.matchFields.length) {
 
 				matchArray.forEach((currentData, index) => {
 
-					let currentField = MATCH_FIELDS[index];
+					let currentField = APP_CONFIG.matchFields[index];
 
 					matchObj[currentField] = currentData;
 

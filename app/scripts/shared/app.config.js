@@ -4,7 +4,11 @@
 
 	angular
 	.module('appCore')
-	.constant('FB_URL', 'https://kbceuro2016.firebaseio.com/')
+	.constant('APP_CONFIG', {
+		fbUrl: 'https://kbceuro2016.firebaseio.com/', // Firebase ref url
+		timeLimit: 300000, // Closing time before match start in ms
+		matchFields: ['group', 'datetime', 'home', 'away'] // Data fields for match upload
+	})
 	.config(appRouting)
 	.config(firebase)
 	.run(stateWatchers);
@@ -12,17 +16,17 @@
 
 	// FIREBASE
 
-	firebase.$inject = ['$firebaseRefProvider', 'FB_URL'];
+	firebase.$inject = ['$firebaseRefProvider', 'APP_CONFIG'];
 
-	function firebase ($firebaseRefProvider, FB_URL) {
+	function firebase ($firebaseRefProvider, APP_CONFIG) {
 
 		$firebaseRefProvider.registerUrl({
-			default: FB_URL,
-			users: FB_URL + 'users',
-			tournament: FB_URL + 'tournament',
-			teams: FB_URL + 'tournament/teams',
-			matches: FB_URL + 'tournament/matches',
-			players: FB_URL + 'tournament/players'
+			default: APP_CONFIG.fbUrl,
+			users: APP_CONFIG.fbUrl + 'users',
+			tournament: APP_CONFIG.fbUrl + 'tournament',
+			teams: APP_CONFIG.fbUrl + 'tournament/teams',
+			matches: APP_CONFIG.fbUrl + 'tournament/matches',
+			players: APP_CONFIG.fbUrl + 'tournament/players'
 		});
 	}
 
