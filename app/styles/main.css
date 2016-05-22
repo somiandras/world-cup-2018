@@ -30,13 +30,14 @@ tr:hover .glyphicon-pencil {
 
 .match-block {
   border-bottom: 1px solid #ddd;
-  margin-bottom: 30px;
   padding-bottom: 30px;
+  margin-top: 30px;
 }
 
 .bet-input {
   text-align: center;
 }
+
 
 
 /* Login & Register */

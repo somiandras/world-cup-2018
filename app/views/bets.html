@@ -89,15 +89,16 @@
 		</div>
 		<div class="col-xs-12 match-block" ng-repeat="match in bets.data.matches | orderBy: 'datetime'">
 			<div class="col-xs-10">
-				<h5>{{match.datetime | date: 'MM.dd. H:mm'}}</h5>
+				<h4>
+					{{match.datetime | date: 'MM.dd. H:mm'}}
+				</h4>
 			</div>
 			<div class="col-xs-2 text-center">
-				<h5>
+				<h4>
 					<span class="label label-info" ng-show="bets.now < match.datetime - bets.timeLimit"><span class="glyphicon glyphicon-pencil"></span> Nyitott</span>
 					<span class="label label-default" ng-show="bets.now > match.datetime - bets.timeLimit && !match.result"><span class="glyphicon glyphicon-ban-circle"></span> Lezárt</span>
 					<span class="label label-success" ng-show="match.result"><span class="glyphicon glyphicon-ok"></span> Eredmény</span>
-
-				</h5>
+				</h4>
 			</div>
 			<div class="col-xs-12 col-md-10">
 				<h3>
