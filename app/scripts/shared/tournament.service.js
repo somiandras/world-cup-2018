@@ -4,15 +4,34 @@
 
 	angular.module('appCore').factory('tournamentService', tournamentService);
 
-	tournamentService.$inject = ['$firebaseArray', '$firebaseRef', '$q', 'APP_CONFIG'];
+	tournamentService.$inject = ['$firebaseArray', '$firebaseRef', '$q', 'scoreService', 'APP_CONFIG'];
 
-	function tournamentService ($firebaseArray, $firebaseRef, $q, APP_CONFIG) {
+	function tournamentService ($firebaseArray, $firebaseRef, $q, scoreService, APP_CONFIG) {
 
 		let data = {};
 
 		data.teams = $firebaseArray($firebaseRef.teams);
 		data.matches = $firebaseArray($firebaseRef.matches);
 		data.players = $firebaseArray($firebaseRef.players);
+
+
+		// Watch for results change and calculate new scores
+		
+		data.matches.$loaded().
+		then((matches) => {
+
+			matches.$watch((event) => {
+
+				let changedMatch = matches.$getRecord(event.key);
+
+				scoreService.updateUserScores(changedMatch)
+
+			})
+		})
+		.catch((error) => {
+
+			console.error(error);
+		})
 
 
 		return {
@@ -28,6 +47,7 @@
 			saveMatch: saveMatch,
 			updateResult: updateResult
 		};
+
 
 		// TEAM METHODS
 
@@ -200,24 +220,20 @@
 				result = result.trim();
 			}
 
-			if (regexp.test(result)) {
-
-				result = result.split("");
-				match.result.home = result[0];
-				match.result.away = result[result.length-1];
-
-				return saveMatch(match);
-
-			} else if (result) {
+			if (!regexp.test(result) && result) {
 
 				let error = new Error('Az eredmény első és utolsó karaktere szám kell legyen');
 
 				return $q.reject(error);
 
-			} else {
+			} else if (regexp.test(result)) {
 
-				return saveMatch(match);
+				result = result.split("");
+				match.result.home = result[0];
+				match.result.away = result[result.length-1];
 			}
+
+			return saveMatch(match);
 		}
 
 

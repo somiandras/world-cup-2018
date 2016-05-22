@@ -7,7 +7,13 @@
 	.constant('APP_CONFIG', {
 		fbUrl: 'https://kbceuro2016.firebaseio.com/', // Firebase ref url
 		timeLimit: 300000, // Closing time before match start in ms
-		matchFields: ['group', 'datetime', 'home', 'away'] // Data fields for match upload
+		matchFields: ['group', 'datetime', 'home', 'away'], // Data fields for match upload
+		rules: { //Points rewarded for right bets
+			result: 1,
+			exactResult: 1,
+			finalWinner: 3,
+			topScorer: 3
+		}
 	})
 	.config(appRouting)
 	.config(firebase)
