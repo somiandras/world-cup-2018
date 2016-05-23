@@ -12,7 +12,7 @@
 
 		return {
 			updateUserScores: updateUserScores,
-		}
+		};
 
 
 		function updateUserScores (match) {
@@ -39,10 +39,10 @@
 					}
 
 					promises.push(userService.saveUser(user)); 
-				})
+				});
 
 				return $q.all(promises);
-			})
+			});
 		}
 
 

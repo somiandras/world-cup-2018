@@ -19,7 +19,7 @@
 
 		vm.addPlayers = function (team, players) {
 
-			let playerArray = players.trim().split(',')
+			let playerArray = players.trim().split(',');
 
 			tour.addPlayers(playerArray, team)
 			.then((resp) => {
@@ -31,13 +31,13 @@
 
 				toastr.error(error);
 			});
-		}
+		};
 
 
 		vm.removePlayer = function (player) {
 
 			tour.removePlayer(player)
-			.then((resp) => {
+			.then(() => {
 
 				toastr.success(player.name + ' eltávolítva');
 
@@ -46,7 +46,7 @@
 
 				toastr.error(error);
 			});
-		}
+		};
 
 
 		vm.reset = function (form) {

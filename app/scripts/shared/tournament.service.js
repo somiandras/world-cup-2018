@@ -24,14 +24,14 @@
 
 				let changedMatch = matches.$getRecord(event.key);
 
-				scoreService.updateUserScores(changedMatch)
+				scoreService.updateUserScores(changedMatch);
 
-			})
+			});
 		})
 		.catch((error) => {
 
 			console.error(error);
-		})
+		});
 
 
 		return {
@@ -76,11 +76,11 @@
 
 				let found = teams.find((team) => {
 
-					return team.shortName == shortName;
-				})
+					return team.shortName === shortName;
+				});
 
 				return found;
-			})
+			});
 		}
 
 
@@ -94,7 +94,7 @@
 				teams[index] = team;
 
 				return teams.$save(index);
-			})
+			});
 		}
 
 
@@ -128,10 +128,10 @@
 
 						promises.push(players.$add(playerToAdd));
 					}
-				})
+				});
 
 				return $q.all(promises);
-			})
+			});
 		}
 
 
@@ -141,7 +141,7 @@
 			.then((players) => {
 
 				return players.$remove(playerToRemove);
-			})
+			});
 		}
 
 
@@ -192,7 +192,7 @@
 			.then((matches) => {
 
 				return matches.$getRecord(matchId);
-			})
+			});
 		}
 
 

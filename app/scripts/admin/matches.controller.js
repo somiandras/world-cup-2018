@@ -41,7 +41,7 @@
 			.catch((error) => {
 
 				toastr.error(error.message);
-			})
+			});
 		};
 
 		vm.updateResult = function (match, result) {

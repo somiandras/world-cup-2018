@@ -16,14 +16,14 @@
 			user.admin = true;
 
 			userService.saveUser(user)
-			.then((resp) => {
+			.then(() => {
 
 				toastr.success(user.email + ' admin lett');
 			})
 			.catch((error) => {
 
 				toastr.error(error);
-			})
+			});
 		};
 	}
 

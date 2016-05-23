@@ -34,8 +34,6 @@
 
 		function getUser (uid) {
 
-			let user;
-
 			users = $firebaseArray($firebaseRef.users);
 
 			return users.$loaded()
@@ -83,9 +81,9 @@
 
 				return auth.$authWithPassword(credentials);
 			})
-			.then((user) => {
+			.then(() => {
 
-				let userObject = $firebaseObject($firebaseRef.users)
+				let userObject = $firebaseObject($firebaseRef.users);
 
 				return userObject.$loaded();
 			})
@@ -98,15 +96,15 @@
 					createdAt: date.getTime(),
 					admin: false,
 					uid: newUid,
-				}
+				};
 
 				userObj[newUid] = newUser;
 
 				return userObj.$save()
-				.then((ref) => {
+				.then(() => {
 
 					return userObj.$destroy();
-				})
+				});
 			})
 			.catch((error) => {
 

@@ -32,7 +32,7 @@
 		vm.addWinnerAndScorer = function (data) {
 
 			betService.saveWinner(data, user)
-			.then((resp) => {
+			.then(() => {
 
 				toastr.success('Elmentettük a favoritjaidat');
 				vm.showTopForm = false;
@@ -41,8 +41,8 @@
 			.catch((error) => {
 
 				toastr.error(error.message);
-			})
-		}
+			});
+		};
 
 
 		vm.loadBets = function () {
@@ -50,17 +50,17 @@
 			vm.topForm = {};
 			vm.topForm.winner = user.bets.winner;
 			vm.topForm.topScorer = user.bets.topScorer;
-		}
+		};
 
 
 		vm.updateBet = function (bet, matchId) {
 
 			betService.saveMatchBet(bet, matchId, user)
-			.then((resp) => {
+			.then(() => {
 
 				if (bet) {
 
-					toastr.success("Elmentettük a tippedet")
+					toastr.success("Elmentettük a tippedet");
 				}
 				
 				vm.inputs[matchId] = false;
@@ -71,7 +71,7 @@
 				toastr.error(error.message);
 				vm.inputs[matchId] = false;
 				vm.matchBet[matchId] = undefined;
-			})
+			});
 		}
 
 
@@ -81,7 +81,7 @@
 
 				vm.updateBet(bet, matchId);
 			}
-		}
+		};
 
 
 		vm.loadMatchBet = function (bet, matchId) {
@@ -90,7 +90,7 @@
 
 				vm.matchBet[matchId] = bet.home + " - " + bet.away;
 			}
-		}
+		};
 	}
 	
 })();

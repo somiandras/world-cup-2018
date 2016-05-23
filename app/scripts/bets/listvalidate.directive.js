@@ -9,7 +9,7 @@
 		return {
 			require: 'ngModel',
 			link: link
-		}
+		};
 	}
 
 	function link (scope, element, attr, controller) {
@@ -26,7 +26,7 @@
 
 			let check = data[list].find((elem) => {
 
-				return (elem.longName === viewValue || elem.name === viewValue) 
+				return (elem.longName === viewValue || elem.name === viewValue);
 			});
 
 			if (check) {
@@ -37,7 +37,7 @@
 
 				return false;
 			}
-		}
+		};
 	}
 
 })();

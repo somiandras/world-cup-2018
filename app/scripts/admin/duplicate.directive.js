@@ -10,7 +10,7 @@
 		return {
 			require: 'ngModel',
 			link: link
-		}
+		};
 	}
 
 	
@@ -32,7 +32,7 @@
 			let check = teams.find((element) => {
 
 				return element[prop] === viewValue;
-			})
+			});
 
 
 			if (check) {
@@ -43,7 +43,7 @@
 
 				return true;
 			}
-		}
+		};
 	}	
 
 })();

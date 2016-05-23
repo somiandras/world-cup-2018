@@ -18,10 +18,10 @@
 
 					filteredData.push(elem);
 				}
-			})
+			});
 
 			return filteredData;
-		}
+		};
 	}
 
 })();
