@@ -3,7 +3,8 @@
 	'use strict';
 
 	angular.module('appCore')
-	.filter('team', teamFilter);
+	.filter('team', teamFilter)
+	.filter('open', openFilter);
 
 	function teamFilter () {
 
@@ -22,6 +23,35 @@
 
 			return filteredData;
 		};
+	}
+
+	openFilter.$inject = ['APP_CONFIG']
+
+	function openFilter (APP_CONFIG) {
+
+		return function (matchList, trigger, time) {
+
+			let filteredData = [];
+			matchList = matchList || [];
+			time = time || new Date().getTime();
+
+			if (trigger) {
+
+				matchList.forEach((match) => {
+
+					if (time < match.datetime - APP_CONFIG.timeLimit && !match.result) {
+
+						filteredData.push(match)
+					}
+				});
+
+				return filteredData;
+
+			} else {
+
+				return matchList;
+			}
+		}	
 	}
 
 })();

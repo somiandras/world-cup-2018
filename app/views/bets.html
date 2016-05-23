@@ -86,8 +86,16 @@
 		<div class="col-xs-12">
 			<h3>Meccsek<br>	
 			<small>A tippedet még megváltoztathatod, legkésőbb a meccs kezdete előtt {{bets.timeLimit / 60000}} perccel. Kattints a tippre a módosításhoz!</small></h3>
+				<div class="checkbox checkbox-lg">
+					<label>
+						<input type="checkbox" ng-model="bets.onlyOpen">Csak <span class="label label-info"><span class="glyphicon glyphicon-pencil"></span> Nyitott</span> meccsek
+					</label>
+				</div>
 		</div>
-		<div class="col-xs-12 match-block" ng-repeat="match in bets.data.matches | orderBy: 'datetime'">
+		<div 
+		class="col-xs-12 match-block" 
+		ng-repeat="match in bets.data.matches | orderBy: 'datetime' | open: bets.onlyOpen : bets.now">
+
 			<div class="col-sm-10">
 				<h4>
 					<span class="label label-info" ng-show="bets.now < match.datetime - bets.timeLimit && !match.result"><span class="glyphicon glyphicon-pencil"></span> Nyitott</span>
