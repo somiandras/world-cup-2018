@@ -1,8 +1,9 @@
 /* OWN STYLES */
 
-.inner-content {
+.content, .inner-content {
 
   margin-top: 30px;
+  min-height: 500px;
 }
 
 
@@ -82,6 +83,7 @@ body {
   padding-top: 19px;
   color: #777;
   border-top: 1px solid #e5e5e5;
+  margin-bottom: 30px;
 }
 
 .container-narrow > hr {
@@ -89,13 +91,6 @@ body {
 }
 
 
-/* Supporting marketing content */
-.marketing {
-  margin: 40px 0;
-}
-.marketing p + h4 {
-  margin-top: 28px;
-}
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {

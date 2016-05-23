@@ -24,9 +24,10 @@
 
     <!-- Add your site or application content here -->
     <div ui-view="navigation"></div>
-    <div ui-view="content"></div>
-
+    <div ui-view="content" class="content"></div>
     
+    <div ng-include="'views/footer.html'"></div>
+        
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
