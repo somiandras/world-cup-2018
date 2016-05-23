@@ -26,7 +26,9 @@
 
 				angular.forEach(users, (user) => {
 
+					user.bets = user.bets || {};
 					user.bets.matches = user.bets.matches || {};
+					
 					let bet = user.bets.matches[currentMatchId] || {};
 
 					if (match.result) {
