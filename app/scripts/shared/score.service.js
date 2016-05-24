@@ -21,20 +21,7 @@
 			let promises = [];
 			let currentUid = userService.getCurrentUser();	
 			
-			return userService.getUser(currentUid)
-			.then((user) => {
-
-				if (user.admin) {
-
-					return userService.getUserList()
-				
-				} else {
-
-					let error = new Error('Nincs jogosultság a pontszámításra')
-
-					return $q.reject(error);
-				}
-			})
+			return userService.getUserList()
 			.then((users) => {
 
 				angular.forEach(users, (user) => {

@@ -28,6 +28,8 @@
 					users.$destroy();
 				} 
 
+				currentUid = undefined;
+
 				$state.go('login');
 			}		
 		});

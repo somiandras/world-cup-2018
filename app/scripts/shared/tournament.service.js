@@ -4,9 +4,11 @@
 
 	angular.module('appCore').factory('tournamentService', tournamentService);
 
-	tournamentService.$inject = ['$firebaseArray', '$firebaseRef', '$q', 'scoreService', 'APP_CONFIG'];
+	tournamentService.$inject = ['$firebaseAuthService','$firebaseArray', '$firebaseRef', '$q', 'scoreService', 'userService', 'APP_CONFIG'];
 
-	function tournamentService ($firebaseArray, $firebaseRef, $q, scoreService, APP_CONFIG) {
+	function tournamentService ($firebaseAuthService, $firebaseArray, $firebaseRef, $q, scoreService, userService, APP_CONFIG) {
+
+		let auth = $firebaseAuthService;
 
 		let data = {};
 
@@ -16,26 +18,47 @@
 
 
 		// Watch for results change and calculate new scores
+		// if the user is admin.
 		
-		data.matches.$loaded().
-		then((matches) => {
+		auth.$onAuth((userRef) => {
 
-			matches.$watch((event) => {
+			if (userRef) {
 
-				let changedMatch = matches.$getRecord(event.key);
+				let uid = userRef.uid;
 
-				scoreService.updateUserScores(changedMatch)
+				userService.getUser(uid)
+				.then((user) => {
+
+					if (user.admin) {
+
+						return data.matches.$loaded();
+					
+					} else {
+
+						let error = new Error('No admin rights for this user');
+
+						return $q.reject(error);
+					}
+				})
+				.then((matches) => {
+
+					console.log('Admin, van watch');
+
+					matches.$watch((event) => {
+
+						let changedMatch = matches.$getRecord(event.key);
+
+						return scoreService.updateUserScores(changedMatch);
+					});
+
+				})
 				.catch((error) => {
 
-					console.log(error);
+					console.error(error);
 				});
-
-			});
-		})
-		.catch((error) => {
-
-			console.error(error);
+			}
 		});
+
 
 
 		return {
