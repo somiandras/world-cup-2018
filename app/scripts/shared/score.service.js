@@ -18,23 +18,36 @@
 		function updateUserScores (match) {
 
 			let currentMatchId = match.$id;
-
 			let promises = [];
+			let currentUid = userService.getCurrentUser();	
+			
+			return userService.getUser(currentUid)
+			.then((user) => {
 
-			return userService.getUserList()
+				if (user.admin) {
+
+					return userService.getUserList()
+				
+				} else {
+
+					let error = new Error('Nincs jogosultság a pontszámításra')
+
+					return $q.reject(error);
+				}
+			})
 			.then((users) => {
 
 				angular.forEach(users, (user) => {
 
 					user.bets = user.bets || {};
 					user.bets.matches = user.bets.matches || {};
-					
+							
 					let bet = user.bets.matches[currentMatchId] || {};
 
 					if (match.result) {
 
 						bet.points = calculateScore(match.result, bet);
-					
+							
 					} else {
 
 						bet.points = null;

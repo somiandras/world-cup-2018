@@ -24,7 +24,11 @@
 
 				let changedMatch = matches.$getRecord(event.key);
 
-				scoreService.updateUserScores(changedMatch);
+				scoreService.updateUserScores(changedMatch)
+				.catch((error) => {
+
+					console.log(error);
+				});
 
 			});
 		})

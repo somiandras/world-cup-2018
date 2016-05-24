@@ -12,12 +12,13 @@
 	function userService ($firebaseObject, $firebaseArray, $firebaseAuthService, $firebaseRef, $state) {
 
 		const auth = $firebaseAuthService;
-		let users;
+		let users, currentUid;
 
 		auth.$onAuth((newData) => {
 
 			if (newData) {
 
+				currentUid = newData.uid;
 				$state.go('app.dashboard');
 				
 			} else {
@@ -30,6 +31,12 @@
 				$state.go('login');
 			}		
 		});
+
+
+		function getCurrentUser () {
+
+			return currentUid;
+		}
 
 
 		function getUser (uid) {
@@ -124,6 +131,7 @@
 			logout: logout,
 			register: register,
 			getUser: getUser,
+			getCurrentUser: getCurrentUser,
 			saveUser: saveUser,
 			getUserList: getUserList
 		};
