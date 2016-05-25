@@ -86,11 +86,12 @@
 		<div class="col-xs-12">
 			<h3>Meccsek<br>	
 			<small>A tippedet még megváltoztathatod, legkésőbb a meccs kezdete előtt {{bets.timeLimit / 60000}} perccel. Kattints a tippre a módosításhoz!</small></h3>
-				<div class="checkbox checkbox-lg">
-					<label>
-						<input type="checkbox" ng-model="bets.onlyOpen">Csak <span class="label label-info"><span class="glyphicon glyphicon-pencil"></span> Nyitott</span> meccsek
-					</label>
-				</div>
+			<hr>
+			<div>
+				<button class="btn btn-info" uib-btn-checkbox ng-model="bets.onlyOpen">
+					Csak a nyitott meccsek
+				</button>
+			</div>
 		</div>
 		<div 
 		class="col-xs-12 match-block" 
