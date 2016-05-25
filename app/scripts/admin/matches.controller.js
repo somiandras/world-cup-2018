@@ -47,7 +47,7 @@
 		vm.updateResult = function (match, result) {
 
 			tour.updateResult(match, result)			
-			.then(() => {
+			.then((resp) => {
 
 				if (result) {
 

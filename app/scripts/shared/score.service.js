@@ -17,7 +17,6 @@
 
 		function updateUserScores (match) {
 
-			let currentMatchId = match.$id;
 			let promises = [];
 			let currentUid = userService.getCurrentUser();	
 			
@@ -29,7 +28,7 @@
 					user.bets = user.bets || {};
 					user.bets.matches = user.bets.matches || {};
 							
-					let bet = user.bets.matches[currentMatchId] || {};
+					let bet = user.bets.matches[match.$id] || {};
 
 					if (match.result) {
 
