@@ -5,6 +5,7 @@
   margin-top: 30px;
   min-height: 500px;
   margin-bottom: 30px;
+  background: rgba(256,256,256,0);
 }
 
 
@@ -40,6 +41,10 @@ tr:hover .glyphicon-pencil {
   text-align: center;
 }
 
+.wallpaper {
+  background: url(../images/bode_daniel_BA20151008_9472.jpg) no-repeat center center fixed;
+  background-size: cover;
+}
 
 
 /* Login & Register */

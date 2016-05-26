@@ -96,7 +96,7 @@
 
 	function stateWatchers ($rootScope, $state) {
 
-		$rootScope.$on("$stateChangeError", function (event, toState, toParams, fromState, fromParams, error) {
+		$rootScope.$on("$stateChangeError", (event, toState, toParams, fromState, fromParams, error) => {
 
 		 	if (error === "AUTH_REQUIRED") {
 
@@ -107,6 +107,19 @@
 		  		toastr.error(error);
 		  	}
 		});
+
+		$rootScope.$on("$stateChangeSuccess",  (event, toState, toParams, fromState, fromParams) => {
+
+			if (toState.name ==="login" || toState.name === "register") {
+
+				$rootScope.wallpaper = "wallpaper";
+
+			} else {
+
+				$rootScope.wallpaper = null;
+			}
+
+		})
 	}
 
 })();
