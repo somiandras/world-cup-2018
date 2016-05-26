@@ -16,13 +16,15 @@ module.exports = function (grunt) {
   require('jit-grunt')(grunt, {
     useminPrepare: 'grunt-usemin',
     ngtemplates: 'grunt-angular-templates',
-    cdnify: 'grunt-google-cdn'
+    cdnify: 'grunt-google-cdn',
+    babel: 'grunt-babel'
   });
 
   // Configurable paths for the application
   var appConfig = {
     app: require('./bower.json').appPath || 'app',
-    dist: 'dist'
+    dist: 'dist',
+    transpiled: 'transpiled'
   };
 
   // Define the configuration for all the tasks
@@ -380,7 +382,8 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '*.html',
             'images/{,*/}*.{webp}',
-            'styles/fonts/{,*/}*.*'
+            'styles/fonts/{,*/}*.*',
+            'views/*.html'
           ]
         }, {
           expand: true,
@@ -392,6 +395,11 @@ module.exports = function (grunt) {
           cwd: 'bower_components/bootstrap/dist',
           src: 'fonts/*',
           dest: '<%= yeoman.dist %>'
+        }, {
+          expand: true,
+          cwd: 'bower_components/flag-icon-css/flags',
+          src: '4x3/*',
+          dest: '<%= yeoman.dist %>/flags'
         }]
       },
       styles: {
@@ -423,7 +431,19 @@ module.exports = function (grunt) {
         configFile: 'test/karma.conf.js',
         singleRun: true
       }
-    }
+    },
+
+    // Babel settings
+    babel: {
+            options: {
+                presets: ['es2015']
+            },
+            dist: {
+                files: {
+                    '.tmp/concat/scripts/scripts.js': '.tmp/concat/scripts/scripts.js'
+                }
+            }
+        }
   });
 
 
@@ -464,6 +484,7 @@ module.exports = function (grunt) {
     'postcss',
     'ngtemplates',
     'concat',
+    'babel',
     'ngAnnotate',
     'copy:dist',
     'cdnify',
