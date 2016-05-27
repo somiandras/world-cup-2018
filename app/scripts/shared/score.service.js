@@ -23,7 +23,7 @@
 			return userService.getUserList()
 			.then((users) => {
 
-				let promises = angular.map(users, (user) => {
+				let promises = users.map((user) => {
 
 					user.bets = user.bets || {};
 					user.bets.matches = user.bets.matches || {};
