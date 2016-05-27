@@ -12,8 +12,6 @@
 		
 		vm.registerUser = function (email, password) {
 
-			email = email + '@kbcsecurities.hu';
-
 			let credentials = {
 				email: email,
 				password: password

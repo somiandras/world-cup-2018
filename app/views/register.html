@@ -11,29 +11,28 @@
 				    	<div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
 				    	<input 
 				    		required 
-				    		type="text" 
+				    		type="email" 
 				    		class="form-control" 
 				    		id="emailInput" 
 				    		name="email" 
 				    		ng-model="form.email" 
 				    		placeholder="Email" 
-				    		ng-pattern="/^[a-z]+\.[a-z]+$/" 
 				    		ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 300, 'blur': 0 } }">
-				    	<div class="input-group-addon">@kbcsecurities.hu</div>
 				    </div>
 				    <div ng-messages="regForm.email.$error" ng-if="regForm.email.$touched">
 				    	<p class="help-block" ng-message="required">Kelleni fog az emailcímed</p>
-				    	<p class="help-block" ng-message="pattern">A @ előtti részt írd be az emailcímedből</p>
+				    	<p class="help-block" ng-message="email">Teljes emailcímet írj be</p>
 				    </div>
 				</div>
 
 				<!-- Password -->
 
-				<div class="form-group" ng-class="{'has-success': regForm.password.$dirty && regForm.password.$touched}">
+				<div class="form-group" ng-class="{'has-error': regForm.password.$touched && regForm.email.$invalid,'has-success': regForm.password.$dirty && regForm.password.$touched}">
 				    <div class="input-group">
 				    	<div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
 						<input 
-							required 
+							required
+							minlength="6" 
 							type="password" 
 							class="form-control" 
 							id="passwordInput" 
@@ -41,11 +40,15 @@
 							ng-model="form.password" 
 							placeholder="Jelszó">
 				    </div>
+				    <div ng-messages="regForm.password.$error" ng-if="regForm.password.$touched">
+				    	<p class="help-block" ng-message="required">Kötelező jelszót megadni</p>
+				    	<p class="help-block" ng-message="minlength">Legalább 6 karakter hosszú jelszót adj meg</p>
+				    </div>
 				</div>
 
 				<!-- Password check -->
 
-				<div class="form-group" ng-class="{'has-error': form.password !== form.passwordCheck && regForm.passwordCheck.$touched, 'has-success': form.password == form.passwordCheck && regForm.passwordCheck.$dirty}">
+				<div class="form-group" ng-class="{'has-error': form.password !== form.passwordCheck && regForm.passwordCheck.$touched, 'has-success': form.password === form.passwordCheck && regForm.passwordCheck.$dirty}">
 				    <div class="input-group">
 				    	<div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
 						<input 
