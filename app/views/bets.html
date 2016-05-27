@@ -105,12 +105,22 @@
 					<small ng-show="bets.now < match.datetime - bets.timeLimit && !match.result"> {{match.datetime | date: 'MM.dd., H:mm'}}</small>
 				</h4>
 			</div>
-			<div class="col-xs-12 col-sm-10">
+			<div class="col-sm-10 hidden-xs">
 				<h3>
 					<span class="flag-icon" ng-class="{'flag-icon-{{match.home.ISO}}': true}"></span>&nbsp{{match.home.longName}} - {{match.away.longName}}
 					<span class="flag-icon" ng-class="{'flag-icon-{{match.away.ISO}}': true}"></span>
 				</h3>
 			</div>
+	
+			<div class="col-sm-10 visible-xs-block text-center">
+				<h3>
+					<span class="flag-icon" ng-class="{'flag-icon-{{match.home.ISO}}': true}"></span>&nbsp{{match.home.longName}} <br>
+					- <br>
+					<span class="flag-icon" ng-class="{'flag-icon-{{match.away.ISO}}': true}"></span>
+					{{match.away.longName}}
+				</h3>
+			</div>
+
 			<div class="col-xs-12 col-sm-2 text-center">
 				<h3 ng-hide = "bets.now > match.datetime - bets.timeLimit || match.result">
 					<a href ng-click="bets.inputs[match.$id] = true; bets.loadMatchBet(bets.user.bets.matches[match.$id], match.$id)" ng-hide="bets.inputs[match.$id]">
