@@ -18,13 +18,12 @@
 
 		function updateUserScores (match) {
 
-			let promises = [];
 			let currentUid = userService.getCurrentUser();	
 			
 			return userService.getUserList()
 			.then((users) => {
 
-				angular.forEach(users, (user) => {
+				let promises = angular.map(users, (user) => {
 
 					user.bets = user.bets || {};
 					user.bets.matches = user.bets.matches || {};
@@ -40,7 +39,7 @@
 						bet.points = null;
 					}
 
-					promises.push(userService.saveUser(user)); 
+					return userService.saveUser(user); 
 				});
 
 				return $q.all(promises);
@@ -55,13 +54,9 @@
 			return userService.getUserList()
 			.then((users) => {
 
-				let promises = [];
+				let promises = users.map((user) => {
 
-				users.forEach((user) => {
-
-					let promise = userService.getUserMatchBets(user.uid);
-
-					promises.push(promise);
+					return userService.getUserMatchBets(user.uid);
 				})
 
 				return $q.all(promises);

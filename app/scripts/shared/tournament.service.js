@@ -99,9 +99,7 @@
 			return data.players.$loaded()
 			.then((players) => {
 
-				let promises = [];
-
-				newPlayers.forEach((newPlayer) => {
+				let promises = newPlayers.map((newPlayer) => {
 					
 					if (newPlayer.length) {
 
@@ -109,7 +107,7 @@
 						playerToAdd.name = newPlayer.trim();
 						playerToAdd.team = team.$id;
 
-						promises.push(players.$add(playerToAdd));
+						return players.$add(playerToAdd);
 					}
 				});
 
@@ -231,28 +229,20 @@
 			})
 			.then((resp) => {
 
-				let promises = [];
-
-				resp.forEach((user) => {
+				let promises = resp.map((user) => {
 
 					let uid = user.key();
 
-					let promise = userService.getUser(uid);
-
-					promises.push(promise);
+					return userService.getUser(uid);
 				});
 
 				return $q.all(promises);
 			})
 			.then((users) => {
 
-				let promises = [];
+				let promises = users.map((user) => {
 
-				users.forEach((user) => {
-
-					let promise = addPublicScore(user);
-
-					promises.push(promise);
+					return addPublicScore(user);
 				})
 
 				return $q.all(promises);
@@ -270,13 +260,11 @@
 					throw new Error('Nem egyezik a pontlista hossza a felhasználók számával')
 				}
 
-				let promises = [];
-
-				users.forEach((user, index) => {
+				let promises = users.map((user, index) => {
 
 					user.totalScore = scoresArray[index];
 
-					promises.push(userService.saveUser(user));
+					return userService.saveUser(user);
 				});
 
 				return $q.all(promises);
