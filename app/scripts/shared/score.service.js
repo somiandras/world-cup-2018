@@ -12,6 +12,7 @@
 
 		return {
 			updateUserScores: updateUserScores,
+			sumUserScores: sumUserScores
 		};
 
 
@@ -45,6 +46,48 @@
 				return $q.all(promises);
 			});
 		}
+
+
+		function sumUserScores () {
+
+			let sumPoints;
+
+			return userService.getUserList()
+			.then((users) => {
+
+				let promises = [];
+
+				users.forEach((user) => {
+
+					let promise = userService.getUserMatchBets(user.uid);
+
+					promises.push(promise);
+				})
+
+				return $q.all(promises);
+			})
+			.then((matchArrays) => {
+
+				let scoreArray = matchArrays.map((matches) => {
+
+					let score = matches.reduce((prev,cur) => {
+
+						if (cur.points) {
+
+							prev += cur.points;
+						}
+
+						return prev;
+
+					}, 0)
+
+					return score;
+				})
+
+				return scoreArray;
+			})
+		}
+
 
 
 		function calculateScore (result, bet) {

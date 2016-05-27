@@ -40,7 +40,9 @@
 			tournament: APP_CONFIG.fbUrl + 'tournament',
 			teams: APP_CONFIG.fbUrl + 'tournament/teams',
 			matches: APP_CONFIG.fbUrl + 'tournament/matches',
-			players: APP_CONFIG.fbUrl + 'tournament/players'
+			players: APP_CONFIG.fbUrl + 'tournament/players',
+			game: APP_CONFIG.fbUrl + 'game',
+			scores: APP_CONFIG.fbUrl + 'game/scores'
 		});
 	}
 

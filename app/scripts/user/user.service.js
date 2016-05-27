@@ -6,10 +6,10 @@
 	angular.module('user').factory('userService', userService);
 
 	
-	userService.$inject = ['$firebaseObject', '$firebaseArray', '$firebaseAuthService', '$firebaseRef', '$state'];
+	userService.$inject = ['$q', '$firebaseObject', '$firebaseArray', '$firebaseAuthService', '$firebaseRef', '$state', 'APP_CONFIG'];
 
 	
-	function userService ($firebaseObject, $firebaseArray, $firebaseAuthService, $firebaseRef, $state) {
+	function userService ($q, $firebaseObject, $firebaseArray, $firebaseAuthService, $firebaseRef, $state, APP_CONFIG) {
 
 		const auth = $firebaseAuthService;
 		let users, currentUid;
@@ -50,10 +50,25 @@
 				
 				return ref.$getRecord(uid);
 			})
-			.catch((error) => {
+		}
 
-				console.error(error);
-			});
+
+		function getUserMatchBets (uid) {
+
+			let matchesRef = new Firebase(APP_CONFIG.fbUrl + 'users/' + uid + '/bets/matches')
+
+			let matches = $firebaseArray(matchesRef);
+
+			if (matches) {
+
+				return matches.$loaded();
+
+			} else {
+
+				let error = ("Nem sikerült betölteni a meccseket");
+
+				return $q.reject(error);
+			}
 		}
 
 
@@ -134,6 +149,7 @@
 			register: register,
 			getUser: getUser,
 			getCurrentUser: getCurrentUser,
+			getUserMatchBets: getUserMatchBets,
 			saveUser: saveUser,
 			getUserList: getUserList
 		};
