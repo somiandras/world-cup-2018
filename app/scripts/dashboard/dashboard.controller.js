@@ -4,11 +4,13 @@
 
 	angular.module('appCore').controller('DashboardController', DashboardController);
 
-	DashboardController.$inject = [];
+	DashboardController.$inject = ['tournamentService'];
 
-	function DashboardController () {
+	function DashboardController (tournamentService) {
 
-		//...
+		let vm = this;
+
+		vm.tour = tournamentService;
 	}
 	
 })();

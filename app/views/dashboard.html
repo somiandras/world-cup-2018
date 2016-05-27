@@ -1,7 +1,9 @@
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12">
-			Dashboard
+			<ul>
+				<li ng-repeat="player in dashboard.tour.data.scores">{{player.email}} : {{player.score}}</li>
+			</ul>
 		</div>
 	</div>
 </div>
