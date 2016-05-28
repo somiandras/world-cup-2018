@@ -30,14 +30,19 @@
 		<div class="col-md-6">
 			<div class="row">
 				<div class="col-xs-12">
-					<div class="panel panel-default">
+					<div class="panel" ng-class="{'panel-default': dashboard.user.bets, 'panel-info': !dashboard.user.bets}">
 						<div class="panel-heading">
 							<h3 class="panel-title">
 								<span class="glyphicon glyphicon-calendar"></span>
-								Nyitott tippjeid</h3>
+								Nyitott tippjeid
+							</h3>
 						</div>
 						<div class="panel-body">
-							<div class="player-entry" ng-repeat="match in dashboard.tour.data.matches | orderBy: 'datetime' | open: true | limitTo: 4">
+							<div class="text-info text-center" ng-hide="dashboard.user.bets">
+								Még nem adtál le egyetlen tippet sem!
+							</div>
+							<div class="match-entry" ng-repeat="match in dashboard.tour.data.matches | orderBy: 'datetime' | open: true | limitTo: 4" ng-show="dashboard.user.bets">
+								<small>{{match.datetime | date: 'MM.dd., H:mm'}}</small><br>
 								<span class="flag-icon" ng-class="{'flag-icon-{{match.home.ISO}}': true}"></span>
 								{{match.home.longName}} - {{match.away.longName}}
 								<span class="flag-icon" ng-class="{'flag-icon-{{match.away.ISO}}': true}"></span>
@@ -50,7 +55,8 @@
 								</strong>
 							</div>
 							<div class="text-center">
-								<button class="btn btn-primary" ui-sref="app.myBets">Összes tippem</button>						
+								<button class="btn btn-primary" ui-sref="app.myBets({filter: true})" ng-show="dashboard.user.bets">Összes nyitott tippem</button>
+								<button class="btn btn-primary" ui-sref="app.myBets({filter: true})" ng-hide="dashboard.user.bets">Tippelni szeretnék!</button>
 							</div>
 						</div>
 					</div>
@@ -63,7 +69,10 @@
 								Legfrissebb pontjaid</h3>
 						</div>
 						<div class="panel-body">
-							<div class="player-entry" ng-repeat="match in dashboard.tour.data.matches | orderBy: 'datetime' | result | limitTo: 4">
+							<div ng-hide="matches.length" class="empty-state-message text-center">
+								Itt láthatod majd a frissen kapott pontjaidat.
+							</div>
+							<div class="player-entry" ng-repeat="match in dashboard.tour.data.matches | orderBy: 'datetime' | result | limitTo: 4 as matches">
 								<span class="flag-icon" ng-class="{'flag-icon-{{match.home.ISO}}': true}"></span>
 								{{match.home.longName}} - {{match.away.longName}}
 								<span class="flag-icon" ng-class="{'flag-icon-{{match.away.ISO}}': true}"></span>
@@ -74,7 +83,7 @@
 								</h4>
 							</div>
 							<div class="text-center">
-								<button class="btn btn-primary" ui-sref="app.myBets">Minden meccs</button>						
+								<button class="btn btn-primary" ui-sref="app.myBets({filter:false})">Lezárt meccsek</button>		
 							</div>
 						</div>
 					</div>

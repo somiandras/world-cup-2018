@@ -44,12 +44,27 @@ tr:hover .glyphicon-pencil {
   line-height: 2em;
 }
 
+.match-entry {
+  margin-bottom: 5px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  line-height: 1.5em;
+}
+
+.match-entry small {
+  color: #888;
+}
+
 .player-bold {
   font-weight: bold;
 }
 
 .panel-body .btn {
   margin-top: 15px;
+}
+
+.panel-body .empty-state-message {
+  color: #888;
 }
 
 .point-label {

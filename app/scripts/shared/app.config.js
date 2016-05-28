@@ -90,6 +90,9 @@
 			templateUrl: 'views/bets.html',
 			controller: 'BetsController',
 			controllerAs: 'bets',
+			params: {
+				filter: true
+			}
 		});
 	}
 

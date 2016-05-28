@@ -5,9 +5,9 @@
 	angular.module('myBets')
 		.controller('BetsController', BetsController);
 
-	BetsController.$inject = ['tournamentService', 'user', 'betService', 'APP_CONFIG'];
+	BetsController.$inject = ['$state', 'tournamentService', 'user', 'betService', 'APP_CONFIG'];
 
-	function BetsController (tournamentService, user, betService, APP_CONFIG) {
+	function BetsController ($state, tournamentService, user, betService, APP_CONFIG) {
 
 		let vm = this;
 		let tour = tournamentService;
@@ -18,7 +18,7 @@
 		vm.data = tour.data;
 		vm.user = user;
 		vm.timeLimit = APP_CONFIG.timeLimit;
-		vm.onlyOpen = true;
+		vm.onlyOpen = $state.params.filter;
 
 		if (!user.bets || !user.bets.winner || !user.bets.topScorer) {
 
