@@ -48,6 +48,16 @@ tr:hover .glyphicon-pencil {
   font-weight: bold;
 }
 
+.panel-body .btn {
+  margin-top: 15px;
+}
+
+.point-label {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+
 /* Login & Register */
 
 .user-form {
