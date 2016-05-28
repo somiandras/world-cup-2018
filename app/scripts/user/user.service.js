@@ -19,7 +19,7 @@
 			if (newData) {
 
 				currentUid = newData.uid;
-				$state.go('app.dashboard');
+				// $state.go('app.dashboard');
 				
 			} else {
 				
