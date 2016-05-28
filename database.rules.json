@@ -1,4 +1,16 @@
 {
-  ".read": "auth.uid != null",
-  ".write": "auth.uid != null"
+  ".read": "true",
+  ".write": "auth !== null",
+  "game" :{
+  	".write": "root.child('users').child(auth.uid).child('admin').val() === true"
+  },
+  "tournament": {
+  	".write": "root.child('users').child(auth.uid).child('admin').val() === true"
+  },
+  "users": {
+  	"$user": {
+  		".read": "root.child('users').child(auth.uid).child('admin').val() === true || auth.uid === $user",
+  		".write": "root.child('users').child(auth.uid).child('admin').val() === true || auth.uid === $user"
+  	}
+  }
 }
