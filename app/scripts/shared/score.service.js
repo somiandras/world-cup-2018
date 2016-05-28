@@ -4,85 +4,94 @@
 
 	angular.module('appCore').factory('scoreService', scoreService);
 
-	scoreService.$inject = ['$q', 'userService', 'APP_CONFIG'];
+	scoreService.$inject = ['$q', '$firebaseObject', '$firebaseRef', 'userService', 'APP_CONFIG'];
 
-	function scoreService ($q, userService, APP_CONFIG) {
+	function scoreService ($q, $firebaseObject, $firebaseRef, userService, APP_CONFIG) {
 
 		let rules = APP_CONFIG.rules;
 
+		let gameData = $firebaseObject($firebaseRef.game);
+
+
 		return {
-			updateUserScores: updateUserScores,
-			sumUserScores: sumUserScores
+			updateUserScores: updateUserScores
 		};
 
 
 		function updateUserScores (match) {
 
-			let currentUid = userService.getCurrentUser();	
-			
 			return userService.getUserList()
-			.then((users) => {
+			.then((resp) => {
 
-				let promises = users.map((user) => {
+				let users = resp.map((user) => {
 
-					user.bets = user.bets || {};
-					user.bets.matches = user.bets.matches || {};
-							
-					let bet = user.bets.matches[match.$id] || {};
-
-					if (match.result) {
-
-						bet.points = calculateScore(match.result, bet);
-							
-					} else {
-
-						bet.points = null;
-					}
-
-					return userService.saveUser(user); 
+					return updateMatchScore(user, match);
+				
 				});
 
-				return $q.all(promises);
-			});
-		}
 
+				return $q.all(users.map((user) => {
 
-		function sumUserScores () {
+					return userService.saveUser(user)
+					.then((resp) => {
 
-			let sumPoints;
+						return $q.resolve(user);
+					}); 
 
-			return userService.getUserList()
+				}));
+
+			})
 			.then((users) => {
 
-				let promises = users.map((user) => {
+				let usersWithTotalScore = users.map((user) => {
 
-					return userService.getUserMatchBets(user.uid);
-				})
+					return getTotalScore(user);
 
-				return $q.all(promises);
+				});
+
+
+				return $q.all(usersWithTotalScore);
+
 			})
-			.then((matchArrays) => {
+			.then((users) => {
 
-				let scoreArray = matchArrays.map((matches) => {
+				return $q.all(users.map((user) => {
 
-					let score = matches.reduce((prev,cur) => {
+					return userService.saveUser(user)
+					.then((resp) => {
 
-						if (cur.points) {
+						return $q.resolve(user);
+					}); 
 
-							prev += cur.points;
-						}
+				}));
+			})
+			.then((users) => {
 
-						return prev;
-
-					}, 0)
-
-					return score;
-				})
-
-				return scoreArray;
+				return generatePublicScores(users);
 			})
 		}
 
+
+		function updateMatchScore (user, match) {
+
+			if (!user.bets || !user.bets.matches) {
+
+				return user;
+			}
+
+
+			if (user.bets.matches[match.$id] && match.result) {
+
+				user.bets.matches[match.$id].points = calculateScore(match.result, user.bets.matches[match.$id]);
+
+			} else if (user.bets.matches[match.$id]) {
+
+				user.bets.matches[match.$id].points = null;
+			}
+
+
+			return user;
+		}
 
 
 		function calculateScore (result, bet) {
@@ -129,6 +138,57 @@
 			} 
 
 			return winner;
+		}
+
+
+		function getTotalScore (user) {
+
+			if (!user.uid) {
+
+				let error = new Error(user + 'has no uid!');
+
+				return $q.reject(error);
+			}
+
+			return userService.getUserMatchBets(user.uid)
+			.then((matches) => {
+
+				let score = matches.reduce((prev,cur) => {
+
+					if (cur.points) {
+
+						prev += cur.points;
+					}
+
+					return prev;
+
+				}, 0);
+
+				user.totalScore = score;
+
+				return $q.resolve(user);
+			})
+		}
+
+
+		function generatePublicScores (users) {
+
+			gameData.$loaded()
+			.then((game) => {
+
+				let scoreList = users.map((user) => {
+
+					return {
+						email: user.email,
+						uid: user.uid,
+						score: user.totalScore
+					}
+				})
+
+				game.scores = scoreList;
+
+				return game.$save();
+			})
 		}
 
 	}

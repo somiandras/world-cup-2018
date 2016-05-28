@@ -13,7 +13,6 @@
 		data.teams = $firebaseArray($firebaseRef.teams);
 		data.matches = $firebaseArray($firebaseRef.matches);
 		data.players = $firebaseArray($firebaseRef.players);
-
 		data.scores = $firebaseArray($firebaseRef.scores);
 
 
@@ -215,90 +214,11 @@
 			}
 
 			return saveMatch(match)
-			.then((resp) => {
+			.then((resp) => {
 
 				return scoreService.updateUserScores(match);
-			})
-			.then((resp) => {
-
-				return scoreService.sumUserScores();
-			})
-			.then((scoresArray) => {
-
-				return mapUserScores(scoresArray);
-			})
-			.then((resp) => {
-
-				let promises = resp.map((user) => {
-
-					let uid = user.key();
-
-					return userService.getUser(uid);
-				});
-
-				return $q.all(promises);
-			})
-			.then((users) => {
-
-				let promises = users.map((user) => {
-
-					return addPublicScore(user);
-				})
-
-				return $q.all(promises);
 			});
 		}
-
-
-		function mapUserScores (scoresArray) {
-
-			return userService.getUserList()
-			.then((users) => {
-
-				if (users.length !== scoresArray.length) {
-
-					throw new Error('Nem egyezik a pontlista hossza a felhasználók számával')
-				}
-
-				let promises = users.map((user, index) => {
-
-					user.totalScore = scoresArray[index];
-
-					return userService.saveUser(user);
-				});
-
-				return $q.all(promises);
-			})
-		}
-
-
-		function addPublicScore (user) {
-
-			return data.scores.$loaded()
-			.then((scores) => {
-
-				let indexFound = scores.findIndex((elem) => {
-
-					return elem.uid === user.uid;
-				});
-
-				if (indexFound !== -1) {
-
-					scores[indexFound].score = user.totalScore;
-
-					return scores.$save(indexFound);
-				
-				} else {
-
-					return scores.$add({
-						uid: user.uid,
-						email: user.email,
-						score: user.totalScore || 0,
-					});
-				}
-			});
-		}
-
 
 		// HELPER FUNCTIONS
 
