@@ -4,7 +4,8 @@
 
 	angular.module('appCore')
 	.filter('team', teamFilter)
-	.filter('open', openFilter);
+	.filter('open', openFilter)
+	.filter('result', resultFilter);
 
 	function teamFilter () {
 
@@ -24,6 +25,7 @@
 			return filteredData;
 		};
 	}
+
 
 	openFilter.$inject = ['APP_CONFIG']
 
@@ -53,5 +55,28 @@
 			}
 		}	
 	}
+
+
+	resultFilter.$inject = ['APP_CONFIG']
+
+	function resultFilter (APP_CONFIG) {
+
+		return function (matchList) {
+
+			let filteredData = [];
+			matchList = matchList || [];
+
+			matchList.forEach((match) => {
+
+				if (match.result) {
+
+					filteredData.push(match)
+				}
+			});
+
+			return filteredData;
+		}	
+	}
+
 
 })();
