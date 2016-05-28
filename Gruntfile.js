@@ -17,7 +17,8 @@ module.exports = function (grunt) {
     useminPrepare: 'grunt-usemin',
     ngtemplates: 'grunt-angular-templates',
     cdnify: 'grunt-google-cdn',
-    babel: 'grunt-babel'
+    babel: 'grunt-babel',
+    shell: 'grunt-shell'
   });
 
   // Configurable paths for the application
@@ -443,7 +444,15 @@ module.exports = function (grunt) {
                     '.tmp/concat/scripts/scripts.js': '.tmp/concat/scripts/scripts.js'
                 }
             }
-        }
+        },
+
+    shell: {
+
+      firebase: {
+
+        command: 'firebase deploy --only hosting'
+      }
+    }
   });
 
 
@@ -500,5 +509,10 @@ module.exports = function (grunt) {
     'newer:jscs',
     'test',
     'build'
+  ]);
+
+  grunt.registerTask('deploy', [
+    'build', 
+    'shell:firebase'
   ]);
 };
