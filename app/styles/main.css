@@ -40,7 +40,13 @@ tr:hover .glyphicon-pencil {
   text-align: center;
 }
 
+.player-entry {
+  line-height: 2em;
+}
 
+.player-bold {
+  font-weight: bold;
+}
 
 /* Login & Register */
 

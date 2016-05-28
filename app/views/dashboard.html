@@ -1,10 +1,36 @@
 <div class="container">
 	<div class="row">
-		<div class="col-xs-12">
-
-			<ul>
-				<li ng-repeat="player in dashboard.tour.data.scores">{{player.email}} : {{player.score}}</li>
-			</ul>
+		<div class="col-md-6">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Pontok</h3>
+				</div>
+				<div class="panel-body">
+					<div class="player-entry" ng-repeat="player in dashboard.tour.data.scores | orderBy: 'score' : true  track by player.uid" ng-class="{'text-info player-bold': dashboard.user.uid === player.uid}">
+						<div class="col-xs-8">
+							<span>{{$index + 1}}. </span>
+							<span class="glyphicon glyphicon-user" ng-show="dashboard.user.uid === player.uid"></span>
+							{{player.email}}
+						</div>
+						<div class="col-xs-4 text-right">
+							{{player.score}} pont
+						</div>
+					</div>
+				</div>
+				<div class="panel-footer">
+					<a href>Hogyan számoljuk a pontokat?</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Következő meccsek</h3>
+				</div>
+				<div class="panel-body">
+					Body
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
