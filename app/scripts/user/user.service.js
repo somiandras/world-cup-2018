@@ -19,7 +19,11 @@
 			if (newData) {
 
 				currentUid = newData.uid;
-				// $state.go('app.dashboard');
+
+				if ($state.current.name === 'login') {
+
+					$state.go('app.dashboard');
+				}
 				
 			} else {
 				
