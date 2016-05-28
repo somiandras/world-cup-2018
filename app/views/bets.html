@@ -87,10 +87,9 @@
 			<h3>Meccsek<br>	
 			<small>A tippedet még megváltoztathatod, legkésőbb a meccs kezdete előtt {{bets.timeLimit / 60000}} perccel. Kattints a tippre a módosításhoz!</small></h3>
 			<hr>
-			<div>
-				<button class="btn btn-info" uib-btn-checkbox ng-model="bets.onlyOpen">
-					Csak a nyitott meccsek
-				</button>
+			<div class="btn-group pull-right">
+			    <label class="btn btn-info" ng-model="bets.onlyOpen" uib-btn-radio="true">Nyitott meccsek</label>
+			    <label class="btn btn-primary" ng-model="bets.onlyOpen" uib-btn-radio="false">Már lezárt meccsek</label>
 			</div>
 		</div>
 		<div 

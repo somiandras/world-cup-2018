@@ -18,6 +18,7 @@
 		vm.data = tour.data;
 		vm.user = user;
 		vm.timeLimit = APP_CONFIG.timeLimit;
+		vm.onlyOpen = true;
 
 		if (!user.bets || !user.bets.winner || !user.bets.topScorer) {
 

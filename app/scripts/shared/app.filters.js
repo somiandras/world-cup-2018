@@ -31,13 +31,13 @@
 
 	function openFilter (APP_CONFIG) {
 
-		return function (matchList, trigger, time) {
+		return function (matchList, open, time) {
 
 			let filteredData = [];
 			matchList = matchList || [];
 			time = time || new Date().getTime();
 
-			if (trigger) {
+			if (open) {
 
 				matchList.forEach((match) => {
 
@@ -51,7 +51,15 @@
 
 			} else {
 
-				return matchList;
+				matchList.forEach((match) => {
+
+					if (time > match.datetime - APP_CONFIG.timeLimit || match.result) {
+
+						filteredData.push(match)
+					}
+				});
+
+				return filteredData;
 			}
 		}	
 	}
