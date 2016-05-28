@@ -30,15 +30,15 @@
 		<div class="col-md-6">
 			<div class="row">
 				<div class="col-xs-12">
-					<div class="panel" ng-class="{'panel-default': dashboard.user.bets, 'panel-info': !dashboard.user.bets}">
+					<div class="panel panel-info" ng-class="{'panel-info': dashboard.user.bets, 'panel-warning': !dashboard.user.bets}">
 						<div class="panel-heading">
 							<h3 class="panel-title">
 								<span class="glyphicon glyphicon-calendar"></span>
 								Nyitott tippjeid
 							</h3>
 						</div>
-						<div class="panel-body">
-							<div class="text-info text-center" ng-hide="dashboard.user.bets">
+						<div class="panel-body" ng-class="{'bg-warning': !dashboard.user.bets}">
+							<div class="text-warning text-center" ng-hide="dashboard.user.bets">
 								Még nem adtál le egyetlen tippet sem!
 							</div>
 							<div class="match-entry" ng-repeat="match in dashboard.tour.data.matches | orderBy: 'datetime' | open: true | limitTo: 4" ng-show="dashboard.user.bets">
@@ -56,7 +56,7 @@
 							</div>
 							<div class="text-center">
 								<button class="btn btn-primary" ui-sref="app.myBets({filter: true})" ng-show="dashboard.user.bets">Összes nyitott tippem</button>
-								<button class="btn btn-primary" ui-sref="app.myBets({filter: true})" ng-hide="dashboard.user.bets">Tippelni szeretnék!</button>
+								<button class="btn btn-warning" ui-sref="app.myBets({filter: true})" ng-hide="dashboard.user.bets">Tippelni szeretnék!</button>
 							</div>
 						</div>
 					</div>
