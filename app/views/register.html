@@ -60,7 +60,8 @@
 							name="passwordCheck" 
 							ng-model="form.passwordCheck" 
 							placeholder="Jelszó megerősítése"
-							ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 300, 'blur': 0 } }">
+							ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 300, 'blur': 0 } }"
+							ng-disabled="regForm.password.$invalid">
 				    </div>
 					<div class="help-block" ng-show="form.password !== form.passwordCheck && regForm.passwordCheck.$touched">Nem egyezik a két jelszó</div>
 				</div>
