@@ -9,7 +9,7 @@
 						Pontverseny</h3>
 				</div>
 				<div class="panel-body">
-					<div class="player-entry" ng-repeat="player in dashboard.tour.data.scores | orderBy: 'score' : true  track by player.uid" ng-class="{'text-info player-bold': dashboard.user.uid === player.uid}">
+					<div class="player-entry" ng-repeat="player in dashboard.users | orderBy: 'totalScore' : true  track by player.uid" ng-class="{'text-info player-bold': dashboard.user.uid === player.uid}">
 						<span>
 							<span class="glyphicon glyphicon-star-empty" ng-hide="dashboard.user.uid === player.uid" style="color: #fff"></span>
 							<span class="glyphicon glyphicon-star" ng-show="dashboard.user.uid === player.uid"></span>
@@ -17,7 +17,7 @@
 							<span ng-show="!player.name">{{player.email}}</span>
 						</span>
 						<span class="pull-right">
-							{{player.score}} pont
+							{{player.totalScore}} pont
 						</span>
 					</div>
 				</div>

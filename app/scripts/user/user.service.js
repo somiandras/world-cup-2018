@@ -12,13 +12,11 @@
 	function userService ($q, $firebaseObject, $firebaseArray, $firebaseAuthService, $firebaseRef, $state, APP_CONFIG) {
 
 		const auth = $firebaseAuthService;
-		let users, currentUid;
+		let users = $firebaseArray($firebaseRef.users);
 
 		auth.$onAuth((newData) => {
 
 			if (newData) {
-
-				currentUid = newData.uid;
 
 				if ($state.current.name === 'login' || $state.current.name === 'register') {
 
@@ -27,28 +25,18 @@
 				
 			} else {
 				
-				// if (users) {
-				//
-				// 	users.$destroy();
-				//
-				// } 
-
-				currentUid = undefined;
+				if (users) {
+				
+					users.$destroy();
+				
+				} 
 
 				$state.go('login');
 			}		
 		});
 
 
-		function getCurrentUser () {
-
-			return currentUid;
-		}
-
-
 		function getUser (uid) {
-
-			users = $firebaseArray($firebaseRef.users);
 
 			return users.$loaded()
 			.then((ref) => {
@@ -151,11 +139,11 @@
 
 
 		return {
+			users: users,
 			login: login,
 			logout: logout,
 			register: register,
 			getUser: getUser,
-			// getCurrentUser: getCurrentUser,
 			getUserMatchBets: getUserMatchBets,
 			saveUser: saveUser,
 			removeUser: removeUser,

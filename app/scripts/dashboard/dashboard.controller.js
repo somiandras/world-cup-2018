@@ -4,14 +4,16 @@
 
 	angular.module('appCore').controller('DashboardController', DashboardController);
 
-	DashboardController.$inject = ['tournamentService', 'user', '$uibModal'];
+	DashboardController.$inject = ['userService', 'tournamentService', 'user', '$uibModal'];
 
-	function DashboardController (tournamentService, user, $uibModal) {
+	function DashboardController (userService, tournamentService, user, $uibModal) {
 
 		let vm = this;
 
 		vm.tour = tournamentService;
 		vm.user = user;
+
+		vm.users = userService.users;
 
 		if (!user.name) {
 
