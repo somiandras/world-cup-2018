@@ -3,18 +3,23 @@
 		<div class="col-xs-12">
 			<h3>Profiladataim</h3>
 			<hr>
-			<h4>
-				<strong>Email: </strong>
+			<h5>
+				<span class="glyphicon glyphicon-envelope text-info"></span>
+				<strong>Email</strong>
+			</h5>
 				<span>{{profile.user.email}}</span>
-				<small><span class="glyphicon glyphicon-lock"></span> Az emailcímedet nem változtathatod meg.</small>
-			</h4>
-			<h4 ng-hide="profile.form.name">
-				<strong>Név: </strong>
-				<span>{{profile.user.name}}</span>
+				<small class="help-block"><span class="glyphicon glyphicon-lock"></span> Az emailcímedet nem változtathatod meg.</small>
+			<hr>
+			<h5 >
+				<span class="glyphicon glyphicon-user text-info"></span>
+				<strong>Név</strong>
+			</h5>
+				<span ng-hide="profile.form.name">{{profile.user.name}}
 				<small>
 					<a href ng-click="profile.editParam('name')">Szerkesztés</a>
 				</small>
-			</h4>
+				</span>
+
 			<form class="form-horizontal" ng-submit="profile.saveParam('name',profile.form.name)" ng-show="profile.form.name">
 				<div class="form-group">
 					<div class="col-xs-8 col-sm-6 col-lg-3">
@@ -23,13 +28,19 @@
 					<button type="submit" class="btn btn-primary">Mentés</button>
 				</div>
 			</form>
-			<h4 ng-hide="profile.form.company">
-				<strong>Cégnév: </strong>
-				<span>{{profile.user.company}}</span>
+			
+			<hr>
+			
+			<h5>
+				<span class="glyphicon glyphicon-briefcase text-info"></span>
+				<strong>Cégnév </strong>
+			</h5>
+				<span ng-hide="profile.form.company">{{profile.user.company}}
 				<small>
 					<a href ng-click="profile.editParam('company')">Szerkesztés</a>
 				</small>
-			</h4>
+				</span>
+
 			<form class="form-horizontal" ng-submit="profile.saveParam('company',profile.form.company)" ng-show="profile.form.company">
 				<div class="form-group">
 					<div class="col-xs-8 col-sm-6 col-lg-3">
@@ -38,12 +49,18 @@
 					<button type="submit" class="btn btn-primary">Mentés</button>
 				</div>
 			</form>
-		</div>
-
-		<div class="col-xs-12">
 			<hr>
-			<button class="btn btn-danger">Profil törlése</button>
+		</div>
+		<div class="col-xs-12" ng-hide="profile.showPassword">
+			<button class="btn btn-danger" ng-click="profile.showPassword = true">Profil törlése</button>
 			<span class="text-danger"><strong>&nbsp Figyelem!</strong> Ezzel törlöd magad a játékból, minden tipped és pontszámod elvész.</span>
 		</div>
+		<form class="col-md-6 cl-lg-3" ng-show="profile.showPassword" name="passwordForm">
+			<div class="form-group">
+				<label>Jelszó</label>
+				<input type="password" class="form-control" ng-model="profile.form.password" eb-focus="profile.showPassword" required>
+			</div>
+			<button class="btn btn-danger" ng-click="profile.deleteProfile(profile.form.password)" ng-disabled = "passwordForm.$invalid">Törölni szeretném a profilomat</button>
+		</form>
 	</div>
 </div>

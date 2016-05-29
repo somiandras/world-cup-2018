@@ -180,6 +180,7 @@
 
 					return {
 						email: user.email,
+						name: user.name || null,
 						uid: user.uid,
 						score: user.totalScore
 					}

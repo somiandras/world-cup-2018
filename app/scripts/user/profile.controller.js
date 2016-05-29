@@ -4,18 +4,20 @@
 
 	angular.module('user').controller('ProfileController', ProfileController);
 
-	ProfileController.$inject = ['user', 'userService'];
+	ProfileController.$inject = ['$window', 'user', 'userService'];
 
-	function ProfileController (user, userService) {
+	function ProfileController ($window, user, userService) {
 
 		let vm = this;
 		vm.user = user;
 		vm.form = {};
 
+
 		vm.editParam = function (param) {
 
 			vm.form[param] = user[param];
-		}
+		};
+
 
 		vm.saveParam = function (param, newValue) {
 
@@ -36,7 +38,36 @@
 			}
 
 			vm.form[param] = false;
-		}
+		};
+
+
+		vm.deleteProfile = function (password) {
+
+			let cred = {
+				email: user.email,
+				password: password
+			};
+
+			userService.login(cred)
+			.then(() => {
+
+				let confirm = $window.confirm('Biztosan törölni akarod magad? Ezzel minden tipped és eredményed elvész, a Föld pedig a Napba zuhan.');
+
+				if (confirm) {
+
+					return userService.removeUser(cred, user);
+
+				} else {
+
+					profile.showPassword = false;
+				}
+
+			})
+			.catch((error) => {
+
+				toastr.error(error.message);
+			});
+		};
 	}
 	
 })();

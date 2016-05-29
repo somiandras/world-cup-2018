@@ -13,7 +13,8 @@
 						<span>
 							<span class="glyphicon glyphicon-star-empty" ng-hide="dashboard.user.uid === player.uid" style="color: #fff"></span>
 							<span class="glyphicon glyphicon-star" ng-show="dashboard.user.uid === player.uid"></span>
-							{{player.email}}
+							{{player.name}}
+							<span ng-show="!player.name">{{player.email}}</span>
 						</span>
 						<span class="pull-right">
 							{{player.score}} pont

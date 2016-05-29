@@ -20,17 +20,18 @@
 
 				currentUid = newData.uid;
 
-				if ($state.current.name === 'login') {
+				if ($state.current.name === 'login' || $state.current.name === 'register') {
 
 					$state.go('app.dashboard');
 				}
 				
 			} else {
 				
-				if (users) {
-
-					users.$destroy();
-				} 
+				// if (users) {
+				//
+				// 	users.$destroy();
+				//
+				// } 
 
 				currentUid = undefined;
 
@@ -84,11 +85,7 @@
 
 		function login (credentials) {
 
-			auth.$authWithPassword(credentials)
-			.catch((error) => {
-
-				toastr.error(error);
-			});
+			return auth.$authWithPassword(credentials)
 		}
 
 
@@ -147,14 +144,25 @@
 		}
 
 
+		function removeUser (cred, user) {
+
+			return users.$remove(user)
+			.then(() => {
+
+				return auth.$removeUser(cred);
+			});
+		}
+
+
 		return {
 			login: login,
 			logout: logout,
 			register: register,
 			getUser: getUser,
-			getCurrentUser: getCurrentUser,
+			// getCurrentUser: getCurrentUser,
 			getUserMatchBets: getUserMatchBets,
 			saveUser: saveUser,
+			removeUser: removeUser,
 			getUserList: getUserList
 		};
 	}

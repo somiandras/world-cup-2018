@@ -15,6 +15,15 @@
 		var vm = this;
 
 		vm.user = userService;
+
+		vm.login = function (data) {
+
+			userService.login(data)
+			.catch((error) => {
+
+				toastr.error(error.message);
+			});
+		}
 	}
 
 })();
