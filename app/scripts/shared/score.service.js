@@ -57,17 +57,9 @@
 
 				return $q.all(users.map((user) => {
 
-					return userService.saveUser(user)
-					.then((resp) => {
-
-						return $q.resolve(user);
-					}); 
+					return userService.saveUser(user);
 
 				}));
-			})
-			.then((users) => {
-
-				return generatePublicScores(users);
 			})
 		}
 
@@ -167,28 +159,6 @@
 				user.totalScore = score;
 
 				return $q.resolve(user);
-			})
-		}
-
-
-		function generatePublicScores (users) {
-
-			gameData.$loaded()
-			.then((game) => {
-
-				let scoreList = users.map((user) => {
-
-					return {
-						email: user.email,
-						name: user.name || null,
-						uid: user.uid,
-						score: user.totalScore
-					}
-				})
-
-				game.scores = scoreList;
-
-				return game.$save();
 			})
 		}
 
