@@ -9,6 +9,7 @@
 	function UserRegisterController (userService) {
 
 		let vm = this;
+		vm.loading = false;
 		
 		vm.registerUser = function (email, password) {
 

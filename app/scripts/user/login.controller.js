@@ -15,13 +15,17 @@
 		var vm = this;
 
 		vm.user = userService;
+		vm.loading = false;
 
 		vm.login = function (data) {
+
+			vm.loading = true;
 
 			userService.login(data)
 			.catch((error) => {
 
 				toastr.error(error.message);
+				vm.loading = false;
 			});
 		}
 	}

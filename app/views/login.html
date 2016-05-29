@@ -19,7 +19,10 @@
 				</div>
 
 				<div class="form-group">
-				     <button type="submit" class="btn btn-primary btn-block" ng-disabled="loginForm.$invalid">Bejelentkezés</button>
+				    <button type="submit" class="btn btn-primary btn-block" ng-disabled="loginForm.$invalid || login.loading">
+						<span ng-hide="login.loading">Bejelentkezés</span>
+						<span ng-show="login.loading">Folyamatban...</span>
+				    </button>
 					<hr>
 				  	<div class="col-xs-12">
 				  		<p class="text-center">Még nem regisztráltam. <a ui-sref="register">Most regisztrálok!</a></p>
