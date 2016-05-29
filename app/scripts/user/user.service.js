@@ -99,7 +99,7 @@
 
 			let newUid;
 
-			auth.$createUser(credentials)
+			return auth.$createUser(credentials)
 			.then((data) => {
 
 				newUid = data.uid;
@@ -130,10 +130,6 @@
 
 					return userObj.$destroy();
 				});
-			})
-			.catch((error) => {
-
-				console.error(error);
 			});
 		}
 

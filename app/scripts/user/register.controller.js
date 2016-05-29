@@ -12,12 +12,19 @@
 		
 		vm.registerUser = function (email, password) {
 
+			vm.loading = true;
+
 			let credentials = {
 				email: email,
 				password: password
 			};
 
-			userService.register(credentials);
+			userService.register(credentials)
+			.catch((error) => {
+
+				vm.loading = false;
+				toastr.error(error.message);
+			});
 		};
 
 	}

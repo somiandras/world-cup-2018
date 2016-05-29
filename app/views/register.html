@@ -68,7 +68,10 @@
 				<!-- Submit button -->
 
 				<div class="form-group">
-				    <button type="submit" class="btn btn-info btn-block" ng-disabled="regForm.$invalid || form.password !== form.passwordCheck">Regisztrálok</button>
+				    <button type="submit" class="btn btn-info btn-block" ng-disabled="regForm.$invalid || form.password !== form.passwordCheck || register.loading">
+						<span ng-hide = "register.loading">Regisztrálok</span>
+						<span ng-show = "register.loading">Folyamatban...</span>
+				    </button>
 					<hr>
 				  	<div class="col-xs-12">
 				  		<p class="text-center">Már regisztráltál?
