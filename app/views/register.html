@@ -27,7 +27,7 @@
 
 				<!-- Password -->
 
-				<div class="form-group" ng-class="{'has-error': regForm.password.$touched && regForm.email.$invalid,'has-success': regForm.password.$dirty && regForm.password.$touched}">
+				<div class="form-group" ng-class="{'has-error': regForm.password.$touched && regForm.password.$invalid,'has-success': regForm.password.$dirty && regForm.password.$touched}">
 				    <div class="input-group">
 				    	<div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
 						<input 
@@ -38,7 +38,8 @@
 							id="passwordInput" 
 							name="password" 
 							ng-model="form.password" 
-							placeholder="Jelszó">
+							placeholder="Jelszó"
+							ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 300, 'blur': 0 } }">
 				    </div>
 				    <div ng-messages="regForm.password.$error" ng-if="regForm.password.$touched">
 				    	<p class="help-block" ng-message="required">Kötelező jelszót megadni</p>
@@ -58,7 +59,8 @@
 							id="passwordInput" 
 							name="passwordCheck" 
 							ng-model="form.passwordCheck" 
-							placeholder="Jelszó megerősítése">
+							placeholder="Jelszó megerősítése"
+							ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 300, 'blur': 0 } }">
 				    </div>
 					<div class="help-block" ng-show="form.password !== form.passwordCheck && regForm.passwordCheck.$touched">Nem egyezik a két jelszó</div>
 				</div>
