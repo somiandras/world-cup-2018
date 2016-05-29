@@ -38,7 +38,7 @@
 			})
 			.catch((error) => {
 
-				toastr.error(error);
+				console.error(error);
 			})
 		}
 

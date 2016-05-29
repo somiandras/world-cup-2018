@@ -12,7 +12,7 @@
   		".read": "auth !== null",
   		".write": "root.child('users').child(auth.uid).child('admin').val() === true || auth.uid === $user",
       "email": {
-        ".read": "root.child('users').child(auth.uid).child('admin').val() === true || auth.uid === $user",
+        ".read": "root.child('users').child(auth.uid).child('admin').val() === true || auth.uid === $user"
       }
   	}
   }

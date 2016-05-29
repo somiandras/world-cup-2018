@@ -25,12 +25,6 @@
 				
 			} else {
 				
-				if (users) {
-				
-					users.$destroy();
-				
-				} 
-
 				$state.go('login');
 			}		
 		});
@@ -40,7 +34,7 @@
 
 			return users.$loaded()
 			.then((ref) => {
-				
+
 				return ref.$getRecord(uid);
 			})
 		}
@@ -73,7 +67,7 @@
 
 		function login (credentials) {
 
-			return auth.$authWithPassword(credentials)
+			return auth.$authWithPassword(credentials);
 		}
 
 
