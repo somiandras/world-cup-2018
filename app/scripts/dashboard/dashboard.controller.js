@@ -13,7 +13,7 @@
 		vm.tour = tournamentService;
 		vm.user = user;
 
-		vm.users = userService.users;
+		vm.users = userService.public;
 
 		if (!user.name) {
 

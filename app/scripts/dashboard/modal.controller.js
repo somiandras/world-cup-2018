@@ -30,8 +30,7 @@
 
 				$uibModalInstance.close('Elmentettük az adataidat!');
 			})
-		}
-
+		};
 	}
 
 })();

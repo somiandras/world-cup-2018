@@ -1,9 +1,6 @@
 {
   ".read": "true",
   ".write": "auth !== null",
-  "game" :{
-  	".write": "root.child('users').child(auth.uid).child('admin').val() === true"
-  },
   "tournament": {
   	".write": "root.child('users').child(auth.uid).child('admin').val() === true"
   },

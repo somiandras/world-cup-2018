@@ -13,6 +13,7 @@
 
 		const auth = $firebaseAuthService;
 		let users = $firebaseArray($firebaseRef.users);
+		let usersPublic = $firebaseArray($firebaseRef.public);
 
 		auth.$onAuth((newData) => {
 
@@ -107,18 +108,53 @@
 
 				userObj[newUid] = newUser;
 
-				return userObj.$save()
-				.then(() => {
+				return userObj.$save();
+			})
+			.then((resp) => {
 
-					return userObj.$destroy();
-				});
-			});
+				return usersPublic.$loaded();
+			})
+			.then((users) => {
+
+				users[newUid] = {};
+				users[newUid].score = 0;
+
+				return users.$save();
+			})
 		}
 
 
 		function saveUser (user) {
 
-			return users.$save(user);
+			return users.$save(user)
+			.then((ref) => {
+
+				return usersPublic.$loaded();
+			})
+			.then((publicData) => {
+
+				let found = publicData.find((item) => {
+
+					return item.uid === user.uid;
+				});
+
+				if (!found) {
+
+					return publicData.$add({
+						name: user.name || null, 
+						uid: user.uid,
+						score: user.totalScore || 0
+					});
+				
+				} else {
+
+					found.name = user.name || null;
+					found.score = user.totalScore || 0;
+
+					return publicData.$save(found);
+				} 
+
+			});
 		}
 
 
@@ -127,13 +163,26 @@
 			return users.$remove(user)
 			.then(() => {
 
+				return usersPublic.$loaded();
+			})
+			.then((publicArray) => {
+
+				let found = publicArray.find((item) => {
+
+					return item.uid === user.uid;
+				})
+
+				return publicArray.$remove(found);
+			})
+			.then(() => {
+
 				return auth.$removeUser(cred);
 			});
 		}
 
 
 		return {
-			users: users,
+			public: usersPublic,
 			login: login,
 			logout: logout,
 			register: register,

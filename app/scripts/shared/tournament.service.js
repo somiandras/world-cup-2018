@@ -13,8 +13,7 @@
 		data.teams = $firebaseArray($firebaseRef.teams);
 		data.matches = $firebaseArray($firebaseRef.matches);
 		data.players = $firebaseArray($firebaseRef.players);
-		data.scores = $firebaseArray($firebaseRef.scores);
-
+		data.scores = $firebaseArray($firebaseRef.public);
 
 		return {
 			data: data,
@@ -217,7 +216,11 @@
 			.then((resp) => {
 
 				return scoreService.updateUserScores(match);
-			});
+			})
+			// .then(() => {
+
+			// 	return scoreService.calculatePublicScores();
+			// })
 		}
 
 		// HELPER FUNCTIONS

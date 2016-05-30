@@ -10,11 +10,8 @@
 
 		let rules = APP_CONFIG.rules;
 
-		let gameData = $firebaseObject($firebaseRef.game);
-
-
 		return {
-			updateUserScores: updateUserScores
+			updateUserScores: updateUserScores,
 		};
 
 
