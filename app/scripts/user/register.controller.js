@@ -25,6 +25,7 @@
 
 				vm.loading = false;
 				toastr.error(error.message);
+				console.error(error);
 			});
 		};
 

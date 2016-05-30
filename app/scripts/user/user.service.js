@@ -114,13 +114,13 @@
 
 				return usersPublic.$loaded();
 			})
-			.then((users) => {
+			.then((publicData) => {
 
-				users[newUid] = {};
-				users[newUid].score = 0;
-
-				return users.$save();
-			})
+				return publicData.$add({
+					uid: newUid,
+					score: 0
+				});
+			});
 		}
 
 
