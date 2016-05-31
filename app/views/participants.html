@@ -1,7 +1,42 @@
 <div class="container">
-	<div ng-repeat="user in participants.players">
-		{{user.email}}&nbsp 
-		<a href ng-click="participants.makeUserAdmin(user)" ng-hide="user.admin">Adminná teszem</a>
-		<small ng-show="user.admin">(Admin)</small>
+	<div class="row">
+		<div class="col-xs-12">
+			<table class="table table-striped">
+				<thead>
+					<th>Email</th>
+					<th>Név</th>
+					<th>Cég</th>
+					<th>Regisztráció ideje</th>
+					<th>Fő tipp?</th>
+					<th>Meccs tippek?</th>
+					<th>Admin</th>
+					<th>Módosítás</th>
+				</thead>
+				<tbody>
+					<tr ng-repeat="user in participants.players">
+						<td><span uib-tooltip="{{user.uid}}">{{user.email}}</span></td>
+						<td>{{user.name}}</td>
+						<td>{{user.company}}</td>
+						<td>{{user.createdAt | date: 'MM.dd. H:mm'}}</td>
+						<td>
+							<span ng-show="user.bets.topScorer && user.bets.winner">Igen</span>
+							<span ng-hide="user.bets.topScorer && user.bets.winner">Nem</span>
+						</td>
+						<td>
+							<span ng-show="user.bets.matches">Igen</span>
+							<span ng-hide="user.bets.matches">Nem</span>
+						</td>
+						<td>
+							<span ng-show="user.admin">Igen</span>
+							<span ng-hide="user.admin">Nem</span>
+						</td>
+						<td>
+							<a href ng-click="participants.makeUserAdmin(user)" ng-hide="user.admin">Adminná teszem</a>
+							<a href ng-click="participants.deleteUser(user)">Törlés</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
