@@ -92,6 +92,12 @@
 			params: {
 				filter: true
 			}
+		})
+		.state('app.rules', {
+			url: '/rules',
+			templateUrl: 'views/rules.html',
+			controller: 'RulesController',
+			controllerAs: 'rules'
 		});
 	}
 
