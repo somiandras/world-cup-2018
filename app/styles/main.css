@@ -3,7 +3,8 @@
 .content, .inner-content {
 
   margin-top: 30px;
-  min-height: 500px;
+  min-height: 80vh;
+  height: auto;
   margin-bottom: 30px;
 }
 
@@ -70,6 +71,15 @@ tr:hover .glyphicon-pencil {
 .point-label {
   font-size: 1.2em;
   font-weight: bold;
+}
+
+.eb-footer {
+  height: 100px;
+  padding-top: 19px;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
+  margin-bottom: 10px;
+  background: #fcfcfc;
 }
 
 
