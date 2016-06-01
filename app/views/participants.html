@@ -5,35 +5,35 @@
 			<table class="table table-striped">
 				<thead>
 					<th>Email</th>
-					<th>Név</th>
-					<th>Cég</th>
-					<th>Regisztráció ideje</th>
-					<th>Liga</th>
-					<th>Fő tipp?</th>
-					<th>Meccs tippek?</th>
-					<th>Admin</th>
-					<th>Módosítás</th>
+					<th class="text-center">Név</th>
+					<th class="text-center">Cég</th>
+					<th class="text-center">Regisztráció ideje</th>
+					<th class="text-center">Liga</th>
+					<th class="text-center">Fő tipp?</th>
+					<th class="text-center">Meccs tippek?</th>
+					<th class="text-center">Admin</th>
+					<th class="text-center">Módosítás</th>
 				</thead>
 				<tbody>
 					<tr ng-repeat="user in participants.players">
 						<td><span uib-tooltip="{{user.uid}}">{{user.email}}</span></td>
-						<td>{{user.name}}</td>
-						<td>{{user.company}}</td>
-						<td>{{user.createdAt | date: 'MM.dd. H:mm'}}</td>
-						<td>{{user.league}}</td>
-						<td>
-							<span ng-show="user.bets.topScorer && user.bets.winner">Igen</span>
-							<span ng-hide="user.bets.topScorer && user.bets.winner">Nem</span>
+						<td class="text-center">{{user.name}}</td>
+						<td class="text-center">{{user.company}}</td>
+						<td class="text-center">{{user.createdAt | date: 'MM.dd. H:mm'}}</td>
+						<td class="text-center">{{user.league}}</td>
+						<td class="text-center">
+							<span ng-show="user.bets.topScorer && user.bets.winner"><span class="glyphicon glyphicon-ok text-success"></span></span>
+							<span ng-hide="user.bets.topScorer && user.bets.winner"><span class="glyphicon glyphicon-remove text-danger"></span></span>
 						</td>
-						<td>
-							<span ng-show="user.bets.matches">Igen</span>
-							<span ng-hide="user.bets.matches">Nem</span>
+						<td class="text-center">
+							<span ng-show="user.bets.matches"><span class="glyphicon glyphicon-ok text-success"></span></span>
+							<span ng-hide="user.bets.matches"><span class="glyphicon glyphicon-remove text-danger"></span></span>
 						</td>
-						<td>
-							<span ng-show="user.admin">Igen</span>
-							<span ng-hide="user.admin">Nem</span>
+						<td class="text-center">
+							<span ng-show="user.admin"><span class="glyphicon glyphicon-ok text-success"></span></span>
+							<span ng-hide="user.admin"><span class="glyphicon glyphicon-remove text-danger"></span></span>
 						</td>
-						<td>
+						<td class="text-center">
 							<a href ng-click="participants.makeUserAdmin(user)" ng-hide="user.admin">Adminná teszem</a>
 						</td>
 					</tr>
@@ -43,7 +43,7 @@
 		</div>
 
 		<div class="col-xs-6">
-			<h4>Még nem regisztrált játékosok</h4>
+			<h4>Várólista</h4>
 			<div ng-hide="participants.pending.length">
 				<span><em>Nincs cím a listában.</em></span>
 			</div>
