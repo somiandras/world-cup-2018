@@ -1,12 +1,14 @@
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12">
+			<h4>Regisztrált játékosok</h4>
 			<table class="table table-striped">
 				<thead>
 					<th>Email</th>
 					<th>Név</th>
 					<th>Cég</th>
 					<th>Regisztráció ideje</th>
+					<th>Liga</th>
 					<th>Fő tipp?</th>
 					<th>Meccs tippek?</th>
 					<th>Admin</th>
@@ -18,6 +20,7 @@
 						<td>{{user.name}}</td>
 						<td>{{user.company}}</td>
 						<td>{{user.createdAt | date: 'MM.dd. H:mm'}}</td>
+						<td>Liga</td>
 						<td>
 							<span ng-show="user.bets.topScorer && user.bets.winner">Igen</span>
 							<span ng-hide="user.bets.topScorer && user.bets.winner">Nem</span>
@@ -32,11 +35,35 @@
 						</td>
 						<td>
 							<a href ng-click="participants.makeUserAdmin(user)" ng-hide="user.admin">Adminná teszem</a>
-							<a href ng-click="participants.deleteUser(user)">Törlés</a>
 						</td>
 					</tr>
 				</tbody>
 			</table>
+			<hr>
+		</div>
+
+		<div class="col-xs-6">
+			<h4>Még nem regisztrált játékosok</h4>
+			<div ng-hide="participants.pending.length">
+				<span><em>Nincs cím a listában.</em></span>
+			</div>
+			<div ng-repeat = "item in participants.pending">
+				<span>{{item.email}} ({{item.league}})</span>
+			</div>
+		</div>
+		<div class="col-xs-6">
+			<div>
+				<h4>Új emailcímek hozzáadása</h4>
+				<a href ng-hide="participants.showAddEmails" ng-click="participants.showAddEmails = true"><span class="glyphicon glyphicon-plus"></span> Új címek hozzáadása</a>
+			</div>
+			<div ng-show="participants.showAddEmails">
+				<div class="form-group">
+					<textarea class="form-control" name="newEmails" cols="30" rows="10" placeholder="email@email.com, email@email.com, ..." ng-model="participants.form.newEmails"></textarea>
+				</div>
+				<p class="help-block">Az új emailcímek vesszővel elválasztva.</p>
+				<button class="btn btn-primary" ng-click="participants.addNewEmails(participants.form.newEmails)">Hozzáadás</button>
+				<button class="btn btn-default" ng-click="participants.form.newEmails = undefined; participants.showAddEmails = false">Mégse</button>
+			</div>
 		</div>
 	</div>
 </div>

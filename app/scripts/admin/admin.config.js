@@ -66,6 +66,10 @@
 				userList: (userService) => {
 
 					return userService.getUserList();
+				},
+				pendingList: (adminService) => {
+
+					return adminService.getPendingList();
 				}
 			}
 		});

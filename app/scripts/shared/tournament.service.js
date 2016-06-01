@@ -216,11 +216,7 @@
 			.then((resp) => {
 
 				return scoreService.updateUserScores(match);
-			})
-			// .then(() => {
-
-			// 	return scoreService.calculatePublicScores();
-			// })
+			});
 		}
 
 		// HELPER FUNCTIONS
