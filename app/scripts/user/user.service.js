@@ -6,10 +6,10 @@
 	angular.module('user').factory('userService', userService);
 
 	
-	userService.$inject = ['$q', '$firebaseObject', '$firebaseArray', '$firebaseAuthService', '$firebaseRef', '$state', 'APP_CONFIG'];
+	userService.$inject = ['$q', '$firebaseObject', '$firebaseArray', '$firebaseAuthService', '$firebaseRef', '$state', 'APP_CONFIG', 'adminService'];
 
 	
-	function userService ($q, $firebaseObject, $firebaseArray, $firebaseAuthService, $firebaseRef, $state, APP_CONFIG) {
+	function userService ($q, $firebaseObject, $firebaseArray, $firebaseAuthService, $firebaseRef, $state, APP_CONFIG, adminService) {
 
 		const auth = $firebaseAuthService;
 		let users = $firebaseArray($firebaseRef.users);
@@ -80,9 +80,29 @@
 
 		function register (credentials) {
 
-			let newUid;
+			let newUid, pending, pendingList;
 
-			return auth.$createUser(credentials)
+			return adminService.getPendingList()
+			.then((list) => {
+
+				pendingList = list;
+
+				pending = list.find((item) => {
+
+					return item.email === credentials.email;
+				});
+
+				if (!find) {
+
+					let error = new Error ('Ezzel az emailcímmel nem regisztrálhatsz.')
+
+					return $q.reject(error);
+				
+				} else {
+
+					return auth.$createUser(credentials)
+				}
+			})
 			.then((data) => {
 
 				newUid = data.uid;
@@ -90,6 +110,8 @@
 				return auth.$authWithPassword(credentials);
 			})
 			.then(() => {
+
+				pendingList.$remove(pending);
 
 				let userObject = $firebaseObject($firebaseRef.users);
 
@@ -104,6 +126,7 @@
 					createdAt: date.getTime(),
 					admin: false,
 					uid: newUid,
+					league: pending.league
 				};
 
 				userObj[newUid] = newUser;
@@ -118,9 +141,10 @@
 
 				return publicData.$add({
 					uid: newUid,
+					league: pending.league,
 					score: 0
 				});
-			});
+			})
 		}
 
 
@@ -143,7 +167,8 @@
 					return publicData.$add({
 						name: user.name || null, 
 						uid: user.uid,
-						score: user.totalScore || 0
+						score: user.totalScore || 0,
+						league: user.league
 					});
 				
 				} else {
