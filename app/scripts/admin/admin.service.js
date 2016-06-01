@@ -12,7 +12,8 @@
 
 		return {
 			addNewEmails: addNewEmails,
-			getPendingList: getPendingList
+			getPendingList: getPendingList,
+			deletePending: deletePending
 		};
 
 
@@ -48,6 +49,11 @@
 		function getPendingList () {
 
 			return pendingList.$loaded();
+		}
+
+		function deletePending (item) {
+
+			return pendingList.$remove(item);
 		}
 	}
 

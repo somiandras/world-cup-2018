@@ -4,13 +4,14 @@
 
 	angular.module('admin').controller('ParticipantsController', ParticipantsController);
 
-	ParticipantsController.$inject = ['$window', 'userList', 'pendingList', 'userService', 'adminService'];
+	ParticipantsController.$inject = ['$window', 'userList', 'pendingList', 'userService', 'adminService', 'APP_CONFIG'];
 
-	function ParticipantsController ($window, userList, pendingList, userService, adminService) {
+	function ParticipantsController ($window, userList, pendingList, userService, adminService, APP_CONFIG) {
 
 		let vm = this;
 		vm.players = userList;
 		vm.pending = pendingList;
+		vm.leagues = APP_CONFIG.leagues;
 
 
 		vm.makeUserAdmin = function (user) {
@@ -28,7 +29,8 @@
 			});
 		};
 
-		vm.addNewEmails = function (list) {
+
+		vm.addNewEmails = function (list, league) {
 
 			if (list) {
 
@@ -36,7 +38,7 @@
 					
 				let array = list.trim().split(',');
 
-				adminService.addNewEmails(array, 'Basic')
+				adminService.addNewEmails(array, league)
 				.then((resp) => {
 
 					if (resp.length) {
@@ -58,6 +60,21 @@
 				});
 			}
 		};
+
+
+		vm.deletePending = function (item) {
+
+			adminService.deletePending(item)
+			.then((resp) => {
+
+				toastr.success(item.email + ' törölve');
+			})
+			.catch((error) => {
+
+				console.error(error);
+			});
+
+		}
 	}
 
 })();

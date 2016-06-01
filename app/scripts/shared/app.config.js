@@ -21,7 +21,10 @@
 			exactResult: 1,
 			finalWinner: 3,
 			topScorer: 3
-		}
+		},
+
+		//Eligible competitions
+		leagues: ['KBC', 'Somi Privát', 'Norbi Privát']
 	})
 	.config(appRouting)
 	.config(firebase)

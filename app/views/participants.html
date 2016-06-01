@@ -20,7 +20,7 @@
 						<td>{{user.name}}</td>
 						<td>{{user.company}}</td>
 						<td>{{user.createdAt | date: 'MM.dd. H:mm'}}</td>
-						<td>Liga</td>
+						<td>{{user.league}}</td>
 						<td>
 							<span ng-show="user.bets.topScorer && user.bets.winner">Igen</span>
 							<span ng-hide="user.bets.topScorer && user.bets.winner">Nem</span>
@@ -49,6 +49,7 @@
 			</div>
 			<div ng-repeat = "item in participants.pending">
 				<span>{{item.email}} ({{item.league}})</span>
+				<a href ng-click="participants.deletePending(item)">Törlés</a>
 			</div>
 		</div>
 		<div class="col-xs-6">
@@ -56,14 +57,20 @@
 				<h4>Új emailcímek hozzáadása</h4>
 				<a href ng-hide="participants.showAddEmails" ng-click="participants.showAddEmails = true"><span class="glyphicon glyphicon-plus"></span> Új címek hozzáadása</a>
 			</div>
-			<div ng-show="participants.showAddEmails">
+			<form ng-show="participants.showAddEmails">
 				<div class="form-group">
 					<textarea class="form-control" name="newEmails" cols="30" rows="10" placeholder="email@email.com, email@email.com, ..." ng-model="participants.form.newEmails"></textarea>
 				</div>
 				<p class="help-block">Az új emailcímek vesszővel elválasztva.</p>
-				<button class="btn btn-primary" ng-click="participants.addNewEmails(participants.form.newEmails)">Hozzáadás</button>
+				<div class="form-group">
+					<label>Melyik ligába menjenek?</label>
+					<select class="form-control" ng-options="league for league in participants.leagues" ng-model="participants.form.league">{{league}}
+						<option value="" disabled selected hidden>Válassz egyet!</option>
+					</select>
+				</div>
+				<button class="btn btn-primary" ng-click="participants.addNewEmails(participants.form.newEmails, participants.form.league)">Hozzáadás</button>
 				<button class="btn btn-default" ng-click="participants.form.newEmails = undefined; participants.showAddEmails = false">Mégse</button>
-			</div>
+			</form>
 		</div>
 	</div>
 </div>
