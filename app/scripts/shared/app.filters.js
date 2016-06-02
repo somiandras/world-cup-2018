@@ -102,9 +102,14 @@
 						filtered.push(item);
 					}
 				});
+
+				return filtered;
+
+			} else {
+
+				return array;
 			}
 
-			return filtered;
 		}
 	}
 
