@@ -12,8 +12,12 @@
 
 		vm.tour = tournamentService;
 		vm.user = user;
-
 		vm.users = userService.public;
+
+		if (user.league && user.league.length) {
+
+			vm.leagueFilter = user.league[0];
+		}
 
 		if (!user.name) {
 

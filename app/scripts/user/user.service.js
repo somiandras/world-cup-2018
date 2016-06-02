@@ -126,7 +126,7 @@
 					createdAt: date.getTime(),
 					admin: false,
 					uid: newUid,
-					league: pending.league
+					league: [pending.league]
 				};
 
 				userObj[newUid] = newUser;
@@ -141,7 +141,7 @@
 
 				return publicData.$add({
 					uid: newUid,
-					league: pending.league,
+					league: [pending.league],
 					score: 0
 				});
 			})
@@ -175,6 +175,7 @@
 
 					found.name = user.name || null;
 					found.score = user.totalScore || 0;
+					found.league = user.league;
 
 					return publicData.$save(found);
 				} 

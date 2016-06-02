@@ -24,7 +24,7 @@
 		},
 
 		//Eligible competitions
-		leagues: ['KBC', 'Somi Privát', 'Norbi Privát']
+		leagues: ['KBC', 'Somi', 'Norbi']
 	})
 	.config(appRouting)
 	.config(firebase)

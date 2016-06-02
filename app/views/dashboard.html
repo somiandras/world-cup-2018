@@ -9,7 +9,13 @@
 						Pontverseny</h3>
 				</div>
 				<div class="panel-body">
-					<div class="player-entry" ng-repeat="player in dashboard.users | orderBy: 'score' : true  track by player.uid" ng-class="{'text-info player-bold': dashboard.user.uid === player.uid}">
+					<div>
+						<a href ng-repeat="league in dashboard.user.leagues" ng-click="dashboard.leagueFilter = league">{{league}}</a>
+					</div>
+					<div 
+						class="player-entry" 
+						ng-repeat="player in dashboard.users | orderBy: 'score' : true | league: dashboard.leagueFilter track by player.uid" 
+						ng-class="{'text-info player-bold': dashboard.user.uid === player.uid}">
 						<span>
 							<span class="glyphicon glyphicon-star-empty" ng-hide="dashboard.user.uid === player.uid" style="color: #fff"></span>
 							<span class="glyphicon glyphicon-star" ng-show="dashboard.user.uid === player.uid"></span>

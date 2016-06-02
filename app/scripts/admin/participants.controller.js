@@ -75,6 +75,40 @@
 			});
 
 		}
+
+
+		vm.checkLeague = function (user, league) {
+
+			if (user.league && user.league.length) {
+
+				return user.league.find((item) => {
+
+					return item === league;
+				});
+
+			} else {
+
+				return false;
+			}			 
+		};
+
+
+		vm.addLeague = function (user, league) {
+
+			user.league = user.league || [];
+
+			user.league.push(league);
+
+			userService.saveUser(user)
+			.then(() => {
+
+				toastr.success(user.name + ' a ' + league +' tagja lett');
+			})
+			.catch((error) => {
+
+				toastr.error(error);
+			});
+		};
 	}
 
 })();
