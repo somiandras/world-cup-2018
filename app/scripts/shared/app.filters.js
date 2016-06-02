@@ -5,7 +5,8 @@
 	angular.module('appCore')
 	.filter('team', teamFilter)
 	.filter('open', openFilter)
-	.filter('result', resultFilter);
+	.filter('result', resultFilter)
+	.filter('league', leagueFilter);
 
 	function teamFilter () {
 
@@ -84,6 +85,27 @@
 
 			return filteredData;
 		}	
+	}
+
+	function leagueFilter () {
+
+		return function (array, league) {
+
+			let filtered = [];
+
+			if (league) {
+
+				array.forEach((item) => {
+
+					if (item.league === league) {
+
+						filtered.push(item);
+					}
+				});
+			}
+
+			return filtered;
+		}
 	}
 
 
