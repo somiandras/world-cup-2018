@@ -9,9 +9,9 @@
 						Pontverseny</h3>
 				</div>
 				<div class="panel-body">
-					<div>
-						<a href ng-repeat="league in dashboard.user.leagues" ng-click="dashboard.leagueFilter = league">{{league}}</a>
-					</div>
+					<ul class="nav nav-tabs" ng-if="dashboard.user.league[1]">
+						<li role="presentation" ng-class="{'active': dashboard.leagueFilter === league}" ng-repeat="league in dashboard.user.league"><a href ng-click="dashboard.leagueFilter = league">{{league}} Liga</a></li>
+					</ul>
 					<div 
 						class="player-entry" 
 						ng-repeat="player in dashboard.users | orderBy: 'score' : true | league: dashboard.leagueFilter track by player.uid" 

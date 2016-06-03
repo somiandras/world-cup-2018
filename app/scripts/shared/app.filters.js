@@ -97,7 +97,12 @@
 
 				array.forEach((item) => {
 
-					if (item.league === league) {
+					let found = item.league.find((x) => {
+
+						return x === league;
+					})
+
+					if (found) {
 
 						filtered.push(item);
 					}
