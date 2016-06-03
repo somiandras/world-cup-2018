@@ -29,16 +29,13 @@
 						<input 
 							required
 							name="scorer"
-							list-to-validate = "players"
 							type="text" 
-							class="form-control input-lg" 
-							uib-typeahead="player as player.name for player in bets.data.players | filter: {name: $viewValue}" 
+							class="form-control input-lg"
 							ng-model="bets.topForm.topScorer"
 							placeholder="Gólkirály"
 							ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 300, 'blur': 0 } }">
 						<div ng-messages = "topForm.scorer.$error" ng-if="topForm.scorer.$touched">
 							<p class="help-block" ng-message="required">Ne felejtsd el megadni a gólkirályt</p>
-							<p class="help-block" ng-message="listToValidate">Nincs ilyen játékos az adatbázisban</p>
 						</div>
 					</div>
 					<div class="form-group col-xs-12 col-sm-12">
@@ -65,7 +62,7 @@
 				<span class="flag-icon" ng-class="{'flag-icon-{{bets.user.bets.winner.ISO}}': true}"></span> <strong>{{bets.user.bets.winner.longName}}</strong> lesz az Európa-bajnok, és
 			</span>
 			<span ng-show="bets.user.bets.topScorer">
-				<span class="flag-icon" ng-class="{'flag-icon-hu': true}"></span> <strong>{{bets.user.bets.topScorer.name}}</strong> a gólkirály.
+				<strong>{{bets.user.bets.topScorer}}</strong> a gólkirály.
 			</span>
 			<a ng-show="bets.user.bets.winner || bets.user.bets.topScorer" href class="pull-right" ng-click="bets.showTopForm = true; bets.loadBets()">Módosítom</a>
 		</div>

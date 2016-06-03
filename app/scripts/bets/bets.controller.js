@@ -30,14 +30,13 @@
 		}
 
 
-		vm.addWinnerAndScorer = function (data) {
+		vm.addWinnerAndScorer = function (data) {			
 
 			betService.saveWinner(data, user)
 			.then(() => {
 
 				toastr.success('Elmentettük a favoritjaidat');
 				vm.showTopForm = false;
-
 			})
 			.catch((error) => {
 
