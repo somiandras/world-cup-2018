@@ -12,7 +12,12 @@
 						ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 300, 'blur': 0 } }">
 				</div>
 			</form>
-			<table class="table table-striped table-bordered">
+			<a href ng-click="participants.onlyEmail = true" ng-hide="participants.onlyEmail">Csak a címek</a>
+			<div ng-show="participants.onlyEmail">
+				<div ng-repeat="user in participants.players | orderBy: participants.orderBy : participants.reverse | filter: participants.listFilter">{{user.email}},</div>
+				<a href ng-click="participants.onlyEmail = false">Vissza</a>
+			</div>
+			<table class="table table-striped table-bordered" ng-hide="participants.onlyEmail">
 				<thead>
 					<th ng-click="participants.orderBy = 'email' ; participants.reverse = !participants.reverse">Email
 					<span class="glyphicon glyphicon-triangle-top" ng-show="participants.orderBy === 'email' && !participants.reverse"></span>
@@ -28,6 +33,10 @@
 					<span class="glyphicon glyphicon-triangle-top" ng-show="participants.orderBy === 'createdAt' && !participants.reverse"></span>
 					<span class="glyphicon glyphicon-triangle-bottom" ng-show="participants.orderBy === 'createdAt' && participants.reverse"></span>
 					</th>
+					<th class="text-center" ng-click="participants.orderBy = 'lastLogin' ; participants.reverse = !participants.reverse">Utolsó bejelentkezés
+					<span class="glyphicon glyphicon-triangle-top" ng-show="participants.orderBy === 'lastLogin' && !participants.reverse"></span>
+					<span class="glyphicon glyphicon-triangle-bottom" ng-show="participants.orderBy === 'lastLogin' && participants.reverse"></span>
+					</th>
 					<th class="text-center">Liga</th>
 					<th class="text-center">Fő tipp?</th>
 					<th class="text-center">Meccs tippek?</th>
@@ -40,6 +49,7 @@
 						<td class="text-center" nowrap>{{user.name}}</td>
 						<td class="text-center" nowrap>{{user.company}}</td>
 						<td class="text-center" nowrap>{{user.createdAt | date: 'MM.dd. H:mm'}}</td>
+						<td class="text-center" nowrap>{{user.lastLogin | date: 'MM.dd. H:mm'}}</td>
 						<td class="text-left" nowrap>
 							<p ng-repeat="league in participants.leagues">
 								{{league}} : <span class="glyphicon glyphicon-ok text-success" ng-show="participants.checkLeague(user,league)"></span>
