@@ -68,7 +68,19 @@
 
 		function login (credentials) {
 
-			return auth.$authWithPassword(credentials);
+			let date = new Date().getTime();
+
+			return auth.$authWithPassword(credentials)
+			.then((data) => {
+
+				return getUser(data.uid);
+			})
+			.then((user) => {
+
+				user.lastLogin = date;
+
+				return saveUser(user);
+			});
 		}
 
 
