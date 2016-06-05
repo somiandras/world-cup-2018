@@ -2,12 +2,32 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<h4>Regisztrált játékosok</h4>
+			<form>
+				<div class="form-group">
+					<input 
+						type="text" 
+						class="form-control" 
+						placeholder="Keresés..." 
+						ng-model="participants.listFilter"
+						ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 300, 'blur': 0 } }">
+				</div>
+			</form>
 			<table class="table table-striped table-bordered">
 				<thead>
-					<th>Email</th>
-					<th class="text-center">Név</th>
-					<th class="text-center">Cég</th>
-					<th class="text-center">Regisztráció ideje</th>
+					<th ng-click="participants.orderBy = 'email' ; participants.reverse = !participants.reverse">Email
+					<span class="glyphicon glyphicon-triangle-top" ng-show="participants.orderBy === 'email' && !participants.reverse"></span>
+					<span class="glyphicon glyphicon-triangle-bottom" ng-show="participants.orderBy === 'email' && participants.reverse"></span></th>
+					<th class="text-center" ng-click="participants.orderBy = 'name' ; participants.reverse = !participants.reverse">Név
+					<span class="glyphicon glyphicon-triangle-top" ng-show="participants.orderBy === 'name' && !participants.reverse"></span>
+					<span class="glyphicon glyphicon-triangle-bottom" ng-show="participants.orderBy === 'name' && participants.reverse"></span>
+					</th>
+					<th class="text-center" ng-click="participants.orderBy = 'company' ; participants.reverse = !participants.reverse">Cég
+					<span class="glyphicon glyphicon-triangle-top" ng-show="participants.orderBy === 'company' && !participants.reverse"></span>
+					<span class="glyphicon glyphicon-triangle-bottom" ng-show="participants.orderBy === 'company' && participants.reverse"></span></th>
+					<th class="text-center" ng-click="participants.orderBy = 'createdAt' ; participants.reverse = !participants.reverse">Regisztráció ideje
+					<span class="glyphicon glyphicon-triangle-top" ng-show="participants.orderBy === 'createdAt' && !participants.reverse"></span>
+					<span class="glyphicon glyphicon-triangle-bottom" ng-show="participants.orderBy === 'createdAt' && participants.reverse"></span>
+					</th>
 					<th class="text-center">Liga</th>
 					<th class="text-center">Fő tipp?</th>
 					<th class="text-center">Meccs tippek?</th>
@@ -15,7 +35,7 @@
 					<th class="text-center">Módosítás</th>
 				</thead>
 				<tbody>
-					<tr ng-repeat="user in participants.players">
+					<tr ng-repeat="user in participants.players | orderBy: participants.orderBy : participants.reverse | filter: participants.listFilter">
 						<td><span uib-tooltip="{{user.uid}}">{{user.email}}</span></td>
 						<td class="text-center" nowrap>{{user.name}}</td>
 						<td class="text-center" nowrap>{{user.company}}</td>

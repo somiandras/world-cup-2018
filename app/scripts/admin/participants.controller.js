@@ -12,6 +12,8 @@
 		vm.players = userList;
 		vm.pending = pendingList;
 		vm.leagues = APP_CONFIG.leagues;
+		vm.orderBy = 'name';
+		vm.reverse = false;
 
 
 		vm.makeUserAdmin = function (user) {
