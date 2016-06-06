@@ -16,7 +16,7 @@
 			vm.loading = true;
 
 			let credentials = {
-				email: email,
+				email: email.toLowerCase(),
 				password: password
 			};
 

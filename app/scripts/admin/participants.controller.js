@@ -40,7 +40,12 @@
 					
 				let array = list.trim().split(',');
 
-				adminService.addNewEmails(array, league)
+				let lowerCaseArray = array.map((item) => {
+
+					return item.toLowerCase();
+				});
+
+				adminService.addNewEmails(lowerCaseArray, league)
 				.then((resp) => {
 
 					if (resp.length) {

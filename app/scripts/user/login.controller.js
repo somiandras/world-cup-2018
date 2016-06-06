@@ -19,6 +19,8 @@
 
 		vm.login = function (data) {
 
+			data.email = data.email.toLowerCase();
+
 			vm.loading = true;
 
 			userService.login(data)
