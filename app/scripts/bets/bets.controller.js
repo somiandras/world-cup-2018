@@ -18,12 +18,21 @@
 		vm.data = tour.data;
 		vm.user = user;
 		vm.timeLimit = APP_CONFIG.timeLimit;
+		vm.startTime = APP_CONFIG.startTime;
 		vm.onlyOpen = $state.params.filter;
 
-		if (!user.bets || !user.bets.winner || !user.bets.topScorer) {
 
-			vm.showTopForm = true;
-		
+		if (vm.now < vm.startTime - vm.timeLimit) {
+
+			if (!user.bets || !user.bets.winner || !user.bets.topScorer) {
+
+				vm.showTopForm = true;
+			
+			} else {
+
+				vm.showTopForm = false;
+			}
+
 		} else {
 
 			vm.showTopForm = false;
@@ -32,16 +41,23 @@
 
 		vm.addWinnerAndScorer = function (data) {			
 
-			betService.saveWinner(data, user)
-			.then(() => {
+			if (vm.now < vm.startTime - vm.timeLimit) {
 
-				toastr.success('Elmentettük a favoritjaidat');
-				vm.showTopForm = false;
-			})
-			.catch((error) => {
+				betService.saveWinner(data, user)
+				.then(() => {
 
-				toastr.error(error.message);
-			});
+					toastr.success('Elmentettük a favoritjaidat');
+					vm.showTopForm = false;
+				})
+				.catch((error) => {
+
+					toastr.error(error.message);
+				});
+				
+			} else {
+
+				toastr.error('Már nem adhatsz le tippet a nyertesre és gólkirályra');
+			}
 		};
 
 

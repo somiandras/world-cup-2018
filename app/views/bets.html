@@ -64,14 +64,14 @@
 			<span ng-show="bets.user.bets.topScorer">
 				<strong>{{bets.user.bets.topScorer}}</strong> a gólkirály.
 			</span>
-			<a ng-show="bets.user.bets.winner || bets.user.bets.topScorer" href class="pull-right" ng-click="bets.showTopForm = true; bets.loadBets()">Módosítom</a>
+			<a ng-show="bets.now < bets.startTime - bets.timeLimit" href class="pull-right" ng-click="bets.showTopForm = true; bets.loadBets()">Módosítom</a>
 		</div>
 
 		<!-- Empty state -->
 
-		<div class="alert alert-danger" ng-hide="bets.user.bets.winner || bets.user.bets.topScorer">
+		<div class="alert alert-danger" ng-hide="bets.user.bets.winner || bets.user.bets.topScorer || bets.now > bets.startTime - bets.timeLimit">
 			<span>
-				Még nem tippeltél a győztesre és a gólkirályra! 
+				Nem tippeltél a győztesre és a gólkirályra! 
 			</span>
 			<a href class="alert-link" ng-click="bets.showTopForm = true">Kattints ide a tippeléshez!</a>
 		</div>

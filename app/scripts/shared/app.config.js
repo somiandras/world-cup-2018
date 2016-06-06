@@ -24,7 +24,10 @@
 		},
 
 		//Eligible competitions
-		leagues: ['KBC', 'Somi', 'Norbi']
+		leagues: ['KBC', 'Somi', 'Norbi'],
+
+		//Starting time: 2016.06.10 21:00
+		startTime: 1465585200000
 	})
 	.config(appRouting)
 	.config(firebase)
