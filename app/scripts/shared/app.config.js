@@ -104,8 +104,12 @@
 		.state('app.rules', {
 			url: '/rules',
 			templateUrl: 'views/rules.html',
-			controller: 'RulesController',
-			controllerAs: 'rules'
+			// controller: 'RulesController',
+			// controllerAs: 'rules'
+		})
+		.state('app.contact', {
+			url: '/contact',
+			templateUrl: 'views/contact.html',
 		});
 	}
 
