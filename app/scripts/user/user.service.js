@@ -101,7 +101,9 @@
 
 				pending = list.find((item) => {
 
-					return item.email === credentials.email;
+					let lower = item.email.toLowerCase();
+
+					return  lower === credentials.email;
 				});
 
 				if (!find) {
