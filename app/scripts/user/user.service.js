@@ -106,9 +106,9 @@
 					return  lower === credentials.email;
 				});
 
-				if (!find) {
+				if (!pending) {
 
-					let error = new Error ('Ezzel az emailcímmel nem regisztrálhatsz.')
+					let error = new Error ('Ezzel az emailcímmel nem regisztrálhatsz. Írj a szervezőknek!')
 
 					return $q.reject(error);
 				
