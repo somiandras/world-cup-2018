@@ -3,7 +3,8 @@
 		<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 user-form">
 			<form name="regForm" class="form" ng-submit="register.registerUser(form.email, form.password)" novalidate autocomplete="false">
 				<h4>Regisztráció</h4>
-
+	
+				<p class="text-warning">Csak olyan emailcímmel fogsz tudni regisztrálni, amit a szervezők engedélyeztek. Ha nem vagy biztos benne, hogy fent van-e a címed a listán, írj a szervezőknek!</p>
 				<!-- Email -->
 				
 				 <div class="form-group" ng-class="{ 'has-error': regForm.email.$touched && regForm.email.$invalid, 'has-success': regForm.email.$touched && regForm.email.$valid }">
