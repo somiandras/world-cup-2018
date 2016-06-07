@@ -1,7 +1,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12">
-			<h4>Regisztrált játékosok</h4>
+			<h4>Regisztrált játékosok <small>Összesen {{participants.players.length}}</small></h4>
 			<form>
 				<div class="form-group">
 					<input 
@@ -81,7 +81,7 @@
 		</div>
 
 		<div class="col-xs-6">
-			<h4>Várólista</h4>
+			<h4>Várólista <small>Összesen {{participants.pending.length}}</small></h4>
 			<div ng-hide="participants.pending.length">
 				<span><em>Nincs cím a listában.</em></span>
 			</div>
