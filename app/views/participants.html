@@ -12,9 +12,12 @@
 						ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 300, 'blur': 0 } }">
 				</div>
 			</form>
-			<a href ng-click="participants.onlyEmail = true" ng-hide="participants.onlyEmail">Csak a címek</a>
+			<a class="pull-right" href ng-click="participants.onlyEmail = true" ng-hide="participants.onlyEmail">Csak a címek</a>
+			<ul class="nav nav-tabs">
+				<li role="presentation" ng-class="{'active': participants.leagueFilter === league}" ng-repeat="league in participants.leagues"><a href ng-click="participants.leagueFilter = league">{{league}} Liga</a></li>
+			</ul>
 			<div ng-show="participants.onlyEmail">
-				<div ng-repeat="user in participants.players | orderBy: participants.orderBy : participants.reverse | filter: participants.listFilter">{{user.email}},</div>
+				<div ng-repeat="user in participants.players | orderBy: participants.orderBy : participants.reverse | filter: participants.listFilter | league: participants.leagueFilter">{{user.email}},</div>
 				<a href ng-click="participants.onlyEmail = false">Vissza</a>
 			</div>
 			<table class="table table-striped table-bordered" ng-hide="participants.onlyEmail">
@@ -44,7 +47,7 @@
 					<th class="text-center">Módosítás</th>
 				</thead>
 				<tbody>
-					<tr ng-repeat="user in participants.players | orderBy: participants.orderBy : participants.reverse | filter: participants.listFilter">
+					<tr ng-repeat="user in participants.players | orderBy: participants.orderBy : participants.reverse | filter: participants.listFilter | league: participants.leagueFilter">
 						<td><span uib-tooltip="{{user.uid}}">{{user.email}}</span></td>
 						<td class="text-center" nowrap>{{user.name}}</td>
 						<td class="text-center" nowrap>{{user.company}}</td>
@@ -82,7 +85,7 @@
 			<div ng-hide="participants.pending.length">
 				<span><em>Nincs cím a listában.</em></span>
 			</div>
-			<div ng-repeat = "item in participants.pending">
+			<div ng-repeat = "item in participants.pending | league: participants.leagueFilter">
 				<span>{{item.email}} ({{item.league}})</span>
 				<a href ng-click="participants.deletePending(item)">Törlés</a>
 			</div>

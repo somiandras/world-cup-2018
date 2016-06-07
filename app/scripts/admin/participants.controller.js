@@ -14,6 +14,7 @@
 		vm.leagues = APP_CONFIG.leagues;
 		vm.orderBy = 'name';
 		vm.reverse = false;
+		vm.leagueFilter = vm.leagues[0];
 
 
 		vm.makeUserAdmin = function (user) {
