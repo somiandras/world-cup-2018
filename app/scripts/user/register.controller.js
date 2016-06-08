@@ -23,6 +23,11 @@
 			userService.register(credentials)
 			.catch((error) => {
 
+				if (error === "IE Object doesn't support property or method 'find'") {
+
+					vm.errorMessage = "Ebben a böngészőben ez nem fog menni. Próbáld Chrome-ban vagy Firefoxban!";
+				}
+
 				vm.loading = false;
 				toastr.error(error.message);
 				console.error(error);
