@@ -89,6 +89,12 @@
 				console.error(error);
 			})
 		}
+
+		vm.reset = function (form) {
+
+			form.$setPristine();
+			form.$setUntouched();
+		}
 	}
 	
 })();

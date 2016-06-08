@@ -52,12 +52,12 @@
 			<hr>
 		</div>
 		
-		<div class="col-xs-4">
+		<div class="col-xs-12">
 			<h4>Jelszó megváltoztatása</h4>
 			<a href ng-click="profile.showPasswordChange = true" ng-hide="profile.showPasswordChange">Megváltoztatom a jelszavamat</a>
 			
 
-			<form name="passForm" ng-show="profile.showPasswordChange">
+			<form name="passForm" ng-if="profile.showPasswordChange" class="col-xs-4">
 
 				<div class="form-group" ng-class="{'has-error': passForm.oldPassword.$touched && passForm.oldPassword.$invalid, 'has-success': passForm.oldPassword.$dirty && passForm.oldPassword.$touched}">
 				    <div class="input-group">
@@ -116,17 +116,18 @@
 					<div class="help-block" ng-show="form.password !== form.passwordCheck && passForm.passwordCheck.$touched">Nem egyezik a két jelszó</div>
 				</div>
 				<button class="btn btn-primary" ng-click="profile.changePassword(form)">Mentés</button>
-				<button class="btn btn-default" ng-click="profile.showPasswordChange=false">Mégse</button>
-			</form>	
-			<hr>		
+				<button class="btn btn-default" ng-click="profile.showPasswordChange=false; profile.reset(passForm)">Mégse</button>
+			</form>			
 		</div>
 		
 
 		<div class="col-xs-12" ng-hide="profile.showPassword">
+			<hr>
 			<button class="btn btn-danger" ng-click="profile.showPassword = true">Profil törlése</button>
 			<span class="text-danger"><strong>&nbsp Figyelem!</strong> Ezzel törlöd magad a játékból, minden tipped és pontszámod elvész.</span>
 		</div>
 		<form class="col-md-6 cl-lg-3" ng-show="profile.showPassword" name="passwordForm">
+			<hr>
 			<div class="form-group">
 				<label>Jelszó</label>
 				<input type="password" class="form-control" ng-model="profile.form.password" eb-focus="profile.showPassword" required>
