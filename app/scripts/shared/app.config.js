@@ -90,7 +90,10 @@
 			url: '/dashboard',
 			templateUrl: 'views/dashboard.html',
 			controller: 'DashboardController',
-			controllerAs: 'dashboard'
+			controllerAs: 'dashboard',
+			params: {
+				temporary: false
+			}
 		})
 		.state('app.myBets', {
 			url: '/mybets',

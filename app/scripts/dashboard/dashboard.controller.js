@@ -4,9 +4,9 @@
 
 	angular.module('appCore').controller('DashboardController', DashboardController);
 
-	DashboardController.$inject = ['userService', 'tournamentService', 'user', '$uibModal'];
+	DashboardController.$inject = ['$state', 'userService', 'tournamentService', 'user', '$uibModal'];
 
-	function DashboardController (userService, tournamentService, user, $uibModal) {
+	function DashboardController ($state, userService, tournamentService, user, $uibModal) {
 
 		let vm = this;
 
@@ -18,6 +18,36 @@
 
 			vm.leagueFilter = user.league[0];
 		}
+
+
+		if ($state.params.temporary) {
+
+			let tempModal = $uibModal.open({
+				templateUrl: 'views/password_modal.html',
+				controller: 'PasswordController',
+				controllerAs: 'password',
+				animation: true,
+				backdrop: 'static',
+				keyboard: false,
+				size: 'sm',
+				resolve: {
+					user: function () {
+
+						return user;
+					}
+				}
+			});
+
+			tempModal.result.then((result) => {
+
+				toastr.success(result);
+			})
+			.catch((error) => {
+
+				console.error(error);
+			});
+		}
+
 
 		if (!user.name) {
 
@@ -43,7 +73,7 @@
 			.catch((error) => {
 
 				console.error(error);
-			})
+			});
 		}
 
 	}

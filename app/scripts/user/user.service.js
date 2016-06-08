@@ -21,7 +21,7 @@
 
 				if ($state.current.name === 'login' || $state.current.name === 'register') {
 
-					$state.go('app.dashboard');
+					$state.go('app.dashboard', {temporary: newData.password.isTemporaryPassword});
 				}
 				
 			} else {
@@ -221,6 +221,18 @@
 		}
 
 
+		function resetPassword (credentials) {
+
+			return auth.$resetPassword(credentials);
+		}
+
+
+		function changePassword (credentials) {
+
+			return auth.$changePassword(credentials);
+		}
+
+
 		return {
 			public: usersPublic,
 			login: login,
@@ -230,7 +242,9 @@
 			getUserMatchBets: getUserMatchBets,
 			saveUser: saveUser,
 			removeUser: removeUser,
-			getUserList: getUserList
+			getUserList: getUserList,
+			resetPassword: resetPassword,
+			changePassword: changePassword
 		};
 	}
 

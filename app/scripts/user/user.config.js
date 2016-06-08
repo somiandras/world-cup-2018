@@ -37,6 +37,16 @@
 					controllerAs: 'register'
 				}
 			}
+		})
+		.state('reset', {
+			url: '/reset',
+			views: {
+				content: {
+					templateUrl: 'views/reset.html',
+					controller: 'ResetPasswordController',
+					controllerAs: 'reset'
+				}
+			}
 		});
 	}
 
