@@ -51,6 +51,77 @@
 			</form>
 			<hr>
 		</div>
+		
+		<div class="col-xs-4">
+			<h4>Jelszó megváltoztatása</h4>
+			<a href ng-click="profile.showPasswordChange = true" ng-hide="profile.showPasswordChange">Megváltoztatom a jelszavamat</a>
+			
+
+			<form name="passForm" ng-show="profile.showPasswordChange">
+
+				<div class="form-group" ng-class="{'has-error': passForm.oldPassword.$touched && passForm.oldPassword.$invalid, 'has-success': passForm.oldPassword.$dirty && passForm.oldPassword.$touched}">
+				    <div class="input-group">
+				    	<div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+						<input 
+							required
+							type="password" 
+							class="form-control" 
+							id="passwordInput" 
+							name="oldPassword" 
+							ng-model="form.oldPassword" 
+							placeholder="Jelenlegi jelszó"
+							ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 300, 'blur': 0 } }">
+				    </div>
+				    <div ng-messages="passForm.oldPassword.$error" ng-if="passForm.oldPassword.$touched">
+				    	<p class="help-block" ng-message="required">Kötelező megadni</p>
+				    </div>
+				</div>
+
+				<div class="form-group" ng-class="{'has-error': passForm.password.$touched && passForm.password.$invalid,'has-success': passForm.password.$dirty && passForm.password.$touched}">
+				    <div class="input-group">
+				    	<div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+						<input 
+							required
+							minlength="6" 
+							type="password" 
+							class="form-control" 
+							id="passwordInput" 
+							name="password" 
+							ng-model="form.password" 
+							placeholder="Új jelszó"
+							ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 300, 'blur': 0 } }">
+				    </div>
+				    <div ng-messages="passForm.password.$error" ng-if="passForm.password.$touched">
+				    	<p class="help-block" ng-message="required">Kötelező jelszót megadni</p>
+				    	<p class="help-block" ng-message="minlength">Legalább 6 karakter hosszú jelszót adj meg</p>
+				    </div>
+				</div>
+
+				<!-- Password check -->
+
+				<div class="form-group" ng-class="{'has-error': form.password !== form.passwordCheck && passForm.passwordCheck.$touched, 'has-success': form.password === form.passwordCheck && passForm.passwordCheck.$dirty}">
+				    <div class="input-group">
+				    	<div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+						<input 
+							required 
+							type="password" 
+							class="form-control" 
+							id="passwordInput" 
+							name="passwordCheck" 
+							ng-model="form.passwordCheck" 
+							placeholder="Új jelszó megerősítése"
+							ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 300, 'blur': 0 } }"
+							ng-disabled="passForm.password.$invalid">
+				    </div>
+					<div class="help-block" ng-show="form.password !== form.passwordCheck && passForm.passwordCheck.$touched">Nem egyezik a két jelszó</div>
+				</div>
+				<button class="btn btn-primary" ng-click="profile.changePassword(form)">Mentés</button>
+				<button class="btn btn-default" ng-click="profile.showPasswordChange=false">Mégse</button>
+			</form>	
+			<hr>		
+		</div>
+		
+
 		<div class="col-xs-12" ng-hide="profile.showPassword">
 			<button class="btn btn-danger" ng-click="profile.showPassword = true">Profil törlése</button>
 			<span class="text-danger"><strong>&nbsp Figyelem!</strong> Ezzel törlöd magad a játékból, minden tipped és pontszámod elvész.</span>

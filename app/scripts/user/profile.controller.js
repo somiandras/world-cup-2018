@@ -68,6 +68,27 @@
 				toastr.error(error.message);
 			});
 		};
+
+
+		vm.changePassword = function (form) {
+
+			let credentials = {
+				email: user.email,
+				newPassword: form.password,
+				oldPassword: form.oldPassword
+			};
+
+			userService.changePassword(credentials)
+			.then((resp) => {
+
+				toastr.success("Elmentettük az új jelszavadat");
+				vm.showPasswordChange = false;
+			})
+			.catch((error) => {
+
+				console.error(error);
+			})
+		}
 	}
 	
 })();
