@@ -55,10 +55,12 @@
 
 	// ROUTING
 
-	appRouting.$inject = ['$stateProvider', '$urlRouterProvider'];
+	appRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 	
-	function appRouting($stateProvider, $urlRouterProvider) {
+	function appRouting($stateProvider, $urlRouterProvider, $locationProvider) {
 
+		$locationProvider.html5Mode(true);
+		
 		$urlRouterProvider.otherwise('/dashboard');
 
 		$stateProvider
