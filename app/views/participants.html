@@ -14,10 +14,10 @@
 			</form>
 			<a class="pull-right" href ng-click="participants.onlyEmail = true" ng-hide="participants.onlyEmail">Csak a címek</a>
 			<ul class="nav nav-tabs">
-				<li role="presentation" ng-class="{'active': participants.leagueFilter === league}" ng-repeat="league in participants.leagues"><a href ng-click="participants.leagueFilter = league">{{league}} Liga</a></li>
+				<li role="presentation" ng-class="{'active': participants.leagueFilter === league}" ng-repeat="league in participants.leagues"><a href ng-click="participants.leagueFilter = league">{{league}} Liga <span class="badge" ng-show="participants.leagueFilter === league">{{result.length}}</span></a></li>
 			</ul>
 			<div ng-show="participants.onlyEmail">
-				<div ng-repeat="user in participants.players | orderBy: participants.orderBy : participants.reverse | filter: participants.listFilter | league: participants.leagueFilter">{{user.email}},</div>
+				<div ng-repeat="user in participants.players | orderBy: participants.orderBy : participants.reverse | filter: participants.listFilter | league: participants.leagueFilter as result">{{user.email}},</div>
 				<a href ng-click="participants.onlyEmail = false">Vissza</a>
 			</div>
 			<table class="table table-striped table-bordered" ng-hide="participants.onlyEmail">
