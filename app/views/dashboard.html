@@ -19,8 +19,7 @@
 						<span>
 							<span class="glyphicon glyphicon-star-empty" ng-hide="dashboard.user.uid === player.uid" style="color: #fff"></span>
 							<span class="glyphicon glyphicon-star" ng-show="dashboard.user.uid === player.uid"></span>
-							{{player.name}}
-							<span ng-show="!player.name">{{player.email}}</span>
+							<a ui-sref="app.public({uid: player.uid})">{{player.name}}</a>
 						</span>
 						<span class="pull-right">
 							{{player.score}} pont

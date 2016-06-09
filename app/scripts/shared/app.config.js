@@ -59,7 +59,6 @@
 	
 	function appRouting($stateProvider, $urlRouterProvider, $locationProvider) {
 
-		// $locationProvider.html5Mode(true);
 		
 		$urlRouterProvider.otherwise('/dashboard');
 
@@ -109,8 +108,6 @@
 		.state('app.rules', {
 			url: '/rules',
 			templateUrl: 'views/rules.html',
-			// controller: 'RulesController',
-			// controllerAs: 'rules'
 		})
 		.state('app.contact', {
 			url: '/contact',

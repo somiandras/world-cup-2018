@@ -18,6 +18,28 @@
 			controller: 'ProfileController',
 			controllerAs: 'profile',
 		})
+		.state('app.public', {
+			url: '/public/:uid',
+			templateUrl: 'views/public_profile.html',
+			controller: 'PublicController',
+			controllerAs: 'public',
+			params: {
+				uid: null,
+			},
+			resolve: {
+				currentUser: function ($stateParams, userService) {
+
+					return userService.public.$loaded()
+					.then((publicList) => {
+
+						return publicList.find((item) => {
+
+							return item.uid === $stateParams.uid;
+						});
+					});
+				}
+			}
+		})
 		.state('login', {
 			url: '/login',
 			views: {
