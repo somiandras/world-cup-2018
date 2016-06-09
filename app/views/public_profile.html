@@ -3,7 +3,7 @@
 		<div class="col-xs-12">
 			<h1>{{public.user.name}} <small>{{public.user.company}}</small></h1>
 			
-			<h4>Favoritok: <span class="flag-icon" ng-class="{'flag-icon-{{public.user.bets.winner.ISO}}': true}"></span> {{public.user.bets.winner.longName}} | <span class="glyphicon glyphicon-star-empty"></span> {{public.user.bets.topScorer}}</h4>
+			<h4 ng-hide="public.now < public.start">Favoritok: <span class="flag-icon" ng-class="{'flag-icon-{{public.user.bets.winner.ISO}}': true}"></span> {{public.user.bets.winner.longName}} | <span class="glyphicon glyphicon-star-empty"></span> {{public.user.bets.topScorer}}</h4>
 		</div>
 	</div>
 	<br>
