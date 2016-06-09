@@ -182,7 +182,9 @@
 						name: user.name || null, 
 						uid: user.uid,
 						score: user.totalScore || 0,
-						league: user.league
+						league: user.league,
+						bets: user.bets || null,
+						company: user.company || null
 					});
 				
 				} else {
@@ -190,6 +192,8 @@
 					found.name = user.name || null;
 					found.score = user.totalScore || 0;
 					found.league = user.league;
+					found.bets = user.bets || null;
+					found.company = user.company || null;
 
 					return publicData.$save(found);
 				} 
