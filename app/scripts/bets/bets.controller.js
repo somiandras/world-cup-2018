@@ -39,9 +39,11 @@
 		}
 
 
-		vm.addWinnerAndScorer = function (data) {			
+		vm.addWinnerAndScorer = function (data) {
 
-			if (vm.now < vm.startTime - vm.timeLimit) {
+		let now = new Date().getTime();	
+
+			if (now < vm.startTime - vm.timeLimit) {
 
 				betService.saveWinner(data, user)
 				.then(() => {
