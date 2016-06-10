@@ -139,8 +139,10 @@
 				</h3>
 				<h3 ng-show="bets.now > match.datetime - bets.timeLimit && !match.result">
 					<span ng-show="bets.user.bets.matches[match.$id]">
+						<small>Tipped: 
 						{{bets.user.bets.matches[match.$id].home}} - 
 						{{bets.user.bets.matches[match.$id].away}}
+						 </small>
 					</span>
 					<small ng-hide="bets.user.bets.matches[match.$id]">Nem tippeltél</small>
 				</h3>
