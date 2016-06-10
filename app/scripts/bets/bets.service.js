@@ -4,9 +4,9 @@
 
 	angular.module('myBets').factory('betService', betService);
 
-	betService.$inject = ['$q', 'userService', 'tournamentService'];
+	betService.$inject = ['$q', 'userService', 'tournamentService', 'APP_CONFIG'];
 
-	function betService ($q, userService, tournamentService) {
+	function betService ($q, userService, tournamentService, APP_CONFIG) {
 
 		return {
 			saveWinner: saveWinner,
@@ -31,8 +31,9 @@
 
 				let now = new Date().getTime();
 				let matchTime = match.datetime;
+				let timeLimit = APP_CONFIG.timeLimit;
 
-				if (now > matchTime) {
+				if (now > matchTime - timeLimit) {
 
 					let error = new Error('Már nem lehet tippet leadni erre a meccsre');
 					
