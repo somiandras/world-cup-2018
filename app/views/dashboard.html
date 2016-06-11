@@ -5,6 +5,7 @@
 			<div class="row">
 
 				<div class="col-xs-12">
+					
 					<div class="panel panel-info" ng-class="{'panel-info': dashboard.user.bets, 'panel-warning': !dashboard.user.bets}">
 						<div class="panel-heading">
 							<h3 class="panel-title">
@@ -14,7 +15,7 @@
 						</div>
 						<div class="panel-body" ng-class="{'bg-warning': !dashboard.user.bets}">
 							<div class="match-entry" ng-repeat="match in dashboard.tour.data.matches | orderBy: 'datetime' : true | open: false | noResult | limitTo: 2">
-								<span class="label label-danger" ng-show="dashboard.now > match.datetime">MOST</span><small> {{match.datetime | date: 'MM.dd., H:mm'}}</small><br>
+								<span class="label label-danger" ng-show="dashboard.now > match.datetime - dashboard.timeLimit">MOST</span><small> {{match.datetime | date: 'MM.dd., H:mm'}}</small><br>
 								<span class="flag-icon" ng-class="{'flag-icon-{{match.home.ISO}}': true}"></span>
 								{{match.home.longName}} - {{match.away.longName}}
 								<span class="flag-icon" ng-class="{'flag-icon-{{match.away.ISO}}': true}"></span>

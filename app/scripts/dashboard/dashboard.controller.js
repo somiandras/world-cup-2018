@@ -4,21 +4,30 @@
 
 	angular.module('appCore').controller('DashboardController', DashboardController);
 
-	DashboardController.$inject = ['$state', 'userService', 'tournamentService', 'user', '$uibModal'];
+	DashboardController.$inject = ['$state', '$interval', 'userService', 'tournamentService', 'user', '$uibModal', 'APP_CONFIG'];
 
-	function DashboardController ($state, userService, tournamentService, user, $uibModal) {
+	function DashboardController ($state, $interval, userService, tournamentService, user, $uibModal, APP_CONFIG) {
 
 		let vm = this;
 
 		vm.tour = tournamentService;
 		vm.user = user;
 		vm.users = userService.public;
+		vm.timeLimit = APP_CONFIG.timeLimit;
+
 		vm.now = new Date().getTime();
+
+		$interval(() => {
+
+			vm.now = new Date().getTime();
+		}, 10000);
 
 		if (user.league && user.league.length) {
 
 			vm.leagueFilter = user.league[0];
 		}
+
+
 
 
 		if ($state.params.temporary) {
