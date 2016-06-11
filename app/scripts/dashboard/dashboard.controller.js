@@ -13,6 +13,7 @@
 		vm.tour = tournamentService;
 		vm.user = user;
 		vm.users = userService.public;
+		vm.now = new Date().getTime();
 
 		if (user.league && user.league.length) {
 

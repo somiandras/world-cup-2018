@@ -5,6 +5,7 @@
 	angular.module('appCore')
 	.filter('team', teamFilter)
 	.filter('open', openFilter)
+	.filter('noResult', noResultFilter)
 	.filter('result', resultFilter)
 	.filter('league', leagueFilter);
 
@@ -66,6 +67,27 @@
 	}
 
 
+	function noResultFilter () {
+
+		return function (matchList) {
+
+			let filteredData = [];
+
+			matchList = matchList || [];
+
+			matchList.forEach((match) => {
+
+				if (!match.result) {
+
+					filteredData.push(match);
+				}
+			});
+
+			return filteredData;
+		}
+	}
+
+
 	resultFilter.$inject = ['APP_CONFIG']
 
 	function resultFilter (APP_CONFIG) {
@@ -86,6 +108,7 @@
 			return filteredData;
 		}	
 	}
+
 
 	function leagueFilter () {
 
