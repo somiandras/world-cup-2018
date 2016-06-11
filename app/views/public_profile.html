@@ -12,7 +12,7 @@
 		<div class="col-xs-12 col-md-6">
 			<h3>Összesítés <span class="label label-success pull-right">{{public.user.score}} pont</span></h3>
 			<hr>
-			<h4 ng-repeat="match in public.matches | open: false as result">
+			<h4 ng-repeat="match in public.matches | result as result">
 
 				<span class="flag-icon" ng-class="{'flag-icon-{{match.home.ISO}}': true}"></span>
 				{{match.home.longName}} - {{match.away.longName}}

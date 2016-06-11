@@ -96,7 +96,7 @@
 		</div>
 		<div 
 		class="col-xs-12 match-block" 
-		ng-repeat="match in bets.data.matches | orderBy: 'datetime' | open: bets.onlyOpen : bets.now">
+		ng-repeat="match in bets.data.matches | orderBy: 'datetime' : !bets.onlyOpen | open: bets.onlyOpen : bets.now">
 
 			<div class="col-sm-10">
 				<h4>
