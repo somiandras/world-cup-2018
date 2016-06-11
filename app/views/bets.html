@@ -81,13 +81,18 @@
 
 	<div class="row">
 		<div class="col-xs-12">
-			<h3>Meccsek<br>	
-			<small>A tippedet még megváltoztathatod, legkésőbb a meccs kezdete előtt {{bets.timeLimit / 60000}} perccel. Kattints a tippre a módosításhoz!</small></h3>
-			<hr>
-			<div class="btn-group pull-right">
-			    <label class="btn btn-info" ng-model="bets.onlyOpen" uib-btn-radio="true">Nyitott tippek</label>
-			    <label class="btn btn-primary" ng-model="bets.onlyOpen" uib-btn-radio="false">Már lezárt tippek</label>
-			</div>
+			<ul class="nav nav-tabs">
+				<li role="presentation" ng-class="{'active': bets.onlyOpen}">
+					<a href ng-click="bets.onlyOpen = true">Nyitott tippjeim</a>
+				</li>
+				<li role="presentation" ng-class="{'active': !bets.onlyOpen}">
+					<a href ng-click="bets.onlyOpen = false">Lezárt tippjeim</a>
+				</li>
+			</ul>
+		</div>
+		<div class="col-xs-12">
+			<h3 ng-show="bets.onlyOpen"><small>Ezeket a tippjeidet még megváltoztathatod, legkésőbb a meccs kezdete előtt {{bets.timeLimit / 60000}} perccel. Kattints a tippre a módosításhoz!</small></h3>
+			<h3 ng-hide="bets.onlyOpen"><small>Ezeket a tippjeidet már nem módosíthatod. Ha már megvan a meccs eredménye, akkor a pontszámot is láthatod.</small></h3>
 		</div>
 		<div 
 		class="col-xs-12 match-block" 
