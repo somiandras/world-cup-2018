@@ -61,7 +61,7 @@
 							<div ng-hide="matches.length" class="empty-state-message text-center">
 								Itt láthatod majd a frissen kapott pontjaidat.
 							</div>
-							<div class="player-entry" ng-repeat="match in dashboard.tour.data.matches | orderBy: 'datetime' | result | limitTo: 4 as matches">
+							<div class="player-entry" ng-repeat="match in dashboard.tour.data.matches | orderBy: 'datetime' : true | result | limitTo: 4 as matches">
 								<span class="flag-icon" ng-class="{'flag-icon-{{match.home.ISO}}': true}"></span>
 								{{match.home.longName}} - {{match.away.longName}}
 								<span class="flag-icon" ng-class="{'flag-icon-{{match.away.ISO}}': true}"></span>
