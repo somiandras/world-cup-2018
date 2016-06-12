@@ -19,7 +19,7 @@
           <li ng-class="{'active': navigation.state.is('app.dashboard')}"><a ui-sref="app.dashboard"><span class="glyphicon glyphicon-home"></span> Főoldal</a></li>
           <li ng-class="{'active': navigation.state.is('app.myBets')}"><a ui-sref="app.myBets"><span class="glyphicon glyphicon-check"></span> Tippjeim</a></li>
           <li ng-class="{'active': navigation.state.is('app.rules')}"><a ui-sref="app.rules"><span class="glyphicon glyphicon-info-sign"></span> Szabályok</a></li>
-          <li ng-show="navigation.user.admin" ng-class="{'active': navigation.state.includes('app.admin')}"><a ui-sref="app.admin.participants"><span class="glyphicon glyphicon-wrench"></span> Admin</a></li>
+          <li ng-show="navigation.user.admin" ng-class="{'active': navigation.state.includes('app.admin')}"><a ui-sref="app.admin.matches"><span class="glyphicon glyphicon-wrench"></span> Admin</a></li>
         </ul>
 
         <div class="navbar-right">

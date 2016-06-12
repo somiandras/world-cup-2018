@@ -12,7 +12,7 @@
 	 */
 	angular.module('euro2016App', ['appCore', 'myBets', 'user', 'admin']);
 
-	angular.module('appCore',['ngMessages','ngResource','ngSanitize', 'ui.router', 'firebase']);  
+	angular.module('appCore',['ngMessages','ngResource','ngSanitize', 'ui.router', 'firebase','angulartics', 'angulartics.google.tagmanager']);  
 
 	angular.module('myBets', ['ui.bootstrap']);
 
