@@ -9,7 +9,7 @@
 	</div>
 	<br>
 	<div class="row">
-		<div class="col-xs-12 col-md-6">
+		<div class="col-xs-12 col-md-8">
 			<h3>Összesítés <span class="label label-success pull-right">{{public.user.score}} pont</span></h3>
 			<hr>
 			<h4 ng-repeat="match in public.matches | result as result">
@@ -19,9 +19,16 @@
 				<span class="flag-icon" ng-class="{'flag-icon-{{match.away.ISO}}': true}"></span>
 
 				<span class="label label-success pull-right" ng-show="public.user.bets.matches[match.$id].points"><span class="glyphicon glyphicon-ok"></span> {{public.user.bets.matches[match.$id].points}} pont</span>
+
 				<span class="label label-default pull-right" ng-hide="public.user.bets.matches[match.$id].points || !match.result"><span class="glyphicon glyphicon-remove"></span> 0 pont</span>
+
 				<span ng-show="!match.result" class="pull-right"><small>Nincs még eredmény</small></span>
-			</h4>
+
+				<small>
+					<span>{{match.result.home}} - {{match.result.away}}</span>
+					<span>(Tipped: {{public.user.bets.matches[match.$id].home}} - {{public.user.bets.matches[match.$id].away}})</span>
+				</small>			
+				</h4>
 			<h4><small ng-hide="result.length">A lezárt meccsekre kapott pontok jelennek majd meg itt.</small></h4>
 		</div>
 	</div>
