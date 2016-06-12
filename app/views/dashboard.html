@@ -17,7 +17,8 @@
 							<div class="match-entry" ng-repeat="match in dashboard.tour.data.matches | orderBy: 'datetime' : true | open: false | noResult | limitTo: 2">
 								<span class="label label-danger" ng-show="dashboard.now > match.datetime - dashboard.timeLimit">MOST</span><small> {{match.datetime | date: 'MM.dd., H:mm'}}</small><br>
 								<span class="flag-icon" ng-class="{'flag-icon-{{match.home.ISO}}': true}"></span>
-								{{match.home.longName}} - {{match.away.longName}}
+								<span class="hidden-xs">{{match.home.longName}} - {{match.away.longName}}</span>
+								<span class="visible-xs-inline">{{match.home.shortName}} - {{match.away.shortName}}</span>
 								<span class="flag-icon" ng-class="{'flag-icon-{{match.away.ISO}}': true}"></span>
 								<strong class="pull-right" ng-show="dashboard.user.bets.matches[match.$id]">
 									{{dashboard.user.bets.matches[match.$id].home}} - 
@@ -31,7 +32,8 @@
 							<div class="match-entry" ng-repeat="match in dashboard.tour.data.matches | orderBy: 'datetime' | open: true | limitTo: 4" ng-show="dashboard.user.bets">
 								<span class="label label-warning" ng-show="dashboard.now + 3600000 > match.datetime">MINDJÁRT!</span><small> {{match.datetime | date: 'MM.dd., H:mm'}}</small><br>
 								<span class="flag-icon" ng-class="{'flag-icon-{{match.home.ISO}}': true}"></span>
-								{{match.home.longName}} - {{match.away.longName}}
+								<span class="hidden-xs">{{match.home.longName}} - {{match.away.longName}}</span>
+								<span class="visible-xs-inline">{{match.home.shortName}} - {{match.away.shortName}}</span>
 								<span class="flag-icon" ng-class="{'flag-icon-{{match.away.ISO}}': true}"></span>
 								<strong class="pull-right" ng-show="dashboard.user.bets.matches[match.$id]">
 									{{dashboard.user.bets.matches[match.$id].home}} - 
@@ -63,7 +65,8 @@
 							</div>
 							<div class="player-entry" ng-repeat="match in dashboard.tour.data.matches | orderBy: 'datetime' : true | result | limitTo: 4 as matches">
 								<span class="flag-icon" ng-class="{'flag-icon-{{match.home.ISO}}': true}"></span>
-								{{match.home.longName}} - {{match.away.longName}}
+								<span class="hidden-xs">{{match.home.longName}} - {{match.away.longName}}</span>
+								<span class="visible-xs-inline">{{match.home.shortName}} - {{match.away.shortName}}</span>
 								<span class="flag-icon" ng-class="{'flag-icon-{{match.away.ISO}}': true}"></span>
 								
 								<span class="pull-right point-label">
