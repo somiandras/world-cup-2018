@@ -32,47 +32,26 @@
 					<th class="text-center" ng-click="participants.orderBy = 'company' ; participants.reverse = !participants.reverse">Cég
 					<span class="glyphicon glyphicon-triangle-top" ng-show="participants.orderBy === 'company' && !participants.reverse"></span>
 					<span class="glyphicon glyphicon-triangle-bottom" ng-show="participants.orderBy === 'company' && participants.reverse"></span></th>
-					<th class="text-center" ng-click="participants.orderBy = 'createdAt' ; participants.reverse = !participants.reverse">Regisztráció ideje
-					<span class="glyphicon glyphicon-triangle-top" ng-show="participants.orderBy === 'createdAt' && !participants.reverse"></span>
-					<span class="glyphicon glyphicon-triangle-bottom" ng-show="participants.orderBy === 'createdAt' && participants.reverse"></span>
-					</th>
 					<th class="text-center" ng-click="participants.orderBy = 'lastLogin' ; participants.reverse = !participants.reverse">Utolsó bejelentkezés
 					<span class="glyphicon glyphicon-triangle-top" ng-show="participants.orderBy === 'lastLogin' && !participants.reverse"></span>
 					<span class="glyphicon glyphicon-triangle-bottom" ng-show="participants.orderBy === 'lastLogin' && participants.reverse"></span>
 					</th>
-					<th class="text-center">Liga</th>
-					<th class="text-center">Fő tipp?</th>
-					<th class="text-center">Meccs tippek?</th>
-					<th class="text-center">Admin</th>
-					<th class="text-center">Módosítás</th>
+					<th class="text-center">Végső győztes</th>
+					<th class="text-center">Gólkirály</th>
 				</thead>
 				<tbody>
 					<tr ng-repeat="user in participants.players | orderBy: participants.orderBy : participants.reverse | filter: participants.listFilter | league: participants.leagueFilter">
 						<td><span uib-tooltip="{{user.uid}}">{{user.email}}</span></td>
 						<td class="text-center" nowrap>{{user.name}}</td>
 						<td class="text-center" nowrap>{{user.company}}</td>
-						<td class="text-center" nowrap>{{user.createdAt | date: 'MM.dd. H:mm'}}</td>
 						<td class="text-center" nowrap>{{user.lastLogin | date: 'MM.dd. H:mm'}}</td>
-						<td class="text-left" nowrap>
-							<p ng-repeat="league in participants.leagues">
-								{{league}} : <span class="glyphicon glyphicon-ok text-success" ng-show="participants.checkLeague(user,league)"></span>
-								<a href ng-hide="participants.checkLeague(user,league)" ng-click="participants.addLeague(user, league)"><span class="glyphicon glyphicon-plus-sign"></span></a>
-							</p>
-						</td>
 						<td class="text-center">
-							<span ng-show="user.bets.topScorer && user.bets.winner"><span class="glyphicon glyphicon-ok text-success"></span></span>
+							{{user.bets.winner.longName}}
 							<span ng-hide="user.bets.topScorer && user.bets.winner"><span class="glyphicon glyphicon-remove text-danger"></span></span>
 						</td>
 						<td class="text-center">
-							<span ng-show="user.bets.matches"><span class="glyphicon glyphicon-ok text-success"></span></span>
-							<span ng-hide="user.bets.matches"><span class="glyphicon glyphicon-remove text-danger"></span></span>
-						</td>
-						<td class="text-center">
-							<span ng-show="user.admin"><span class="glyphicon glyphicon-ok text-success"></span></span>
-							<span ng-hide="user.admin"><span class="glyphicon glyphicon-remove text-danger"></span></span>
-						</td>
-						<td class="text-center">
-							<a href ng-click="participants.makeUserAdmin(user)" ng-hide="user.admin">Adminná teszem</a>
+							{{user.bets.topScorer}}
+							<span ng-hide="user.bets.topScorer && user.bets.winner"><span class="glyphicon glyphicon-remove text-danger"></span></span>
 						</td>
 					</tr>
 				</tbody>
