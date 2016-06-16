@@ -15,6 +15,7 @@
 		vm.orderBy = 'name';
 		vm.reverse = false;
 		vm.leagueFilter = vm.leagues[0];
+		vm.promo = adminService.promo;
 
 
 		vm.makeUserAdmin = function (user) {

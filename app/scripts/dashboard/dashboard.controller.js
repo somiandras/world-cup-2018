@@ -4,9 +4,9 @@
 
 	angular.module('appCore').controller('DashboardController', DashboardController);
 
-	DashboardController.$inject = ['$state', '$interval', 'userService', 'tournamentService', 'user', '$uibModal', 'APP_CONFIG'];
+	DashboardController.$inject = ['$state', '$interval', 'userService', 'adminService', 'tournamentService', 'user', '$uibModal', 'APP_CONFIG'];
 
-	function DashboardController ($state, $interval, userService, tournamentService, user, $uibModal, APP_CONFIG) {
+	function DashboardController ($state, $interval, userService, adminService, tournamentService, user, $uibModal, APP_CONFIG) {
 
 		let vm = this;
 
@@ -15,19 +15,21 @@
 		vm.users = userService.public;
 		vm.timeLimit = APP_CONFIG.timeLimit;
 
+		vm.promo = adminService.promo;
+
 		vm.now = new Date().getTime();
 
 		$interval(() => {
 
 			vm.now = new Date().getTime();
+
 		}, 10000);
+
 
 		if (user.league && user.league.length) {
 
 			vm.leagueFilter = user.league[0];
 		}
-
-
 
 
 		if ($state.params.temporary) {
@@ -85,6 +87,32 @@
 				console.error(error);
 			});
 		}
+
+
+		vm.showPromo = function (promo, user) {
+
+			let match = user.league.find((league) => {
+
+				return promo.league === league;
+			});
+
+			return match;
+		};
+
+
+		vm.replyToPromo = function (promo, user, answer) {
+
+			adminService.addPromoReply(promo, user, answer)
+			.then(() => {
+
+				toastr.success("Köszi a visszajelzést!");
+			})
+			.catch((error) => {
+
+				console.error(error);
+			});
+		
+		};
 
 	}
 	

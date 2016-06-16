@@ -86,6 +86,12 @@ tr:hover .glyphicon-pencil {
   margin-top: 25vh;
 }
 
+.promobox {
+  margin-bottom: 35px;
+  padding: 0px 30px 20px 30px;
+  border-radius: 10px;
+}
+
 
 .browsehappy {
   margin: 0.2em 0;

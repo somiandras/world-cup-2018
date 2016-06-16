@@ -27,7 +27,8 @@
 		leagues: ['KBC', 'Somi', 'Norbi'],
 
 		//Starting time: 2016.06.10 21:00
-		startTime: 1465585200000
+		startTime: 1465585200000,
+
 	})
 	.config(appRouting)
 	.config(firebase)
@@ -49,7 +50,8 @@
 			matches: APP_CONFIG.fbUrl + 'tournament/matches',
 			players: APP_CONFIG.fbUrl + 'tournament/players',
 			admin: APP_CONFIG.fbUrl + 'admin',
-			pending: APP_CONFIG.fbUrl + 'admin/pending'
+			pending: APP_CONFIG.fbUrl + 'admin/pending',
+			promo: APP_CONFIG.fbUrl + 'promo'
 		});
 	}
 

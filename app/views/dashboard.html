@@ -1,6 +1,13 @@
 <div class="container">
 	<div class="row">
-
+		<div ng-if="dashboard.showPromo(dashboard.promo.current, dashboard.user)">
+			<div class="col-xs-12 promobox bg-warning text-warning">
+				<h3></span> {{dashboard.promo.current.title}}</h3>
+				<p>{{dashboard.promo.current.message}}</p>
+				<a class="btn btn-success" ng-hide="dashboard.promo.users[dashboard.user.uid]" href ng-click="dashboard.replyToPromo(dashboard.promo.current, dashboard.user, true)">Igen, jövök!</a>
+				<em ng-show="dashboard.promo.users[dashboard.user.uid]">Visszajeleztél, hogy jössz. <a href ng-click="dashboard.replyToPromo(dashboard.promo.current, dashboard.user, null)">Mégsem jövök</a></em>			
+			</div>	
+		</div>
 		<div class="col-xs-12 col-md-6">
 			<div class="row">
 
