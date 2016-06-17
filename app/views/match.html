@@ -2,39 +2,45 @@
 	<div class="row">
 		<div class="col-xs-12 col-md-10">
 			<h3>
-				<small>{{match.current.datetime | date: 'MM.dd. H:mm'}}</small>
+				<span class="label label-danger" ng-show="match.current.status === 'running'">MOST</span>
+				<small> {{match.current.datetime | date: 'MM.dd. H:mm'}}</small>
 			</h3>
 			<h1 class="hidden-xs">
 				<span class="flag-icon" ng-class="{'flag-icon-{{match.current.home.ISO}}': true}"></span>
 				<span>{{match.current.home.longName}} - {{match.current.away.longName}}</span>
 				<span class="flag-icon" ng-class="{'flag-icon-{{match.current.away.ISO}}': true}"></span>
-				<span class="pull-right">{{match.current.result.home}} - {{match.current.result.away}}</span>
+				<span class="pull-right" ng-show="match.current.status === 'closed'">{{match.current.result.home}} - {{match.current.result.away}}</span>
 			</h1>
 			<h3 class="visible-xs-inline">
 				<span class="flag-icon" ng-class="{'flag-icon-{{match.current.home.ISO}}': true}"></span>
 				<span>{{match.current.home.shortName}} - {{match.current.away.shortName}}</span>
 				<span class="flag-icon" ng-class="{'flag-icon-{{match.current.away.ISO}}': true}"></span>
-				<span class="pull-right">{{match.current.result.home}} - {{match.current.result.away}}</span>
+				<span class="pull-right" ng-show="match.current.status === 'closed'">{{match.current.result.home}} - {{match.current.result.away}}</span>
 			</h3>
 		</div>
 	</div>
 	<hr>
-	<div class="row">
-		<div class="col-xs-12 col-md-8">
+
+	<div class="row" ng-hide="match.current.status === 'open'">
+		<div class="col-xs-12 col-md-6">
 			<ul class="nav nav-tabs" ng-if="match.user.league[1]">
 				<li role="presentation" ng-class="{'active': match.leagueFilter === league}" ng-repeat="league in match.user.league"><a href ng-click="match.leagueFilter = league">{{league}} Liga</a></li>
 			</ul>
-			<h4 ng-repeat="user in match.userList | orderBy: 'points' : true | league: match.leagueFilter" class="match-entry">
+			<h4 ng-repeat="user in match.userList | orderBy: match.sort : match.reverse | league: match.leagueFilter" class="match-entry">
 				<a ui-sref="app.public({uid: user.uid})">{{user.name}}</a>
 				
-				<span class="pull-right">
+				<span class="pull-right" ng-show="match.current.status === 'closed'">
 
 					<span class="label" ng-class="{'label-success': user.points === 2, 'label-info': user.points === 1}" ng-show="user.points">
 						<span class="glyphicon glyphicon-ok"></span> {{user.points}} pont</span>
 						<span class="label label-default" ng-show="!user.points"><span class="glyphicon glyphicon-remove"></span> 0 pont</span>
 				</span>
 
-				<small><div>Tipp: {{user.home}} - {{user.away}}</div></small>
+				<span class="pull-right" ng-show="match.current.status === 'running'">
+					{{user.home}} - {{user.away}}
+				</span>
+
+				<small ng-show="match.current.status === 'closed'"><div>Tipp: {{user.home}} - {{user.away}}</div></small>
 			</h4>
 		</div>
 	</div>

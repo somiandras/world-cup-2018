@@ -4,9 +4,9 @@
 
 	angular.module('appCore').controller('MatchController', MatchController);
 
-	MatchController.$inject = ['match', 'user', 'userService'];
+	MatchController.$inject = ['match', 'user', 'userService', 'APP_CONFIG'];
 
-	function MatchController (match, user, userService) {
+	function MatchController (match, user, userService, APP_CONFIG) {
 
 		let vm = this;
 		vm.current = match;
@@ -15,10 +15,40 @@
 
 		vm.userList = getUserList(match);
 
+		vm.now = new Date().getTime();
+
+
 		if (user.league && user.league.length) {
 
 			vm.leagueFilter = user.league[0];
 		}
+
+
+		if (vm.now < match.datetime - APP_CONFIG.timeLimit) {
+
+			match.status = "open";
+
+			vm.sort = 'name';
+			vm.reverse = false;
+
+		} else if (!match.result) {
+
+			match.status = "running";
+
+			vm.sort = 'name';
+			vm.reverse = false;
+
+		} else {
+
+			match.status = "closed";
+
+			vm.sort = 'points';
+			vm.reverse = true;
+		}
+
+
+
+
 
 		function getUserList (match) {
 
