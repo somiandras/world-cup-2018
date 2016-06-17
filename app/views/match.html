@@ -20,17 +20,21 @@
 	</div>
 	<hr>
 	<div class="row">
-		<div class="col-xs-12 col-md-6">
+		<div class="col-xs-12 col-md-8">
 			<ul class="nav nav-tabs" ng-if="match.user.league[1]">
 				<li role="presentation" ng-class="{'active': match.leagueFilter === league}" ng-repeat="league in match.user.league"><a href ng-click="match.leagueFilter = league">{{league}} Liga</a></li>
 			</ul>
-			<h4 ng-repeat="user in match.users | orderBy: 'name' | league: match.leagueFilter">
-				<span>{{user.name}}</span>
-				<small>(Tipp: {{user.bets.matches[match.current.$id].home}} - {{user.bets.matches[match.current.$id].away}})</small>
-				<span class="pull-right point-label">
-					<span class="label" ng-class="{'label-success': user.bets.matches[match.current.$id].points === 2, 'label-info': user.bets.matches[match.current.$id].points === 1}" ng-show="user.bets.matches[match.current.$id].points"><span class="glyphicon glyphicon-ok hidden-xs"></span> {{user.bets.matches[match.current.$id].points}} <span class="hidden-xs">pont</span></span>
-					<span class="label label-default" ng-show="!user.bets.matches[match.current.$id].points"><span class="glyphicon glyphicon-remove hidden-xs"></span> 0 <span class="hidden-xs">pont</span></span>
+			<h4 ng-repeat="user in match.users | orderBy: 'name' | league: match.leagueFilter" class="match-entry">
+				<a ui-sref="app.public({uid: user.uid})">{{user.name}}</a>
+				
+				<span class="pull-right">
+
+					<span class="label" ng-class="{'label-success': user.bets.matches[match.current.$id].points === 2, 'label-info': user.bets.matches[match.current.$id].points === 1}" ng-show="user.bets.matches[match.current.$id].points">
+						<span class="glyphicon glyphicon-ok"></span> {{user.bets.matches[match.current.$id].points}} pont</span>
+						<span class="label label-default" ng-show="!user.bets.matches[match.current.$id].points"><span class="glyphicon glyphicon-remove"></span> 0 pont</span>
 				</span>
+
+				<small><div>Tipp: {{user.bets.matches[match.current.$id].home}} - {{user.bets.matches[match.current.$id].away}}</div></small>
 			</h4>
 		</div>
 	</div>
