@@ -24,17 +24,17 @@
 			<ul class="nav nav-tabs" ng-if="match.user.league[1]">
 				<li role="presentation" ng-class="{'active': match.leagueFilter === league}" ng-repeat="league in match.user.league"><a href ng-click="match.leagueFilter = league">{{league}} Liga</a></li>
 			</ul>
-			<h4 ng-repeat="user in match.users | orderBy: 'name' | league: match.leagueFilter" class="match-entry">
+			<h4 ng-repeat="user in match.userList | orderBy: 'points' : true | league: match.leagueFilter" class="match-entry">
 				<a ui-sref="app.public({uid: user.uid})">{{user.name}}</a>
 				
 				<span class="pull-right">
 
-					<span class="label" ng-class="{'label-success': user.bets.matches[match.current.$id].points === 2, 'label-info': user.bets.matches[match.current.$id].points === 1}" ng-show="user.bets.matches[match.current.$id].points">
-						<span class="glyphicon glyphicon-ok"></span> {{user.bets.matches[match.current.$id].points}} pont</span>
-						<span class="label label-default" ng-show="!user.bets.matches[match.current.$id].points"><span class="glyphicon glyphicon-remove"></span> 0 pont</span>
+					<span class="label" ng-class="{'label-success': user.points === 2, 'label-info': user.points === 1}" ng-show="user.points">
+						<span class="glyphicon glyphicon-ok"></span> {{user.points}} pont</span>
+						<span class="label label-default" ng-show="!user.points"><span class="glyphicon glyphicon-remove"></span> 0 pont</span>
 				</span>
 
-				<small><div>Tipp: {{user.bets.matches[match.current.$id].home}} - {{user.bets.matches[match.current.$id].away}}</div></small>
+				<small><div>Tipp: {{user.home}} - {{user.away}}</div></small>
 			</h4>
 		</div>
 	</div>
