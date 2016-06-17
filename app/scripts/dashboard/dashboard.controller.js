@@ -8,6 +8,9 @@
 
 	function DashboardController ($state, $interval, userService, adminService, tournamentService, user, $uibModal, APP_CONFIG) {
 
+		console.log(new Date('2016.06.22. 18:00').getTime());
+
+
 		let vm = this;
 
 		vm.tour = tournamentService;
@@ -91,12 +94,19 @@
 
 		vm.showPromo = function (promo, user) {
 
-			let match = user.league.find((league) => {
+			if (vm.now < promo.validTo) {
 
-				return promo.league === league;
-			});
+				let match = user.league.find((league) => {
 
-			return match;
+					return promo.league === league;
+				});
+
+				return match;
+
+			} else {
+
+				return false;
+			}
 		};
 
 
