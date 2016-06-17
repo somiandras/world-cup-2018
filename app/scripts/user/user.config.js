@@ -40,6 +40,18 @@
 				}
 			}
 		})
+		.state('app.match', {
+			url: '/match/:matchId',
+			templateUrl: 'views/match.html',
+			controller: 'MatchController',
+			controllerAs: 'match',
+			resolve: {
+				match: function ($stateParams, tournamentService) {
+
+					return tournamentService.getMatch($stateParams.matchId);
+				}
+			}
+		})
 		.state('login', {
 			url: '/login',
 			views: {

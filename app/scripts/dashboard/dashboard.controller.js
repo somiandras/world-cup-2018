@@ -8,9 +8,6 @@
 
 	function DashboardController ($state, $interval, userService, adminService, tournamentService, user, $uibModal, APP_CONFIG) {
 
-		console.log(new Date('2016.06.22. 18:00').getTime());
-
-
 		let vm = this;
 
 		vm.tour = tournamentService;

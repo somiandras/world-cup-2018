@@ -72,14 +72,16 @@
 							</div>
 							<div class="player-entry" ng-repeat="match in dashboard.tour.data.matches | orderBy: 'datetime' : true | result | limitTo: 4 as matches">
 								<span class="flag-icon" ng-class="{'flag-icon-{{match.home.ISO}}': true}"></span>
-								<span class="hidden-xs">{{match.home.longName}} - {{match.away.longName}}</span>
-								<span class="visible-xs-inline">{{match.home.shortName}} - {{match.away.shortName}}</span>
+								<a ui-sref="app.match({matchId: match.$id})">
+									<span class="hidden-xs">{{match.home.longName}} - {{match.away.longName}}</span>
+									<span class="visible-xs-inline">{{match.home.shortName}} - {{match.away.shortName}}</span>
+								</a>
 								<span class="flag-icon" ng-class="{'flag-icon-{{match.away.ISO}}': true}"></span>
 								
 								<span class="pull-right point-label">
 									<span class="label label-success" ng-show="dashboard.user.bets.matches[match.$id].points"><span class="glyphicon glyphicon-ok"></span> {{dashboard.user.bets.matches[match.$id].points}} pont</span>
 									<span class="label label-default" ng-hide="dashboard.user.bets.matches[match.$id].points || !match.result"><span class="glyphicon glyphicon-remove"></span> 0 pont</span>
-								</h4>
+								</span>
 							</div>
 							<div class="text-center">
 								<button class="btn btn-primary" ui-sref="app.myBets({filter:false})">Lezárt meccsek</button>		

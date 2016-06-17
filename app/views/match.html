@@ -1,0 +1,37 @@
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 col-md-10">
+			<h3>
+				<small>{{match.current.datetime | date: 'MM.dd. H:mm'}}</small>
+			</h3>
+			<h1 class="hidden-xs">
+				<span class="flag-icon" ng-class="{'flag-icon-{{match.current.home.ISO}}': true}"></span>
+				<span>{{match.current.home.longName}} - {{match.current.away.longName}}</span>
+				<span class="flag-icon" ng-class="{'flag-icon-{{match.current.away.ISO}}': true}"></span>
+				<span class="pull-right">{{match.current.result.home}} - {{match.current.result.away}}</span>
+			</h1>
+			<h3 class="visible-xs-inline">
+				<span class="flag-icon" ng-class="{'flag-icon-{{match.current.home.ISO}}': true}"></span>
+				<span>{{match.current.home.shortName}} - {{match.current.away.shortName}}</span>
+				<span class="flag-icon" ng-class="{'flag-icon-{{match.current.away.ISO}}': true}"></span>
+				<span class="pull-right">{{match.current.result.home}} - {{match.current.result.away}}</span>
+			</h3>
+		</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col-xs-12 col-md-6">
+			<ul class="nav nav-tabs" ng-if="match.user.league[1]">
+				<li role="presentation" ng-class="{'active': match.leagueFilter === league}" ng-repeat="league in match.user.league"><a href ng-click="match.leagueFilter = league">{{league}} Liga</a></li>
+			</ul>
+			<h4 ng-repeat="user in match.users | orderBy: 'name' | league: match.leagueFilter">
+				<span>{{user.name}}</span>
+				<small>(Tipp: {{user.bets.matches[match.current.$id].home}} - {{user.bets.matches[match.current.$id].away}})</small>
+				<span class="pull-right point-label">
+					<span class="label" ng-class="{'label-success': user.bets.matches[match.current.$id].points === 2, 'label-info': user.bets.matches[match.current.$id].points === 1}" ng-show="user.bets.matches[match.current.$id].points"><span class="glyphicon glyphicon-ok hidden-xs"></span> {{user.bets.matches[match.current.$id].points}} <span class="hidden-xs">pont</span></span>
+					<span class="label label-default" ng-show="!user.bets.matches[match.current.$id].points"><span class="glyphicon glyphicon-remove hidden-xs"></span> 0 <span class="hidden-xs">pont</span></span>
+				</span>
+			</h4>
+		</div>
+	</div>
+</div>
