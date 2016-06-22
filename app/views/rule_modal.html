@@ -1,0 +1,31 @@
+<div class="row">
+	<div class="col-xs-12">
+		<div class="modal-header">
+			<h2 class="modal-title">Új szabályok a kiesés szakaszra</h2>
+		</div>
+		<div class="modal-body">
+			
+			<h4>Kieséses rendszer</h4>
+
+			<ul>
+			<li>A meccseket a csoportmeccsek után, illetve a kieséses körök után töltjük fel a rendszerbe. A tippelés menete a szokásos (5 perccel meccs előtt kell tippelni legkésőbb).</li>
+			<li>A tippek a rendes játékidőre vonatkoznak, vagyis 90 percre, hosszabbítás esetén 120 percre.</li>
+			<li>A 11-es párbaj így nem számít bele a pontozásba, vagyis ha valaki döntetlent tippel, akkor arra tippel, hogy 11-esekkel dől el a mérkőzés. Ha pl. 90 perc után 1–1 a meccs, de a hosszabbításban egy gól születik, akkor 2–1 a helyes tipp.</li>
+			</ul>
+
+			<h4>Holtverseny</h4>
+
+			<ul>
+			<li>Két azonos pontszámú versenyző közül az végez előrébb, akinek végső győztesként megadott csapata tovább jut az EB-n.</li>
+			<li>Ha ez ugyanaz a csapat/ugyanúgy végzett, akkor a több gólt szerző gólkirály jelölt számít.</li>
+			<li>Ha ez is egyelő, akkor a több két pontos találat számít.</li>
+			</ul>
+
+			<a ui-sref="app.rules" ng-click="ruleModal.closeAlert()">Teljes játékszabályzat</a>
+
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-primary" ng-click="ruleModal.turnOffAlert(ruleModal.user)">Ok, vettem!</button>
+		</div>
+	</div>
+</div>

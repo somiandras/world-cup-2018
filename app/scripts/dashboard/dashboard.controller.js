@@ -26,6 +26,34 @@
 		}, 10000);
 
 
+		if (!user.alerts || !user.alerts.ruleAlert) {
+
+			let ruleModal = $uibModal.open({
+				templateUrl: 'views/rule_modal.html',
+				controller: 'RuleModalController',
+				controllerAs: 'ruleModal',
+				animation: true,
+				backdrop: 'static',
+				resolve: {
+					user: () => {
+
+						return user;
+					}
+				}
+			});
+
+			ruleModal.result
+			.then((result) => {
+
+				toastr.success(result);
+			})
+			.catch((error) => {
+
+				console.error(error);
+			});
+		}
+
+
 		if (user.league && user.league.length) {
 
 			vm.leagueFilter = user.league[0];
