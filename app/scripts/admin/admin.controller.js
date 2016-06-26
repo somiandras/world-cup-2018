@@ -1,17 +1,17 @@
 (function () {
 
-	'use strict';
+  'use strict';
 
-	angular.module('admin').controller('AdminController', AdminController);
+  angular.module('admin').controller('AdminController', AdminController);
 
-	AdminController.$inject = ['$state'];
+  AdminController.$inject = ['$state'];
 
-	function AdminController ($state) {
+  function AdminController ($state) {
 
-		let vm = this;
+    let vm = this;
 
-		vm.state = $state;
+    vm.state = $state;
 
-	}
+  }
 
 })();

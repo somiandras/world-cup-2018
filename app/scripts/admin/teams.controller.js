@@ -1,18 +1,18 @@
 (function () {
 
-	'use strict';
+  'use strict';
 
-	angular.module('admin').controller('TeamsController', TeamsController);
+  angular.module('admin').controller('TeamsController', TeamsController);
 
-	TeamsController.$inject = ['tournamentService'];
+  TeamsController.$inject = ['tournamentService'];
 
-	function TeamsController (tournamentService) {
+  function TeamsController (tournamentService) {
 
-		let vm = this;
-		let tour = tournamentService;
+    let vm = this;
+    let tour = tournamentService;
 
-		vm.data = tour.data;
+    vm.data = tour.data;
 
-	}
+  }
 
 })();

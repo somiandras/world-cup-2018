@@ -1,156 +1,156 @@
 (function () {
 
-	'use strict';
+  'use strict';
 
-	angular.module('appCore')
-	.filter('team', teamFilter)
-	.filter('open', openFilter)
-	.filter('noResult', noResultFilter)
-	.filter('result', resultFilter)
-	.filter('league', leagueFilter);
+  angular.module('appCore')
+  .filter('team', teamFilter)
+  .filter('open', openFilter)
+  .filter('noResult', noResultFilter)
+  .filter('result', resultFilter)
+  .filter('league', leagueFilter);
 
-	function teamFilter () {
+  function teamFilter () {
 
-		return function (list, team) {
+    return function (list, team) {
 
-			let filteredData = [];
-			list = list || [];
+      let filteredData = [];
+      list = list || [];
 
-			list.forEach((elem) => {
+      list.forEach((elem) => {
 
-				if (elem.team === team) {
+        if (elem.team === team) {
 
-					filteredData.push(elem);
-				}
-			});
+          filteredData.push(elem);
+        }
+      });
 
-			return filteredData;
-		};
-	}
-
-
-	openFilter.$inject = ['APP_CONFIG']
-
-	function openFilter (APP_CONFIG) {
-
-		return function (matchList, open, time) {
-
-			let filteredData = [];
-			matchList = matchList || [];
-			time = time || new Date().getTime();
-
-			if (open) {
-
-				matchList.forEach((match) => {
-
-					if (time < match.datetime - APP_CONFIG.timeLimit && !match.result) {
-
-						filteredData.push(match)
-					}
-				});
-
-				return filteredData;
-
-			} else {
-
-				matchList.forEach((match) => {
-
-					if (time > match.datetime - APP_CONFIG.timeLimit || match.result) {
-
-						filteredData.push(match)
-					}
-				});
-
-				return filteredData;
-			}
-		}	
-	}
+      return filteredData;
+    };
+  }
 
 
-	function noResultFilter () {
+  openFilter.$inject = ['APP_CONFIG']
 
-		return function (matchList) {
+  function openFilter (APP_CONFIG) {
 
-			let filteredData = [];
+    return function (matchList, open, time) {
 
-			matchList = matchList || [];
+      let filteredData = [];
+      matchList = matchList || [];
+      time = time || new Date().getTime();
 
-			matchList.forEach((match) => {
+      if (open) {
 
-				if (!match.result) {
+        matchList.forEach((match) => {
 
-					filteredData.push(match);
-				}
-			});
+          if (time < match.datetime - APP_CONFIG.timeLimit && !match.result) {
 
-			return filteredData;
-		}
-	}
+            filteredData.push(match)
+          }
+        });
 
+        return filteredData;
 
-	resultFilter.$inject = ['APP_CONFIG']
+      } else {
 
-	function resultFilter (APP_CONFIG) {
+        matchList.forEach((match) => {
 
-		return function (matchList) {
+          if (time > match.datetime - APP_CONFIG.timeLimit || match.result) {
 
-			let filteredData = [];
-			matchList = matchList || [];
+            filteredData.push(match)
+          }
+        });
 
-			matchList.forEach((match) => {
-
-				if (match.result) {
-
-					filteredData.push(match)
-				}
-			});
-
-			return filteredData;
-		}	
-	}
+        return filteredData;
+      }
+    } 
+  }
 
 
-	function leagueFilter () {
+  function noResultFilter () {
 
-		return function (array, league) {
+    return function (matchList) {
 
-			let filtered = [];
+      let filteredData = [];
 
-			if (league) {
+      matchList = matchList || [];
 
-				array.forEach((item) => {
+      matchList.forEach((match) => {
 
-					if (typeof item.league === 'object') {
+        if (!match.result) {
 
-						let found = item.league.find((x) => {
+          filteredData.push(match);
+        }
+      });
 
-							return x === league;
-						})
+      return filteredData;
+    }
+  }
 
-						if (found) {
 
-							filtered.push(item);
-						}
+  resultFilter.$inject = ['APP_CONFIG']
 
-					} else if (typeof item.league === 'string') {
+  function resultFilter (APP_CONFIG) {
 
-						if (item.league === league) {
+    return function (matchList) {
 
-							filtered.push(item);
-						}
-					}
+      let filteredData = [];
+      matchList = matchList || [];
 
-				});
+      matchList.forEach((match) => {
 
-				return filtered;
+        if (match.result) {
 
-			} else {
+          filteredData.push(match)
+        }
+      });
 
-				return array;
-			}
+      return filteredData;
+    } 
+  }
 
-		}
-	}
+
+  function leagueFilter () {
+
+    return function (array, league) {
+
+      let filtered = [];
+
+      if (league) {
+
+        array.forEach((item) => {
+
+          if (typeof item.league === 'object') {
+
+            let found = item.league.find((x) => {
+
+              return x === league;
+            })
+
+            if (found) {
+
+              filtered.push(item);
+            }
+
+          } else if (typeof item.league === 'string') {
+
+            if (item.league === league) {
+
+              filtered.push(item);
+            }
+          }
+
+        });
+
+        return filtered;
+
+      } else {
+
+        return array;
+      }
+
+    }
+  }
 
 
 })();

@@ -1,35 +1,35 @@
 (function () {
 
-	'use strict';
+  'use strict';
 
-	angular
-	.module('user')
-	.controller('LoginController', LoginController);
-
-
-	LoginController.$inject = ['userService'];
+  angular
+  .module('user')
+  .controller('LoginController', LoginController);
 
 
-	function LoginController (userService) {
+  LoginController.$inject = ['userService'];
 
-		var vm = this;
 
-		vm.user = userService;
-		vm.loading = false;
+  function LoginController (userService) {
 
-		vm.login = function (data) {
+    var vm = this;
 
-			data.email = data.email.toLowerCase();
+    vm.user = userService;
+    vm.loading = false;
 
-			vm.loading = true;
+    vm.login = function (data) {
 
-			userService.login(data)
-			.catch((error) => {
+      data.email = data.email.toLowerCase();
 
-				toastr.error(error.message);
-				vm.loading = false;
-			});
-		}
-	}
+      vm.loading = true;
+
+      userService.login(data)
+      .catch((error) => {
+
+        toastr.error(error.message);
+        vm.loading = false;
+      });
+    }
+  }
 
 })();

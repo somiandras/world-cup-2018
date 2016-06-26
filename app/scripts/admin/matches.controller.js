@@ -1,71 +1,71 @@
 (function () {
 
-	'use strict';
+  'use strict';
 
-	angular.module('admin').controller('MatchesController', MatchesController);
+  angular.module('admin').controller('MatchesController', MatchesController);
 
-	MatchesController.$inject = ['tournamentService'];
+  MatchesController.$inject = ['tournamentService'];
 
-	function MatchesController (tournamentService) {
+  function MatchesController (tournamentService) {
 
-		let vm = this;
-		let tour = tournamentService;
-		vm.uploadForm = false;
-		vm.data = tour.data;
-		vm.table = {};
-		vm.table.sortColumn = 'datetime';
-		vm.table.reverse = false;
-		vm.table.editResult = false;
-
-
-		vm.reset = function (form) {
-
-			vm.form = {};
-
-			form.$setPristine();
-			form.$setUntouched();
-		};
+    let vm = this;
+    let tour = tournamentService;
+    vm.uploadForm = false;
+    vm.data = tour.data;
+    vm.table = {};
+    vm.table.sortColumn = 'datetime';
+    vm.table.reverse = false;
+    vm.table.editResult = false;
 
 
-		vm.upload = function (matches, form) {
+    vm.reset = function (form) {
 
-			tour.uploadMatches(matches)
-			.then((matches) => {
+      vm.form = {};
 
-				if (matches) {
-					toastr.success('Meccsek feltöltve');
-					vm.uploadForm = false;
-					vm.reset(form);
-				}
-			})
-			.catch((error) => {
+      form.$setPristine();
+      form.$setUntouched();
+    };
 
-				toastr.error(error.message);
-			});
-		};
 
-		vm.updateResult = function (match, result) {
+    vm.upload = function (matches, form) {
 
-			tour.updateResult(match, result)			
-			.then((resp) => {
+      tour.uploadMatches(matches)
+      .then((matches) => {
 
-				if (result) {
+        if (matches) {
+          toastr.success('Meccsek feltöltve');
+          vm.uploadForm = false;
+          vm.reset(form);
+        }
+      })
+      .catch((error) => {
 
-					toastr.success(match.home.longName + '-' + match.away.longName + ' meccs eredménye ' + match.result.home + ':' + match.result.away);
-					vm.table.result[match.$id] = null;
-						
-				} else {
+        toastr.error(error.message);
+      });
+    };
 
-					toastr.success(match.home.longName + '-' + match.away.longName + ' meccs eredménye törölve');
-				}
+    vm.updateResult = function (match, result) {
 
-				vm.table.editResult = false;
-			})
-			.catch((error) => {
+      tour.updateResult(match, result)      
+      .then((resp) => {
 
-				toastr.error(error.message);
-			});
-		};
-	}
+        if (result) {
+
+          toastr.success(match.home.longName + '-' + match.away.longName + ' meccs eredménye ' + match.result.home + ':' + match.result.away);
+          vm.table.result[match.$id] = null;
+            
+        } else {
+
+          toastr.success(match.home.longName + '-' + match.away.longName + ' meccs eredménye törölve');
+        }
+
+        vm.table.editResult = false;
+      })
+      .catch((error) => {
+
+        toastr.error(error.message);
+      });
+    };
+  }
 
 })();

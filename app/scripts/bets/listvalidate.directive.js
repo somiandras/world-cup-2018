@@ -1,43 +1,43 @@
 (function () {
 
-	'use strict';
+  'use strict';
 
-	angular.module('myBets').directive('listToValidate', listDirective);
+  angular.module('myBets').directive('listToValidate', listDirective);
 
-	function listDirective () {
+  function listDirective () {
 
-		return {
-			require: 'ngModel',
-			link: link
-		};
-	}
+    return {
+      require: 'ngModel',
+      link: link
+    };
+  }
 
-	function link (scope, element, attr, controller) {
+  function link (scope, element, attr, controller) {
 
-		controller.$validators.listToValidate = function (modelValue, viewValue) {
+    controller.$validators.listToValidate = function (modelValue, viewValue) {
 
-			let list = attr.listToValidate;
-			let data = scope.bets.data;
+      let list = attr.listToValidate;
+      let data = scope.bets.data;
 
-			if (controller.$isEmpty(modelValue)) {
+      if (controller.$isEmpty(modelValue)) {
 
-				return true;
-			}
+        return true;
+      }
 
-			let check = data[list].find((elem) => {
+      let check = data[list].find((elem) => {
 
-				return (elem.longName === viewValue || elem.name === viewValue);
-			});
+        return (elem.longName === viewValue || elem.name === viewValue);
+      });
 
-			if (check) {
+      if (check) {
 
-				return true;
+        return true;
 
-			} else {
+      } else {
 
-				return false;
-			}
-		};
-	}
+        return false;
+      }
+    };
+  }
 
 })();

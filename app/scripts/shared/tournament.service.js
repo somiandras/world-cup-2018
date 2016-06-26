@@ -1,306 +1,306 @@
 (function () {
 
-	'use strict';
+  'use strict';
 
-	angular.module('appCore').factory('tournamentService', tournamentService);
+  angular.module('appCore').factory('tournamentService', tournamentService);
 
-	tournamentService.$inject = ['$firebaseArray', '$firebaseRef', '$q', 'scoreService', 'userService', 'APP_CONFIG'];
+  tournamentService.$inject = ['$firebaseArray', '$firebaseRef', '$q', 'scoreService', 'userService', 'APP_CONFIG'];
 
-	function tournamentService ($firebaseArray, $firebaseRef, $q, scoreService, userService, APP_CONFIG) {
+  function tournamentService ($firebaseArray, $firebaseRef, $q, scoreService, userService, APP_CONFIG) {
 
-		let data = {};
+    let data = {};
 
-		data.teams = $firebaseArray($firebaseRef.teams);
-		data.matches = $firebaseArray($firebaseRef.matches);
-		data.players = $firebaseArray($firebaseRef.players);
-		data.scores = $firebaseArray($firebaseRef.public);
+    data.teams = $firebaseArray($firebaseRef.teams);
+    data.matches = $firebaseArray($firebaseRef.matches);
+    data.players = $firebaseArray($firebaseRef.players);
+    data.scores = $firebaseArray($firebaseRef.public);
 
-		return {
-			data: data,
-			addTeam: addTeam,
-			getTeam: getTeam,
-			saveTeam: saveTeam,
-			removeTeam: removeTeam,
-			addPlayers: addPlayers,
-			removePlayer: removePlayer,
-			uploadMatches: uploadMatches,
-			getMatch: getMatch,
-			saveMatch: saveMatch,
-			updateResult: updateResult
-		};
+    return {
+      data: data,
+      addTeam: addTeam,
+      getTeam: getTeam,
+      saveTeam: saveTeam,
+      removeTeam: removeTeam,
+      addPlayers: addPlayers,
+      removePlayer: removePlayer,
+      uploadMatches: uploadMatches,
+      getMatch: getMatch,
+      saveMatch: saveMatch,
+      updateResult: updateResult
+    };
 
 
-		// TEAM METHODS
+    // TEAM METHODS
 
 
-		function addTeam (newTeam) {
+    function addTeam (newTeam) {
 
-			return data.teams.$loaded()
-			.then((teams) => {
+      return data.teams.$loaded()
+      .then((teams) => {
 
-				return teams.$add(newTeam);
-			})
-			.then((ref) => {
+        return teams.$add(newTeam);
+      })
+      .then((ref) => {
 
-				let id = ref.key();
-				let index = data.teams.$indexFor(id);
+        let id = ref.key();
+        let index = data.teams.$indexFor(id);
 
-				return data.teams[index];
-			});
-		}
+        return data.teams[index];
+      });
+    }
 
 
-		function getTeam (shortName) {
+    function getTeam (shortName) {
 
-			return data.teams.$loaded()
-			.then((teams) => {
+      return data.teams.$loaded()
+      .then((teams) => {
 
-				let found = teams.find((team) => {
+        let found = teams.find((team) => {
 
-					return team.shortName === shortName;
-				});
+          return team.shortName === shortName;
+        });
 
-				return found;
-			});
-		}
+        return found;
+      });
+    }
 
 
-		function saveTeam (team) {
+    function saveTeam (team) {
 
-			return data.teams.$loaded()
-			.then((teams) => {
+      return data.teams.$loaded()
+      .then((teams) => {
 
-				let index = teams.$indexFor(team.$id);
+        let index = teams.$indexFor(team.$id);
 
-				teams[index] = team;
+        teams[index] = team;
 
-				return teams.$save(index);
-			});
-		}
+        return teams.$save(index);
+      });
+    }
 
 
-		function removeTeam (team) {
+    function removeTeam (team) {
 
-			return data.teams.$loaded()
-			.then((teams) => {
+      return data.teams.$loaded()
+      .then((teams) => {
 
-				return teams.$remove(team);
-			});
-		}
+        return teams.$remove(team);
+      });
+    }
 
 
-		// PLAYER METHODS
-		
+    // PLAYER METHODS
+    
 
-		function addPlayers (newPlayers, team) {
+    function addPlayers (newPlayers, team) {
 
-			return data.players.$loaded()
-			.then((players) => {
+      return data.players.$loaded()
+      .then((players) => {
 
-				let promises = newPlayers.map((newPlayer) => {
-					
-					if (newPlayer.length) {
+        let promises = newPlayers.map((newPlayer) => {
+          
+          if (newPlayer.length) {
 
-						let playerToAdd = {};
-						playerToAdd.name = newPlayer.trim();
-						playerToAdd.team = team.$id;
+            let playerToAdd = {};
+            playerToAdd.name = newPlayer.trim();
+            playerToAdd.team = team.$id;
 
-						return players.$add(playerToAdd);
-					}
-				});
+            return players.$add(playerToAdd);
+          }
+        });
 
-				return $q.all(promises);
-			});
-		}
+        return $q.all(promises);
+      });
+    }
 
 
-		function removePlayer (playerToRemove) {
+    function removePlayer (playerToRemove) {
 
-			return data.players.$loaded()
-			.then((players) => {
+      return data.players.$loaded()
+      .then((players) => {
 
-				return players.$remove(playerToRemove);
-			});
-		}
+        return players.$remove(playerToRemove);
+      });
+    }
 
 
-		// MATCH METHODS
+    // MATCH METHODS
 
 
-		function uploadMatches (string) {
+    function uploadMatches (string) {
 
-			let matchlist = decomposeMatches(string);
-			let newList;
+      let matchlist = decomposeMatches(string);
+      let newList;
 
-			try {
+      try {
 
-				newList = matchlist.map((match) => {
+        newList = matchlist.map((match) => {
 
-					match = decomposeMatchData(match);
-					match = createMatchObject(match);
-					match.datetime = parseDate(match.datetime);
-					checkTeamNames(match);
+          match = decomposeMatchData(match);
+          match = createMatchObject(match);
+          match.datetime = parseDate(match.datetime);
+          checkTeamNames(match);
 
-					return match;
-				});
-			
-			} catch (error) {
+          return match;
+        });
+      
+      } catch (error) {
 
-				return $q.reject(error);
-			}
+        return $q.reject(error);
+      }
 
 
-			return data.matches.$loaded()
-			.then((matches) => {
+      return data.matches.$loaded()
+      .then((matches) => {
 
 
-				newList.forEach((newMatch) => {
+        newList.forEach((newMatch) => {
 
-					matches.$add(newMatch);
+          matches.$add(newMatch);
 
-				});
+        });
 
-				return matches;
-			});
-		}
-		
+        return matches;
+      });
+    }
+    
 
-		function getMatch (matchId) {
+    function getMatch (matchId) {
 
-			return data.matches.$loaded()
-			.then((matches) => {
+      return data.matches.$loaded()
+      .then((matches) => {
 
-				return matches.$getRecord(matchId);
-			});
-		}
+        return matches.$getRecord(matchId);
+      });
+    }
 
 
-		function saveMatch (match) {
+    function saveMatch (match) {
 
-			return data.matches.$loaded()
-			.then((matches) => {
+      return data.matches.$loaded()
+      .then((matches) => {
 
-				let index = matches.$indexFor(match.$id);
+        let index = matches.$indexFor(match.$id);
 
-				return matches.$save(index);
-			});
+        return matches.$save(index);
+      });
 
-		}
+    }
 
 
-		function updateResult (match, result) {
+    function updateResult (match, result) {
 
-			let regexp = new RegExp('^[0-9].*[0-9]$');
-			
-			match.result = {};
+      let regexp = new RegExp('^[0-9].*[0-9]$');
+      
+      match.result = {};
 
-			if (result) {
+      if (result) {
 
-				result = result.trim();
-			}
+        result = result.trim();
+      }
 
-			if (!regexp.test(result) && result) {
+      if (!regexp.test(result) && result) {
 
-				let error = new Error('Az eredmény első és utolsó karaktere szám kell legyen');
+        let error = new Error('Az eredmény első és utolsó karaktere szám kell legyen');
 
-				return $q.reject(error);
+        return $q.reject(error);
 
-			} else if (regexp.test(result)) {
+      } else if (regexp.test(result)) {
 
-				result = result.split("");
-				match.result.home = result[0];
-				match.result.away = result[result.length-1];
-			}
+        result = result.split("");
+        match.result.home = result[0];
+        match.result.away = result[result.length-1];
+      }
 
-			return saveMatch(match)
-			.then((resp) => {
+      return saveMatch(match)
+      .then((resp) => {
 
-				return scoreService.updateUserScores(match);
-			});
-		}
+        return scoreService.updateUserScores(match);
+      });
+    }
 
-		// HELPER FUNCTIONS
+    // HELPER FUNCTIONS
 
 
-		function parseDate (string) {
+    function parseDate (string) {
 
-			let date = new Date (string);
+      let date = new Date (string);
 
-			if (date === 'Invalid Date') {
+      if (date === 'Invalid Date') {
 
-				throw new Error ('Nem jó a dátumformátum');
-			}
+        throw new Error ('Nem jó a dátumformátum');
+      }
 
-			return date.getTime();
-		}
+      return date.getTime();
+    }
 
 
-		function checkTeamNames (match) {
+    function checkTeamNames (match) {
 
-			let findHome = lookUpTeamName(match.home.trim());
-			let findAway = lookUpTeamName(match.away.trim());
+      let findHome = lookUpTeamName(match.home.trim());
+      let findAway = lookUpTeamName(match.away.trim());
 
-			if (findHome && findAway) {
+      if (findHome && findAway) {
 
-				match.home = findHome;
-				match.away = findAway;
+        match.home = findHome;
+        match.away = findAway;
 
-			} else if (!find.home) {
+      } else if (!find.home) {
 
-				throw new Error (match.home + ' nevű csapat nincs a listában');
-			
-			} else {
+        throw new Error (match.home + ' nevű csapat nincs a listában');
+      
+      } else {
 
-				throw new Error (match.away + ' nevű csapat nincs a listában');
-			}
-		}
+        throw new Error (match.away + ' nevű csapat nincs a listában');
+      }
+    }
 
-		function createMatchObject (matchArray) {
+    function createMatchObject (matchArray) {
 
-			let matchObj = {};
+      let matchObj = {};
 
-			if (matchArray.length === APP_CONFIG.matchFields.length) {
+      if (matchArray.length === APP_CONFIG.matchFields.length) {
 
-				matchArray.forEach((currentData, index) => {
+        matchArray.forEach((currentData, index) => {
 
-					let currentField = APP_CONFIG.matchFields[index];
+          let currentField = APP_CONFIG.matchFields[index];
 
-					matchObj[currentField] = currentData;
+          matchObj[currentField] = currentData;
 
-				});
+        });
 
-				return matchObj;
-					
-			} else {
+        return matchObj;
+          
+      } else {
 
-				throw new Error ('Nem megfelelő az oszlopok száma');
-			}
-		}
+        throw new Error ('Nem megfelelő az oszlopok száma');
+      }
+    }
 
-		function decomposeMatches (string) {
+    function decomposeMatches (string) {
 
-			return string.split('\n');
-		}
+      return string.split('\n');
+    }
 
-		function decomposeMatchData (string) {
+    function decomposeMatchData (string) {
 
-			return string.split(';');
-		}
+      return string.split(';');
+    }
 
-		function lookUpTeamName (name) {
+    function lookUpTeamName (name) {
 
-			return data.teams.find((existingTeam) => {
+      return data.teams.find((existingTeam) => {
 
-				if (existingTeam.shortName === name || existingTeam.longName === name) {
+        if (existingTeam.shortName === name || existingTeam.longName === name) {
 
-					return true;
+          return true;
 
-				} else {
+        } else {
 
-					return false;
-				}
-			});
-		}
-	}
+          return false;
+        }
+      });
+    }
+  }
 
 })();

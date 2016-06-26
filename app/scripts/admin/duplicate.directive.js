@@ -1,49 +1,49 @@
 (function () {
-	
-	'use strict';
+  
+  'use strict';
 
-	angular.module('admin').directive('duplicate', duplicate);
-
-
-	function duplicate () {
-
-		return {
-			require: 'ngModel',
-			link: link
-		};
-	}
-
-	
-	function link (scope, element, attrs, controller) {
+  angular.module('admin').directive('duplicate', duplicate);
 
 
-		controller.$validators.duplicate = function (modelValue, viewValue) {
+  function duplicate () {
 
-			let prop = element.context.name;
-			let teams = scope.teams.data.teams;
+    return {
+      require: 'ngModel',
+      link: link
+    };
+  }
 
-
-			if (controller.$isEmpty(modelValue)) {
-
-				return true;
-			}
-
-
-			let check = teams.find((element) => {
-
-				return element[prop] === viewValue;
-			});
+  
+  function link (scope, element, attrs, controller) {
 
 
-			if (check) {
+    controller.$validators.duplicate = function (modelValue, viewValue) {
 
-				return false;
+      let prop = element.context.name;
+      let teams = scope.teams.data.teams;
 
-			} else {
 
-				return true;
-			}
-		};
-	}	
+      if (controller.$isEmpty(modelValue)) {
+
+        return true;
+      }
+
+
+      let check = teams.find((element) => {
+
+        return element[prop] === viewValue;
+      });
+
+
+      if (check) {
+
+        return false;
+
+      } else {
+
+        return true;
+      }
+    };
+  } 
 
 })();

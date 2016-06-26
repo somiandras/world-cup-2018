@@ -1,164 +1,164 @@
 (function () {
 
-	'use strict';
+  'use strict';
 
-	angular.module('appCore').factory('scoreService', scoreService);
+  angular.module('appCore').factory('scoreService', scoreService);
 
-	scoreService.$inject = ['$q', '$firebaseObject', '$firebaseRef', 'userService', 'APP_CONFIG'];
+  scoreService.$inject = ['$q', '$firebaseObject', '$firebaseRef', 'userService', 'APP_CONFIG'];
 
-	function scoreService ($q, $firebaseObject, $firebaseRef, userService, APP_CONFIG) {
+  function scoreService ($q, $firebaseObject, $firebaseRef, userService, APP_CONFIG) {
 
-		let rules = APP_CONFIG.rules;
+    let rules = APP_CONFIG.rules;
 
-		return {
-			updateUserScores: updateUserScores,
-		};
+    return {
+      updateUserScores: updateUserScores,
+    };
 
 
-		function updateUserScores (match) {
+    function updateUserScores (match) {
 
-			return userService.getUserList()
-			.then((resp) => {
+      return userService.getUserList()
+      .then((resp) => {
 
-				let users = resp.map((user) => {
+        let users = resp.map((user) => {
 
-					return updateMatchScore(user, match);
-				
-				});
+          return updateMatchScore(user, match);
+        
+        });
 
 
-				return $q.all(users.map((user) => {
+        return $q.all(users.map((user) => {
 
-					return userService.saveUser(user)
-					.then((resp) => {
+          return userService.saveUser(user)
+          .then((resp) => {
 
-						return $q.resolve(user);
-					}); 
+            return $q.resolve(user);
+          }); 
 
-				}));
+        }));
 
-			})
-			.then((users) => {
+      })
+      .then((users) => {
 
-				let usersWithTotalScore = users.map((user) => {
+        let usersWithTotalScore = users.map((user) => {
 
-					return getTotalScore(user);
+          return getTotalScore(user);
 
-				});
+        });
 
 
-				return $q.all(usersWithTotalScore);
+        return $q.all(usersWithTotalScore);
 
-			})
-			.then((users) => {
+      })
+      .then((users) => {
 
-				return $q.all(users.map((user) => {
+        return $q.all(users.map((user) => {
 
-					return userService.saveUser(user);
+          return userService.saveUser(user);
 
-				}));
-			})
-		}
+        }));
+      })
+    }
 
 
-		function updateMatchScore (user, match) {
+    function updateMatchScore (user, match) {
 
-			if (!user.bets || !user.bets.matches) {
+      if (!user.bets || !user.bets.matches) {
 
-				return user;
-			}
+        return user;
+      }
 
 
-			if (user.bets.matches[match.$id] && match.result) {
+      if (user.bets.matches[match.$id] && match.result) {
 
-				user.bets.matches[match.$id].points = calculateScore(match.result, user.bets.matches[match.$id]);
+        user.bets.matches[match.$id].points = calculateScore(match.result, user.bets.matches[match.$id]);
 
-			} else if (user.bets.matches[match.$id]) {
+      } else if (user.bets.matches[match.$id]) {
 
-				user.bets.matches[match.$id].points = null;
-			}
+        user.bets.matches[match.$id].points = null;
+      }
 
 
-			return user;
-		}
+      return user;
+    }
 
 
-		function calculateScore (result, bet) {
+    function calculateScore (result, bet) {
 
-			let score = 0;
+      let score = 0;
 
-			if (bet) {
+      if (bet) {
 
-				let matchWinner = decideWinner(result);
-				let betWinner = decideWinner(bet);
+        let matchWinner = decideWinner(result);
+        let betWinner = decideWinner(bet);
 
 
-				if (result.home === bet.home && result.away === bet.away) {
+        if (result.home === bet.home && result.away === bet.away) {
 
-					score += rules.exactResult;
-				
-				}  
+          score += rules.exactResult;
+        
+        }  
 
-				if (matchWinner === betWinner) {
+        if (matchWinner === betWinner) {
 
-					score += rules.result;
-				}
-			}
+          score += rules.result;
+        }
+      }
 
-			return score;
-		}
+      return score;
+    }
 
 
-		function decideWinner (result) {
+    function decideWinner (result) {
 
-			let winner;
+      let winner;
 
-			if (result.home > result.away) {
+      if (result.home > result.away) {
 
-				winner = 'home';
+        winner = 'home';
 
-			} else if (result.home < result.away) {
+      } else if (result.home < result.away) {
 
-				winner = 'away';
-			
-			} else {
+        winner = 'away';
+      
+      } else {
 
-				winner = 'draw';
-			} 
+        winner = 'draw';
+      } 
 
-			return winner;
-		}
+      return winner;
+    }
 
 
-		function getTotalScore (user) {
+    function getTotalScore (user) {
 
-			if (!user.uid) {
+      if (!user.uid) {
 
-				let error = new Error(user + 'has no uid!');
+        let error = new Error(user + 'has no uid!');
 
-				return $q.reject(error);
-			}
+        return $q.reject(error);
+      }
 
-			return userService.getUserMatchBets(user.uid)
-			.then((matches) => {
+      return userService.getUserMatchBets(user.uid)
+      .then((matches) => {
 
-				let score = matches.reduce((prev,cur) => {
+        let score = matches.reduce((prev,cur) => {
 
-					if (cur.points) {
+          if (cur.points) {
 
-						prev += cur.points;
-					}
+            prev += cur.points;
+          }
 
-					return prev;
+          return prev;
 
-				}, 0);
+        }, 0);
 
-				user.totalScore = score;
+        user.totalScore = score;
 
-				return $q.resolve(user);
-			})
-		}
+        return $q.resolve(user);
+      })
+    }
 
-	}
+  }
 
 })();

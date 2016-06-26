@@ -1,100 +1,100 @@
 (function () {
 
-	'use strict';
+  'use strict';
 
-	angular.module('user').controller('ProfileController', ProfileController);
+  angular.module('user').controller('ProfileController', ProfileController);
 
-	ProfileController.$inject = ['$window', 'user', 'userService'];
+  ProfileController.$inject = ['$window', 'user', 'userService'];
 
-	function ProfileController ($window, user, userService) {
+  function ProfileController ($window, user, userService) {
 
-		let vm = this;
-		vm.user = user;
-		vm.form = {};
-
-
-		vm.editParam = function (param) {
-
-			vm.form[param] = user[param];
-		};
+    let vm = this;
+    vm.user = user;
+    vm.form = {};
 
 
-		vm.saveParam = function (param, newValue) {
+    vm.editParam = function (param) {
 
-			if (newValue && newValue !== user[param]) {
-
-				user[param] = newValue;
-
-				userService.saveUser(user)
-				.then((resp) => {
-
-					toastr.success('Elmentettük az új adatot');
-
-				})
-				.catch((error) => {
-
-					toastr.error(error.message);
-				});
-			}
-
-			vm.form[param] = false;
-		};
+      vm.form[param] = user[param];
+    };
 
 
-		vm.deleteProfile = function (password) {
+    vm.saveParam = function (param, newValue) {
 
-			let cred = {
-				email: user.email,
-				password: password
-			};
+      if (newValue && newValue !== user[param]) {
 
-			userService.login(cred)
-			.then(() => {
+        user[param] = newValue;
 
-				let confirm = $window.confirm('Biztosan törölni akarod magad? Ezzel minden tipped és eredményed elvész, a Föld pedig a Napba zuhan.');
+        userService.saveUser(user)
+        .then((resp) => {
 
-				if (confirm) {
+          toastr.success('Elmentettük az új adatot');
 
-					return userService.removeUser(cred, user);
+        })
+        .catch((error) => {
 
-				} else {
+          toastr.error(error.message);
+        });
+      }
 
-					profile.showPassword = false;
-				}
-
-			})
-			.catch((error) => {
-
-				toastr.error(error.message);
-			});
-		};
+      vm.form[param] = false;
+    };
 
 
-		vm.changePassword = function (form) {
+    vm.deleteProfile = function (password) {
 
-			let credentials = {
-				email: user.email,
-				newPassword: form.password,
-				oldPassword: form.oldPassword
-			};
+      let cred = {
+        email: user.email,
+        password: password
+      };
 
-			userService.changePassword(credentials)
-			.then((resp) => {
+      userService.login(cred)
+      .then(() => {
 
-				toastr.success("Elmentettük az új jelszavadat");
-				vm.showPasswordChange = false;
-			})
-			.catch((error) => {
+        let confirm = $window.confirm('Biztosan törölni akarod magad? Ezzel minden tipped és eredményed elvész, a Föld pedig a Napba zuhan.');
 
-				console.error(error);
-			})
-		}
+        if (confirm) {
 
-		vm.reset = function (form) {
+          return userService.removeUser(cred, user);
 
-			form.$setPristine();
-			form.$setUntouched();
-		}
-	}
-	
+        } else {
+
+          profile.showPassword = false;
+        }
+
+      })
+      .catch((error) => {
+
+        toastr.error(error.message);
+      });
+    };
+
+
+    vm.changePassword = function (form) {
+
+      let credentials = {
+        email: user.email,
+        newPassword: form.password,
+        oldPassword: form.oldPassword
+      };
+
+      userService.changePassword(credentials)
+      .then((resp) => {
+
+        toastr.success("Elmentettük az új jelszavadat");
+        vm.showPasswordChange = false;
+      })
+      .catch((error) => {
+
+        console.error(error);
+      })
+    }
+
+    vm.reset = function (form) {
+
+      form.$setPristine();
+      form.$setUntouched();
+    }
+  }
+  
 })();

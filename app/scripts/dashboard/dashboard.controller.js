@@ -1,154 +1,154 @@
 (function() {
 
-	'use strict';
+  'use strict';
 
-	angular.module('appCore').controller('DashboardController', DashboardController);
+  angular.module('appCore').controller('DashboardController', DashboardController);
 
-	DashboardController.$inject = ['$state', '$interval', 'userService', 'adminService', 'tournamentService', 'user', '$uibModal', 'APP_CONFIG'];
+  DashboardController.$inject = ['$state', '$interval', 'userService', 'adminService', 'tournamentService', 'user', '$uibModal', 'APP_CONFIG'];
 
-	function DashboardController ($state, $interval, userService, adminService, tournamentService, user, $uibModal, APP_CONFIG) {
+  function DashboardController ($state, $interval, userService, adminService, tournamentService, user, $uibModal, APP_CONFIG) {
 
-		let vm = this;
+    let vm = this;
 
-		vm.tour = tournamentService;
-		vm.user = user;
-		vm.users = userService.public;
-		vm.timeLimit = APP_CONFIG.timeLimit;
+    vm.tour = tournamentService;
+    vm.user = user;
+    vm.users = userService.public;
+    vm.timeLimit = APP_CONFIG.timeLimit;
 
-		vm.promo = adminService.promo;
+    vm.promo = adminService.promo;
 
-		vm.now = new Date().getTime();
+    vm.now = new Date().getTime();
 
-		$interval(() => {
+    $interval(() => {
 
-			vm.now = new Date().getTime();
+      vm.now = new Date().getTime();
 
-		}, 10000);
-
-
-		if (!user.alerts || !user.alerts.ruleAlert) {
-
-			let ruleModal = $uibModal.open({
-				templateUrl: 'views/rule_modal.html',
-				controller: 'RuleModalController',
-				controllerAs: 'ruleModal',
-				animation: true,
-				backdrop: 'static',
-				resolve: {
-					user: () => {
-
-						return user;
-					}
-				}
-			});
-
-			ruleModal.result
-			.then((result) => {
-
-				toastr.success(result);
-			})
-			.catch((error) => {
-
-				console.error(error);
-			});
-		}
+    }, 10000);
 
 
-		if (user.league && user.league.length) {
+    if (!user.alerts || !user.alerts.ruleAlert) {
 
-			vm.leagueFilter = user.league[0];
-		}
+      let ruleModal = $uibModal.open({
+        templateUrl: 'views/rule_modal.html',
+        controller: 'RuleModalController',
+        controllerAs: 'ruleModal',
+        animation: true,
+        backdrop: 'static',
+        resolve: {
+          user: () => {
 
+            return user;
+          }
+        }
+      });
 
-		if ($state.params.temporary) {
+      ruleModal.result
+      .then((result) => {
 
-			let tempModal = $uibModal.open({
-				templateUrl: 'views/password_modal.html',
-				controller: 'PasswordController',
-				controllerAs: 'password',
-				animation: true,
-				backdrop: 'static',
-				keyboard: false,
-				size: 'sm',
-				resolve: {
-					user: function () {
+        toastr.success(result);
+      })
+      .catch((error) => {
 
-						return user;
-					}
-				}
-			});
-
-			tempModal.result.then((result) => {
-
-				toastr.success(result);
-			})
-			.catch((error) => {
-
-				console.error(error);
-			});
-		}
+        console.error(error);
+      });
+    }
 
 
-		if (!user.name) {
+    if (user.league && user.league.length) {
 
-			let modalInstance = $uibModal.open({
-				templateUrl: 'views/welcome_modal.html',
-				controller: 'modalController',
-				controllerAs: 'modal',
-				animation: true,
-				backdrop: 'static',
-				keyboard: false,
-				resolve: {
-					user: function () {
-
-						return user;
-					}
-				}
-			});
-
-			modalInstance.result.then((result) => {
-
-				toastr.success(result);
-			})
-			.catch((error) => {
-
-				console.error(error);
-			});
-		}
+      vm.leagueFilter = user.league[0];
+    }
 
 
-		vm.showPromo = function (promo, user) {
+    if ($state.params.temporary) {
 
-			if (vm.now < promo.validTo) {
+      let tempModal = $uibModal.open({
+        templateUrl: 'views/password_modal.html',
+        controller: 'PasswordController',
+        controllerAs: 'password',
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        size: 'sm',
+        resolve: {
+          user: function () {
 
-				let match = user.league.find((league) => {
+            return user;
+          }
+        }
+      });
 
-					return promo.league === league;
-				});
+      tempModal.result.then((result) => {
 
-				return match;
+        toastr.success(result);
+      })
+      .catch((error) => {
 
-			} else {
-
-				return false;
-			}
-		};
+        console.error(error);
+      });
+    }
 
 
-		vm.replyToPromo = function (promo, user, answer) {
+    if (!user.name) {
 
-			adminService.addPromoReply(promo, user, answer)
-			.then(() => {
+      let modalInstance = $uibModal.open({
+        templateUrl: 'views/welcome_modal.html',
+        controller: 'modalController',
+        controllerAs: 'modal',
+        animation: true,
+        backdrop: 'static',
+        keyboard: false,
+        resolve: {
+          user: function () {
 
-				toastr.success("Köszi a visszajelzést!");
-			})
-			.catch((error) => {
+            return user;
+          }
+        }
+      });
 
-				console.error(error);
-			});
-		
-		};
+      modalInstance.result.then((result) => {
 
-	}
-	
+        toastr.success(result);
+      })
+      .catch((error) => {
+
+        console.error(error);
+      });
+    }
+
+
+    vm.showPromo = function (promo, user) {
+
+      if (vm.now < promo.validTo) {
+
+        let match = user.league.find((league) => {
+
+          return promo.league === league;
+        });
+
+        return match;
+
+      } else {
+
+        return false;
+      }
+    };
+
+
+    vm.replyToPromo = function (promo, user, answer) {
+
+      adminService.addPromoReply(promo, user, answer)
+      .then(() => {
+
+        toastr.success("Köszi a visszajelzést!");
+      })
+      .catch((error) => {
+
+        console.error(error);
+      });
+    
+    };
+
+  }
+  
 })();

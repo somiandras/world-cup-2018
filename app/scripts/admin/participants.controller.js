@@ -1,123 +1,123 @@
 (function () {
 
-	'use strict';
+  'use strict';
 
-	angular.module('admin').controller('ParticipantsController', ParticipantsController);
+  angular.module('admin').controller('ParticipantsController', ParticipantsController);
 
-	ParticipantsController.$inject = ['$window', 'userList', 'pendingList', 'userService', 'adminService', 'APP_CONFIG'];
+  ParticipantsController.$inject = ['$window', 'userList', 'pendingList', 'userService', 'adminService', 'APP_CONFIG'];
 
-	function ParticipantsController ($window, userList, pendingList, userService, adminService, APP_CONFIG) {
+  function ParticipantsController ($window, userList, pendingList, userService, adminService, APP_CONFIG) {
 
-		let vm = this;
-		vm.players = userList;
-		vm.pending = pendingList;
-		vm.leagues = APP_CONFIG.leagues;
-		vm.orderBy = 'name';
-		vm.reverse = false;
-		vm.leagueFilter = vm.leagues[0];
-		vm.promo = adminService.promo;
-
-
-		vm.makeUserAdmin = function (user) {
-
-			user.admin = true;
-
-			userService.saveUser(user)
-			.then(() => {
-
-				toastr.success(user.email + ' admin lett');
-			})
-			.catch((error) => {
-
-				toastr.error(error);
-			});
-		};
+    let vm = this;
+    vm.players = userList;
+    vm.pending = pendingList;
+    vm.leagues = APP_CONFIG.leagues;
+    vm.orderBy = 'name';
+    vm.reverse = false;
+    vm.leagueFilter = vm.leagues[0];
+    vm.promo = adminService.promo;
 
 
-		vm.addNewEmails = function (list, league) {
+    vm.makeUserAdmin = function (user) {
 
-			if (list) {
+      user.admin = true;
 
-				list = list.replace(/\n/g, '');
-					
-				let array = list.trim().split(',');
+      userService.saveUser(user)
+      .then(() => {
 
-				let lowerCaseArray = array.map((item) => {
+        toastr.success(user.email + ' admin lett');
+      })
+      .catch((error) => {
 
-					return item.toLowerCase();
-				});
-
-				adminService.addNewEmails(lowerCaseArray, league)
-				.then((resp) => {
-
-					if (resp.length) {
-
-						toastr.success(resp.length + ' új cím a várólistához adva');
-
-						vm.form.newEmails = undefined;
-						vm.showAddEmails = false;
-
-					} else {
-
-						toastr.warning(resp.length + ' új cím került a várólistára');
-					}
-
-				})
-				.catch((error) => {
-
-					console.error(error);
-				});
-			}
-		};
+        toastr.error(error);
+      });
+    };
 
 
-		vm.deletePending = function (item) {
+    vm.addNewEmails = function (list, league) {
 
-			adminService.deletePending(item)
-			.then((resp) => {
+      if (list) {
 
-				toastr.success(item.email + ' törölve');
-			})
-			.catch((error) => {
+        list = list.replace(/\n/g, '');
+          
+        let array = list.trim().split(',');
 
-				console.error(error);
-			});
+        let lowerCaseArray = array.map((item) => {
 
-		}
+          return item.toLowerCase();
+        });
+
+        adminService.addNewEmails(lowerCaseArray, league)
+        .then((resp) => {
+
+          if (resp.length) {
+
+            toastr.success(resp.length + ' új cím a várólistához adva');
+
+            vm.form.newEmails = undefined;
+            vm.showAddEmails = false;
+
+          } else {
+
+            toastr.warning(resp.length + ' új cím került a várólistára');
+          }
+
+        })
+        .catch((error) => {
+
+          console.error(error);
+        });
+      }
+    };
 
 
-		vm.checkLeague = function (user, league) {
+    vm.deletePending = function (item) {
 
-			if (user.league && user.league.length) {
+      adminService.deletePending(item)
+      .then((resp) => {
 
-				return user.league.find((item) => {
+        toastr.success(item.email + ' törölve');
+      })
+      .catch((error) => {
 
-					return item === league;
-				});
+        console.error(error);
+      });
 
-			} else {
-
-				return false;
-			}			 
-		};
+    }
 
 
-		vm.addLeague = function (user, league) {
+    vm.checkLeague = function (user, league) {
 
-			user.league = user.league || [];
+      if (user.league && user.league.length) {
 
-			user.league.push(league);
+        return user.league.find((item) => {
 
-			userService.saveUser(user)
-			.then(() => {
+          return item === league;
+        });
 
-				toastr.success(user.name + ' a ' + league +' tagja lett');
-			})
-			.catch((error) => {
+      } else {
 
-				toastr.error(error);
-			});
-		};
-	}
+        return false;
+      }      
+    };
+
+
+    vm.addLeague = function (user, league) {
+
+      user.league = user.league || [];
+
+      user.league.push(league);
+
+      userService.saveUser(user)
+      .then(() => {
+
+        toastr.success(user.name + ' a ' + league +' tagja lett');
+      })
+      .catch((error) => {
+
+        toastr.error(error);
+      });
+    };
+  }
 
 })();
