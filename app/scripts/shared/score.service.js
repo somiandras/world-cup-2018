@@ -20,23 +20,26 @@
       return userService.getUserList()
       .then((resp) => {
 
-        let users = resp.map((user) => {
+        if (match) {
+          let users = resp.map((user) => {
 
-          return updateMatchScore(user, match);
-        
-        });
+            return updateMatchScore(user, match);
+          
+          });
 
+          return $q.all(users.map((user) => {
 
-        return $q.all(users.map((user) => {
+            return userService.saveUser(user)
+            .then((resp) => {
 
-          return userService.saveUser(user)
-          .then((resp) => {
+              return $q.resolve(user);
+            }); 
+          }));
 
-            return $q.resolve(user);
-          }); 
+        } else {
 
-        }));
-
+          return $q.resolve(resp);
+        }
       })
       .then((users) => {
 
@@ -153,7 +156,9 @@
 
         }, 0);
 
-        user.totalScore = score;
+        let extraScore = user.extraPoints || 0;
+
+        user.totalScore = score + extraScore;
 
         return $q.resolve(user);
       })

@@ -4,9 +4,9 @@
 
   angular.module('admin').controller('ParticipantsController', ParticipantsController);
 
-  ParticipantsController.$inject = ['$window', 'userList', 'pendingList', 'userService', 'adminService', 'APP_CONFIG'];
+  ParticipantsController.$inject = ['$window', 'userList', 'pendingList', 'userService', 'adminService', 'scoreService', 'APP_CONFIG'];
 
-  function ParticipantsController ($window, userList, pendingList, userService, adminService, APP_CONFIG) {
+  function ParticipantsController ($window, userList, pendingList, userService, adminService, scoreService, APP_CONFIG) {
 
     let vm = this;
     vm.players = userList;
@@ -104,7 +104,7 @@
 
     vm.addLeague = function (user, league) {
 
-      user.league = user.league || [];
+      user.league = user.league || [];
 
       user.league.push(league);
 
@@ -117,6 +117,26 @@
 
         toastr.error(error);
       });
+    };
+
+    vm.addExtraPoints = function(user, points) {
+      user.extraPoints = user.extraPoints || 0;
+      user.extraPoints = user.extraPoints + points;
+
+      if (user.extraPoints < 7) {
+        userService.saveUser(user)
+        .then(() => {
+          return scoreService.updateUserScores();
+        })
+        .then(() => {
+          console.log("Recalculated");
+        })
+        .catch((err) => {
+          console.error(err);
+        })
+      } else {
+        toastr.error("Legfeljebb 6 pont extra lehetséges");
+      }
     };
   }
 

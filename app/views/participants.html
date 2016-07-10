@@ -38,7 +38,7 @@
 					</th>
 					<th class="text-center">Végső győztes</th>
 					<th class="text-center">Gólkirály</th>
-					<th class="text-center">Meccsnézés?</th>
+					<th class="text-center">Extra pontok</th>
 				</thead>
 				<tbody>
 					<tr ng-repeat="user in participants.players | orderBy: participants.orderBy : participants.reverse | filter: participants.listFilter | league: participants.leagueFilter">
@@ -54,8 +54,13 @@
 							{{user.bets.topScorer}}
 							<span ng-hide="user.bets.topScorer && user.bets.winner"><span class="glyphicon glyphicon-remove text-danger"></span></span>
 						</td>
-						<td class="text-center">
-							<span class="glyphicon glyphicon-ok text-success" ng-show="participants.promo.users[user.uid].promo1"></span>
+						<td class="text-left" nowrap>
+							<span class="label label-success" ng-show="user.extraPoints">{{user.extraPoints}}</span>
+							<span ng-hide="user.extraPoints">0</span>
+							<span class="pull-right">
+								<a href ng-click="participants.addExtraPoints(user,3)" ng-hide="user.extraPoints === 6"><span class="glyphicon glyphicon-plus-sign"></span></a>
+								<a href ng-click="participants.addExtraPoints(user,-3)" ng-show="user.extraPoints"><span class="glyphicon glyphicon-minus-sign"></span></a>
+							</span>
 						</td>
 					</tr>
 				</tbody>
