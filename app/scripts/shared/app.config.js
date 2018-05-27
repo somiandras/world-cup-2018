@@ -7,7 +7,7 @@
   .constant('APP_CONFIG', {
 
     // Firebase ref url
-    fbUrl: 'https://kbceuro2016.firebaseio.com/', 
+    fbUrl: 'https://world-cup-2018-9f6f6.firebaseio.com/', 
 
     // Closing time before match start in ms
     timeLimit: 300000, 
@@ -26,8 +26,8 @@
     //Eligible competitions
     leagues: ['KBC', 'Somi', 'Norbi'],
 
-    //Starting time: 2016.06.10 21:00
-    startTime: 1465585200000,
+    //Starting time: 2018.06.14. 17:00
+    startTime: 1528988400000,
 
   })
   .config(appRouting)
