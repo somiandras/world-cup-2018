@@ -1,0 +1,13 @@
+/node_modules
+/dist
+/.tmp
+/.sass-cache
+/bower_components
+euro2016.sublime-project
+euro2016.sublime-workspace
+.firebaserc
+firebase.json
+szabályzat.mdown
+firebase-debug.log
+.DS_Store
+/db
