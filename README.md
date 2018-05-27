@@ -1,12 +1,7 @@
-# euro2016
+# worldCup2018App
 
-This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular)
-version 0.15.1.
+This project initally started as a friends & family betting game for 
+Euro2016. It was written in AngularJS (Angular1.x) on top of Firebase.
 
-## Build & development
-
-Run `grunt` for building and `grunt serve` for preview.
-
-## Testing
-
-Running `grunt test` will run the unit tests with karma.
+Without any relevant updates besides doing the absolutely necessary 
+migrations I updated the app for FIFA World Cup 2018.
