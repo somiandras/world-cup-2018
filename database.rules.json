@@ -1,6 +1,6 @@
 {"rules":
   {
-    ".read": "true",
+    ".read": "auth !== null",
     ".write": "auth !== null",
     "admin": {
       ".write": "root.child('users').child(auth.uid).child('admin').val() === true"
