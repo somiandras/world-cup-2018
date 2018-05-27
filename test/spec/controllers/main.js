@@ -3,7 +3,7 @@
 describe('Controller: MainCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('euro2016App'));
+  beforeEach(module('worldCup2018App'));
 
   var MainCtrl,
     scope;

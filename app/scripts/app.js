@@ -3,13 +3,13 @@
 
   /**
    * @ngdoc overview
-   * @name euro2016App
+   * @name worldCup2018App
    * @description
-   * # euro2016App
+   * # worldCup2018App
    *
    * Main module of the application.
    */
-  angular.module('euro2016App', ['appCore', 'myBets', 'user', 'admin']);
+  angular.module('worldCup2018App', ['appCore', 'myBets', 'user', 'admin']);
 
   angular.module('appCore', [
     'ngMessages',
