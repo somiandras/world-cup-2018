@@ -81,7 +81,7 @@
       resolve: {
         user: ($firebaseAuthService, userService) => {
 
-          return $firebaseAuthService.$requireAuth()
+          return $firebaseAuthService.$requireSignIn()
           .then((data) => {
 
             return userService.getUser(data.uid);

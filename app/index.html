@@ -60,6 +60,19 @@
     <script src="bower_components/angulartics/src/angulartics-gtm.js"></script>
     <!-- endbuild -->
 
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyAawImuCAdFFAiDVFCF-HDVxn8rhOlVUUw",
+        authDomain: "world-cup-2018-9f6f6.firebaseapp.com",
+        databaseURL: "https://world-cup-2018-9f6f6.firebaseio.com",
+        projectId: "world-cup-2018-9f6f6",
+        storageBucket: "world-cup-2018-9f6f6.appspot.com",
+        messagingSenderId: "502202020886"
+      };
+      firebase.initializeApp(config);
+    </script>
+
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/shared/app.config.js"></script>

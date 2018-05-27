@@ -15,7 +15,7 @@
     let users = $firebaseArray($firebaseRef.users);
     let usersPublic = $firebaseArray($firebaseRef.public);
 
-    auth.$onAuth((newData) => {
+    auth.$onAuthStateChanged((newData) => {
 
       if (newData) {
 
@@ -70,7 +70,7 @@
 
       let date = new Date().getTime();
 
-      return auth.$authWithPassword(credentials)
+      return auth.$signInWithEmailAndPassword(credentials.email, credentials.password)
       .then((data) => {
 
         return getUser(data.uid);
@@ -86,7 +86,7 @@
 
     function logout () {
 
-      auth.$unauth();
+      auth.$signOut();
     }
 
 
@@ -114,14 +114,14 @@
         
         } else {
 
-          return auth.$createUser(credentials)
+          return auth.$createUserWithEmailAndPassword(credentials.email, credentials.password)
         }
       })
       .then((data) => {
 
         newUid = data.uid;
 
-        return auth.$authWithPassword(credentials);
+        return auth.$signInWithEmailAndPassword(credentials.email, credentials.password);
       })
       .then(() => {
 
@@ -220,20 +220,20 @@
       })
       .then(() => {
 
-        return auth.$removeUser(cred);
+        return auth.$deleteUser();
       });
     }
 
 
     function resetPassword (credentials) {
 
-      return auth.$resetPassword(credentials);
+      return auth.$sendPasswordResetEmail(credentials.email);
     }
 
 
     function changePassword (credentials) {
 
-      return auth.$changePassword(credentials);
+      return auth.$updatePassword(credentials.password);
     }
 
 
