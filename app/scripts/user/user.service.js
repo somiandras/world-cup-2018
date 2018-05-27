@@ -21,7 +21,7 @@
 
         if ($state.current.name === 'login' || $state.current.name === 'register') {
 
-          $state.go('app.dashboard', {temporary: newData.password.isTemporaryPassword});
+          $state.go('app.dashboard', {temporary: false}); // TODO: temp password flow is broken
         }
         
       } else {
