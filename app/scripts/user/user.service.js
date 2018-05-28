@@ -1,138 +1,102 @@
-(function () {
-
+(function() {
   'use strict';
-
 
   angular.module('user').factory('userService', userService);
 
-  
   userService.$inject = ['$q', '$firebaseObject', '$firebaseArray', '$firebaseAuthService', '$firebaseRef', '$state', 'APP_CONFIG', 'adminService'];
 
-  
-  function userService ($q, $firebaseObject, $firebaseArray, $firebaseAuthService, $firebaseRef, $state, APP_CONFIG, adminService) {
-
+  function userService($q, $firebaseObject, $firebaseArray, $firebaseAuthService, $firebaseRef, $state, APP_CONFIG, adminService) {
     const auth = $firebaseAuthService;
     let users = $firebaseArray($firebaseRef.users);
     let usersPublic = $firebaseArray($firebaseRef.public);
 
-    auth.$onAuthStateChanged((newData) => {
-
+    auth.$onAuthStateChanged(newData => {
       if (newData) {
-
         if ($state.current.name === 'login' || $state.current.name === 'register') {
-
           $state.go('app.dashboard', {temporary: false}); // TODO: temp password flow is broken
         }
-        
       } else {
-        
         $state.go('login');
-      }   
+      }
     });
 
-
-    function getUser (uid) {
-
+    function getUser(uid) {
       return users.$loaded()
-      .then((ref) => {
-
+      .then(ref => {
         return ref.$getRecord(uid);
-      })
+      });
     }
 
-
-    function getUserMatchBets (uid) {
-
-      let matchesRef = new Firebase(APP_CONFIG.fbUrl + 'users/' + uid + '/bets/matches')
+    function getUserMatchBets(uid) {
+      let matchesRef = new Firebase(APP_CONFIG.fbUrl + 'users/' + uid + '/bets/matches');
 
       let matches = $firebaseArray(matchesRef);
 
       if (matches) {
-
         return matches.$loaded();
-
       } else {
-
         let error = ("Nem sikerült betölteni a meccseket");
 
         return $q.reject(error);
       }
     }
 
-
-    function getUserList () {
-
+    function getUserList() {
       return users.$loaded();
     }
 
-
-    function login (credentials) {
-
+    function login(credentials) {
       let date = new Date().getTime();
 
       return auth.$signInWithEmailAndPassword(credentials.email, credentials.password)
-      .then((data) => {
-
+      .then(data => {
         return getUser(data.uid);
       })
-      .then((user) => {
-
+      .then(user => {
         user.lastLogin = date;
 
         return saveUser(user);
       });
     }
 
-
-    function logout () {
-
+    function logout() {
       auth.$signOut();
     }
 
-
-    function register (credentials) {
-
+    function register(credentials) {
       let newUid, pending, pendingList;
 
       return adminService.getPendingList()
-      .then((list) => {
-
+      .then(list => {
         pendingList = list;
 
-        pending = list.find((item) => {
-
+        pending = list.find(item => {
           let lower = item.email.toLowerCase();
 
-          return  lower === credentials.email;
+          return lower === credentials.email;
         });
 
         if (!pending) {
-
-          let error = new Error ('Ezzel az emailcímmel nem regisztrálhatsz. Írj a szervezőknek!')
+          let error = new Error('Ezzel az emailcímmel nem regisztrálhatsz. Írj a szervezőknek!');
 
           return $q.reject(error);
-        
         } else {
-
-          return auth.$createUserWithEmailAndPassword(credentials.email, credentials.password)
+          return auth.$createUserWithEmailAndPassword(credentials.email, credentials.password);
         }
       })
-      .then((data) => {
-
+      .then(data => {
         newUid = data.uid;
 
         return auth.$signInWithEmailAndPassword(credentials.email, credentials.password);
       })
       .then(() => {
-
         pendingList.$remove(pending);
 
         let userObject = $firebaseObject($firebaseRef.users);
 
         return userObject.$loaded();
       })
-      .then((userObj) => {
-
+      .then(userObj => {
         let date = new Date();
 
         let newUser = {
@@ -147,48 +111,38 @@
 
         return userObj.$save();
       })
-      .then((resp) => {
-
+      .then(resp => {
         return usersPublic.$loaded();
       })
-      .then((publicData) => {
-
+      .then(publicData => {
         return publicData.$add({
           uid: newUid,
           league: [pending.league],
           score: 0
         });
-      })
+      });
     }
 
-
-    function saveUser (user) {
-
+    function saveUser(user) {
       return users.$save(user)
-      .then((ref) => {
-
+      .then(ref => {
         return usersPublic.$loaded();
       })
-      .then((publicData) => {
-
-        let found = publicData.find((item) => {
-
+      .then(publicData => {
+        let found = publicData.find(item => {
           return item.uid === user.uid;
         });
 
         if (!found) {
-
           return publicData.$add({
-            name: user.name || null, 
+            name: user.name || null,
             uid: user.uid,
             score: user.totalScore || 0,
             league: user.league,
             bets: user.bets || null,
             company: user.company || null
           });
-        
         } else {
-
           found.name = user.name || null;
           found.score = user.totalScore || 0;
           found.league = user.league;
@@ -196,46 +150,34 @@
           found.company = user.company || null;
 
           return publicData.$save(found);
-        } 
-
+        }
       });
     }
 
-
-    function removeUser (cred, user) {
-
+    function removeUser(cred, user) {
       return users.$remove(user)
       .then(() => {
-
         return usersPublic.$loaded();
       })
-      .then((publicArray) => {
-
-        let found = publicArray.find((item) => {
-
+      .then(publicArray => {
+        let found = publicArray.find(item => {
           return item.uid === user.uid;
-        })
+        });
 
         return publicArray.$remove(found);
       })
       .then(() => {
-
         return auth.$deleteUser();
       });
     }
 
-
-    function resetPassword (credentials) {
-
+    function resetPassword(credentials) {
       return auth.$sendPasswordResetEmail(credentials.email);
     }
 
-
-    function changePassword (credentials) {
-
+    function changePassword(credentials) {
       return auth.$updatePassword(credentials.password);
     }
-
 
     return {
       public: usersPublic,
@@ -251,5 +193,4 @@
       changePassword: changePassword
     };
   }
-
 })();

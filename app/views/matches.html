@@ -15,7 +15,7 @@
 						placeholder="Formátum: Csoport; Időpont; Hazai csapat kódja; Vendég csapat kódja"
 						ng-model="matches.form.list"></textarea>
 				</div>
-				<p class="help-block" ng-show="matchesForm.matchlist.$touched && matchesForm.matchlist.$invalid">Másold be a meccsadatokat!</p>
+				<p class="help-block" ng-show="matchesForm.matchList.$touched && matchesForm.matchList.$invalid">Másold be a meccsadatokat!</p>
 				<button class="btn btn-primary" type="submit" ng-disabled="matchesForm.$invalid">Feltöltés</button>
 				<button class="btn btn-default" type="reset" ng-click="matches.uploadForm=false; matches.reset(matchesForm)">Mégse</button>
 			</form>

@@ -1,109 +1,74 @@
-(function () {
-
+(function() {
   'use strict';
 
   angular.module('appCore').factory('scoreService', scoreService);
 
   scoreService.$inject = ['$q', '$firebaseObject', '$firebaseRef', 'userService', 'APP_CONFIG'];
 
-  function scoreService ($q, $firebaseObject, $firebaseRef, userService, APP_CONFIG) {
-
+  function scoreService($q, $firebaseObject, $firebaseRef, userService, APP_CONFIG) {
     let rules = APP_CONFIG.rules;
 
     return {
-      updateUserScores: updateUserScores,
+      updateUserScores: updateUserScores
     };
 
-
-    function updateUserScores (match) {
-
+    function updateUserScores(match) {
       return userService.getUserList()
-      .then((resp) => {
-
+      .then(resp => {
         if (match) {
-          let users = resp.map((user) => {
-
+          let users = resp.map(user => {
             return updateMatchScore(user, match);
-          
           });
 
-          return $q.all(users.map((user) => {
-
+          return $q.all(users.map(user => {
             return userService.saveUser(user)
-            .then((resp) => {
-
+            .then(resp => {
               return $q.resolve(user);
-            }); 
+            });
           }));
-
-        } else {
-
-          return $q.resolve(resp);
         }
+        return $q.resolve(resp);
       })
-      .then((users) => {
-
-        let usersWithTotalScore = users.map((user) => {
-
+      .then(users => {
+        let usersWithTotalScore = users.map(user => {
           return getTotalScore(user);
-
         });
 
-
         return $q.all(usersWithTotalScore);
-
       })
-      .then((users) => {
-
-        return $q.all(users.map((user) => {
-
+      .then(users => {
+        return $q.all(users.map(user => {
           return userService.saveUser(user);
-
         }));
-      })
+      });
     }
 
-
-    function updateMatchScore (user, match) {
-
+    function updateMatchScore(user, match) {
       if (!user.bets || !user.bets.matches) {
-
         return user;
       }
 
-
       if (user.bets.matches[match.$id] && match.result) {
-
         user.bets.matches[match.$id].points = calculateScore(match.result, user.bets.matches[match.$id]);
-
       } else if (user.bets.matches[match.$id]) {
-
         user.bets.matches[match.$id].points = null;
       }
-
 
       return user;
     }
 
-
-    function calculateScore (result, bet) {
-
+    function calculateScore(result, bet) {
       let score = 0;
 
       if (bet) {
-
         let matchWinner = decideWinner(result);
         let betWinner = decideWinner(bet);
 
-
         if (result.home === bet.home && result.away === bet.away) {
-
           score += rules.exactResult;
-        
-        }  
+        }
 
         if (matchWinner === betWinner) {
-
           score += rules.result;
         }
       }
@@ -111,49 +76,35 @@
       return score;
     }
 
-
-    function decideWinner (result) {
-
+    function decideWinner(result) {
       let winner;
 
       if (result.home > result.away) {
-
         winner = 'home';
-
       } else if (result.home < result.away) {
-
         winner = 'away';
-      
       } else {
-
         winner = 'draw';
-      } 
+      }
 
       return winner;
     }
 
-
-    function getTotalScore (user) {
-
+    function getTotalScore(user) {
       if (!user.uid) {
-
         let error = new Error(user + 'has no uid!');
 
         return $q.reject(error);
       }
 
       return userService.getUserMatchBets(user.uid)
-      .then((matches) => {
-
-        let score = matches.reduce((prev,cur) => {
-
+      .then(matches => {
+        let score = matches.reduce((prev, cur) => {
           if (cur.points) {
-
             prev += cur.points;
           }
 
           return prev;
-
         }, 0);
 
         let extraScore = user.extraPoints || 0;
@@ -161,9 +112,7 @@
         user.totalScore = score + extraScore;
 
         return $q.resolve(user);
-      })
+      });
     }
-
   }
-
 })();

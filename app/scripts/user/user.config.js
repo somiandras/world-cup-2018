@@ -1,5 +1,4 @@
-(function () {
-
+(function() {
   'use strict';
 
   angular.module('user')
@@ -9,14 +8,13 @@
 
   userRouting.$inject = ['$stateProvider'];
 
-  function userRouting ($stateProvider) {
-
+  function userRouting($stateProvider) {
     $stateProvider
     .state('app.profile', {
       url: '/profile',
       templateUrl: 'views/profile.html',
       controller: 'ProfileController',
-      controllerAs: 'profile',
+      controllerAs: 'profile'
     })
     .state('app.public', {
       url: '/public/:uid',
@@ -27,13 +25,10 @@
         uid: null
       },
       resolve: {
-        currentUser: function ($stateParams, userService) {
-
+        currentUser: function($stateParams, userService) {
           return userService.public.$loaded()
-          .then((publicList) => {
-
-            return publicList.find((item) => {
-
+          .then(publicList => {
+            return publicList.find(item => {
               return item.uid === $stateParams.uid;
             });
           });
@@ -46,8 +41,7 @@
       controller: 'MatchController',
       controllerAs: 'match',
       resolve: {
-        match: function ($stateParams, tournamentService) {
-
+        match: function($stateParams, tournamentService) {
           return tournamentService.getMatch($stateParams.matchId);
         }
       }
@@ -83,5 +77,4 @@
       }
     });
   }
-
 })();

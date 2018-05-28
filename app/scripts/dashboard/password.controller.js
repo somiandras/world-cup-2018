@@ -1,17 +1,14 @@
-(function () {
-
+(function() {
   'use strict';
 
   angular.module('appCore').controller('PasswordController', PasswordController);
 
   PasswordController.$inject = ['user', 'userService', '$uibModalInstance'];
 
-  function PasswordController (user, userService, $uibModalInstance) {
-
+  function PasswordController(user, userService, $uibModalInstance) {
     let vm = this;
 
-    vm.changePassword = function (form) {
-
+    vm.changePassword = function(form) {
       let credentials = {
         email: user.email,
         newPassword: form.password,
@@ -19,15 +16,12 @@
       };
 
       userService.changePassword(credentials)
-      .then((resp) => {
-
+      .then(resp => {
         $uibModalInstance.close('Elmentettük a jelszavadat!');
       })
-      .catch((error) => {
-
+      .catch(error => {
         console.error(error);
-      })
-    }
+      });
+    };
   }
-
 })();

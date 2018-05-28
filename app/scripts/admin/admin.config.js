@@ -1,18 +1,15 @@
-(function () {
-
+(function() {
   'use strict';
 
   angular
   .module('admin')
   .config(adminRouting);
 
-
   // ROUTING
-  
+
   adminRouting.$inject = ['$stateProvider'];
 
-  function adminRouting ($stateProvider) {
-
+  function adminRouting($stateProvider) {
     $stateProvider
     .state('app.admin', {
       url: '/admin',
@@ -21,15 +18,10 @@
       controllerAs: 'admin',
       resolve: {
         admin: ($q, user) => {
-
           if (user.admin) {
-
             return $q.resolve(true);
-
-          } else {
-
-            return $q.reject('Nincs admin jogod!');
           }
+          return $q.reject('Nincs admin jogod!');
         }
       }
     })
@@ -46,9 +38,8 @@
       controllerAs: 'team',
       resolve: {
         team: (tournamentService, $stateParams) => {
-
           return tournamentService.getTeam($stateParams.team);
-        },
+        }
       }
     })
     .state('app.admin.matches', {
@@ -63,16 +54,13 @@
       controller: 'ParticipantsController',
       controllerAs: 'participants',
       resolve: {
-        userList: (userService) => {
-
+        userList: userService => {
           return userService.getUserList();
         },
-        pendingList: (adminService) => {
-
+        pendingList: adminService => {
           return adminService.getPendingList();
         }
       }
     });
   }
-
 })();

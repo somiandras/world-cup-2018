@@ -1,18 +1,15 @@
-(function () {
-
+(function() {
   'use strict';
 
   angular.module('user').controller('UserRegisterController', UserRegisterController);
 
   UserRegisterController.$inject = ['userService'];
 
-  function UserRegisterController (userService) {
-
+  function UserRegisterController(userService) {
     let vm = this;
     vm.loading = false;
-    
-    vm.registerUser = function (email, password) {
 
+    vm.registerUser = function(email, password) {
       vm.loading = true;
 
       let credentials = {
@@ -21,10 +18,8 @@
       };
 
       userService.register(credentials)
-      .catch((error) => {
-
+      .catch(error => {
         if (error === "IE Object doesn't support property or method 'find'") {
-
           vm.errorMessage = "Ebben a böngészőben ez nem fog menni. Próbáld Chrome-ban vagy Firefoxban!";
         }
 
@@ -33,7 +28,5 @@
         console.error(error);
       });
     };
-
   }
-
 })();

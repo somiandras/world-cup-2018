@@ -38,7 +38,7 @@
           toastr.success('Elmentettük a favoritjaidat');
           vm.showTopForm = false;
         })
-        .catch((error) => {
+        .catch(error => {
           toastr.error(error.message);
         });
       } else {
@@ -62,7 +62,7 @@
         vm.inputs[matchId] = false;
         vm.matchBet[matchId] = undefined;
       })
-      .catch((error) => {
+      .catch(error => {
         toastr.error(error.message);
         vm.inputs[matchId] = false;
         vm.matchBet[matchId] = undefined;

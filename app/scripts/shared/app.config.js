@@ -1,5 +1,4 @@
-(function () {
-
+(function() {
   'use strict';
 
   angular
@@ -7,40 +6,38 @@
   .constant('APP_CONFIG', {
 
     // Firebase ref url
-    fbUrl: 'https://world-cup-2018-9f6f6.firebaseio.com/', 
+    fbUrl: 'https://world-cup-2018-9f6f6.firebaseio.com/',
 
     // Closing time before match start in ms
-    timeLimit: 300000, 
+    timeLimit: 300000,
 
     // Data fields for match upload
-    matchFields: ['group', 'datetime', 'home', 'away'], 
-    
-    //Points rewarded for bets
-    rules: { 
+    matchFields: ['group', 'datetime', 'home', 'away'],
+
+    // Points rewarded for bets
+    rules: {
       result: 1,
       exactResult: 1,
       finalWinner: 3,
       topScorer: 3
     },
 
-    //Eligible competitions
+    // Eligible competitions
     leagues: ['KBC', 'Somi', 'Norbi'],
 
-    //Starting time: 2018.06.14. 17:00
-    startTime: 1528988400000,
+    // Starting time: 2018.06.14. 17:00
+    startTime: 1528988400000
 
   })
   .config(appRouting)
   .config(firebase)
   .run(stateWatchers);
 
-
   // FIREBASE
 
   firebase.$inject = ['$firebaseRefProvider', 'APP_CONFIG'];
 
-  function firebase ($firebaseRefProvider, APP_CONFIG) {
-
+  function firebase($firebaseRefProvider, APP_CONFIG) {
     $firebaseRefProvider.registerUrl({
       default: APP_CONFIG.fbUrl,
       users: APP_CONFIG.fbUrl + 'users',
@@ -58,10 +55,8 @@
   // ROUTING
 
   appRouting.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
-  
-  function appRouting($stateProvider, $urlRouterProvider, $locationProvider) {
 
-    
+  function appRouting($stateProvider, $urlRouterProvider, $locationProvider) {
     $urlRouterProvider.otherwise('/dashboard');
 
     $stateProvider
@@ -80,10 +75,8 @@
       },
       resolve: {
         user: ($firebaseAuthService, userService) => {
-
           return $firebaseAuthService.$requireSignIn()
-          .then((data) => {
-
+          .then(data => {
             return userService.getUser(data.uid);
           });
         }
@@ -109,30 +102,23 @@
     })
     .state('app.rules', {
       url: '/rules',
-      templateUrl: 'views/rules.html',
+      templateUrl: 'views/rules.html'
     })
     .state('app.contact', {
       url: '/contact',
-      templateUrl: 'views/contact.html',
+      templateUrl: 'views/contact.html'
     });
   }
-
 
   stateWatchers.$inject = ['$rootScope', '$state'];
 
-  function stateWatchers ($rootScope, $state) {
-
-    $rootScope.$on("$stateChangeError", function (event, toState, toParams, fromState, fromParams, error) {
-
+  function stateWatchers($rootScope, $state) {
+    $rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
       if (error === "AUTH_REQUIRED") {
-
         $state.go("login");
-        
-        } else {
-
-          console.error(error);
-        }
+      } else {
+        console.error(error);
+      }
     });
   }
-
 })();
