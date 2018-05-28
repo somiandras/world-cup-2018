@@ -11,3 +11,4 @@ szabályzat.mdown
 firebase-debug.log
 .DS_Store
 /db
+/.vscode
