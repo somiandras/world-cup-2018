@@ -14,6 +14,9 @@
     // Data fields for match upload
     matchFields: ['group', 'datetime', 'home', 'away'],
 
+    // Data fields for team upload
+    teamFields: ['longName', 'shortName', 'ISO'],
+
     // Points rewarded for bets
     rules: {
       result: 1,

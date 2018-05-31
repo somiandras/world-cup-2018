@@ -15,7 +15,7 @@
 
     return {
       data: data,
-      addTeam: addTeam,
+      addTeams: addTeams,
       getTeam: getTeam,
       saveTeam: saveTeam,
       removeTeam: removeTeam,
@@ -29,17 +29,31 @@
 
     // TEAM METHODS
 
-    function addTeam(newTeam) {
-      return data.teams.$loaded()
-      .then(teams => {
-        return teams.$add(newTeam);
-      })
-      .then(ref => {
-        let id = ref.key();
-        let index = data.teams.$indexFor(id);
+    function addTeams(string) {
+      try {
+        let decomposed = string.split('\n').map(str => {
+          let items = str.split(';');
 
-        return data.teams[index];
-      });
+          if (items.length !== APP_CONFIG.teamFields.length) {
+            throw new Error('Nem megfelelő számú oszlop!');
+          }
+
+          let teamObj = {};
+          items.forEach((item, idx) => {
+            let field = APP_CONFIG.teamFields[idx];
+            teamObj[field] = item.trim();
+          });
+
+          return teamObj;
+        });
+
+        return data.teams.$loaded()
+          .then(teams => {
+            return $q.all(decomposed.map(team => teams.$add(team)));
+          });
+      } catch (error) {
+        return $q.reject(error);
+      }
     }
 
     function getTeam(shortName) {

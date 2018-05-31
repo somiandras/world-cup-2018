@@ -3,7 +3,7 @@
 
 		<!-- TEAM LIST -->
 
-		<div class="col-md-6" ng-hide="teams.addTeamForm">
+		<div class="col-md-6" ng-hide="teams.uploadForm">
 			<ul class="list-group">
 				<li class="list-group-item" ng-repeat = "team in teams.data.teams | orderBy: 'shortName'">
 				<span class="flag-icon" ng-class="{'flag-icon-{{team.ISO}}': true}"></span>
@@ -14,6 +14,25 @@
 				</span>
 				</li>
 			</ul>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12" ng-show="teams.uploadForm">
+			<h4>Csapatok feltöltése</h4>
+			<form name="teamsForm" ng-submit="teams.upload(teams.form.list, teamsForm)">
+				<div class="form-group">
+					<label>Csapatlista</label>
+					<textarea required class="form-control" name="teamList" id="teamList" cols="30" rows="10" placeholder="Formátum: Hosszú név; Rövid név; ISO kód"
+						ng-model="teams.form.list"></textarea>
+				</div>
+				<p class="help-block" ng-show="teamsForm.teamList.$touched && teamsForm.teamList.$invalid">Másold be a csapatadatokat!</p>
+				<button class="btn btn-primary" type="submit" ng-disabled="teamsForm.$invalid">Feltöltés</button>
+				<button class="btn btn-default" type="reset" ng-click="teams.uploadForm=false; teams.reset(teamsForm)">Mégse</button>
+			</form>
+		</div>
+		<div class="col-xs-12" ng-hide="teams.uploadForm || teams.disableUpload">
+			<a href ng-click="teams.uploadForm = true">
+				<span class="glyphicon glyphicon-plus"></span> Csapatok feltöltése</a>
 		</div>
 	</div>
 </div>
